@@ -378,7 +378,49 @@ svg {
 /* 모바일 환경을 위한 미디어 쿼리 */
 @media (max-width: 767px) {
   .info-panel {
-    height: 400px; /* 모바일에서는 더 작은 높이 적용 */
+    height: 350px; /* 모바일에서는 더 작은 높이 적용 */
+    padding: 10px;
+  }
+  
+  .page-title h1 {
+    font-size: 22px;
+    padding-bottom: 5px;
+  }
+  
+  .container {
+    padding: 10px;
+  }
+  
+  .map-container {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .booth-name {
+    font-size: 20px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .booth-section {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .event-list li {
+    padding: 6px 0;
+    padding-left: 34px;
+    margin-bottom: 6px;
+  }
+  
+  .social-links {
+    margin-top: 15px;
+    gap: 10px;
+  }
+  
+  .social-links a {
+    width: 36px;
+    height: 36px;
   }
 }
 
