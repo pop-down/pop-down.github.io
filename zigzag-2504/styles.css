@@ -1,0 +1,445 @@
+body {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff4f8;
+  user-select: none; /* 전체 영역 드래그 불가능 */
+}
+
+/* 폰트 추가 */
+@font-face {
+  font-family: 'Cafe24Oneprettynight';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.custom-font {
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+/* 복사 가능한 영역만 선택 가능하게 설정 */
+.copy-area {
+  user-select: text;
+  cursor: text;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 600px; /* 컨테이너 최소 높이 설정 */
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-title h1 {
+  color: #E91E63;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #FF4D9C;
+  display: inline-block;
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
+}
+
+.map-container {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d; /* 3D 변환 스타일 보존 */
+  perspective: 1000px; /* 3D 원근감 추가 */
+  overflow: visible; /* transform으로 커지는 요소 표시 */
+}
+
+.info-panel {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease;
+  max-height: 500px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 추가 */
+}
+
+.info-panel.hidden {
+  opacity: 0.7;
+}
+
+.booth-info {
+  margin-bottom: 20px;
+}
+
+.booth-name {
+  color: #E91E63;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #FF4D9C;
+  padding-bottom: 10px;
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
+}
+
+.booth-name:after {
+  content: "";
+  float: right;
+}
+
+.booth-section {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ffd9e5;
+  padding-bottom: 15px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #E91E63;
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
+}
+
+.section-toggle {
+  font-size: 18px;
+  color: #E91E63;
+  transition: transform 0.3s ease;
+}
+
+.section-toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+.section-content {
+  overflow: visible;
+}
+
+#sections-container .section-content {
+  display: block;
+}
+
+.booth-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.booth-products {
+  font-size: 14px;
+}
+
+.booth-events {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.event-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.event-list li {
+  padding: 5px 0;
+  border-bottom: 1px dashed #FF4D9C;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.event-list li::before {
+  content: "🎁";
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.booth-products h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: #E91E63;
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
+}
+
+.product-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.product-list li {
+  padding: 5px 0;
+  border-bottom: 1px dashed #FF4D9C;
+  color: #333;
+}
+
+.booth-map {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+/* 기본 커서 스타일 */
+.booth-wrapper {
+  cursor: pointer;
+  /* 크기 변경 효과를 CSS에서 제거 */
+}
+
+/* 선택된 부스에 대한 스타일 */
+.booth-wrapper.selected {
+  z-index: 1000 !important;
+}
+
+/* hover 상태의 부스에 대한 스타일 */
+.booth-wrapper:hover {
+  z-index: 9999 !important;
+}
+
+/* SVG 요소에 대한 브라우저 호환성 향상 스타일 */
+svg {
+  overflow: visible !important; /* 요소가 SVG 영역을 벗어날 때 표시 */
+}
+
+/* 투표 영역 스타일 유지 */
+#booth-vote {
+  fill: rgba(255, 217, 229, 0.5);
+}
+
+#booth-exit rect, #booth-vote rect {
+  fill: transparent;
+}
+
+.no-booth-selected {
+  font-size: 18px;
+  color: #999;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.social-links {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.1);
+}
+
+.instagram-icon {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.kakaotalk-icon {
+  background-color: #FEE500;
+  color: #3C1E1E !important;
+}
+
+.zigzag-icon {
+  background-color: #FA6EE3;
+}
+
+.copy-code-block {
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px 0;
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #FF4D9C;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.copy-button:hover {
+  background-color: #FF69B4;
+}
+
+.copy-code-content {
+  margin-top: 5px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: monospace;
+  line-height: 1.5;
+}
+
+.visit-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #FF4D9C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.visit-button:hover {
+  background-color: #FF69B4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 77, 156, 0.3);
+}
+
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (min-width: 768px) {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .map-container {
+    flex: 1;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+  
+  .info-panel {
+    width: 300px;
+    flex-shrink: 0;
+  }
+  
+  .copyright {
+    width: 100%;
+  }
+}
+
+/* 공지 팝업 스타일 */
+.notice-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.notice-content {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  text-align: center;
+}
+
+.notice-content h3 {
+  color: #FF4D9C;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.notice-content ul {
+  list-style-type: none;
+  padding-left: 0;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.notice-content ul li {
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+.notice-content ul li:before {
+  content: "•";
+  color: #FF4D9C;
+  position: absolute;
+  left: 0;
+  font-size: 18px;
+}
+
+#notice-confirm-btn {
+  background-color: #FF4D9C;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#notice-confirm-btn:hover {
+  background-color: #FF69B4;
+}
+
+@media (min-width: 768px) {
+  .notice-content {
+    max-width: 450px;
+  }
+}
+
+/* Top row of pink squares */
+.booth-wrapper g text {
+  fill: #E91E63;
+}
+
+.booth-wrapper rect.booth, .booth-wrapper path.booth {
+  stroke: #E91E63;
+  stroke-width: 1.5;
+}
+
+.booth-wrapper circle.booth {
+  stroke: #E91E63;
+  stroke-width: 1.5;
+}
