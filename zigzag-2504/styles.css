@@ -161,11 +161,10 @@ body {
   float: right;
 }
 
-.booth-section {
+/* .booth-section {
   margin-bottom: 15px;
-  /* border-bottom: 1px solid #ffd9e5; */
-  padding-bottom: 15px;
-}
+  /* border-bottom: 1px solid #ffd9e5; 
+} */
 
 .section-header {
   display: flex;
@@ -490,10 +489,10 @@ svg {
     padding-bottom: 8px;
   }
   
-  .booth-section {
+  /* .booth-section {
     margin-bottom: 10px;
     padding-bottom: 10px;
-  }
+  } */
   
   .event-list li {
     padding: 6px 0;
