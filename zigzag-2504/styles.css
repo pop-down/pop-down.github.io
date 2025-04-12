@@ -73,10 +73,22 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  padding-bottom: 10px;
   transition: all 0.3s ease;
-  height: 500px; /* 높이 고정 */
-  overflow-y: auto; /* 세로 스크롤 추가 */
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
+  height: 500px; /* 높이 고정 */
+}
+
+.info-panel-scroll {
+  overflow-y: auto;
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+.info-panel-fixed {
+  margin-top: auto;
 }
 
 .info-panel.hidden {
@@ -372,7 +384,7 @@ svg {
   .info-panel {
     width: 300px;
     flex-shrink: 0;
-    /* 높이는 모든 화면 크기에서 고정 */
+    height: 500px; /* 높이 고정 */
   }
   
   .copyright {
@@ -385,6 +397,7 @@ svg {
   .info-panel {
     height: 350px; /* 모바일에서는 더 작은 높이 적용 */
     padding: 10px;
+    padding-bottom: 5px;
   }
   
   .page-title h1 {
