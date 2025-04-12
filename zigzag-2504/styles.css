@@ -4,6 +4,8 @@ body {
   padding: 0;
   background-color: #fff4f8;
   user-select: none; /* 전체 영역 드래그 불가능 */
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* 폰트 추가 */
@@ -30,6 +32,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   min-height: 600px; /* 컨테이너 최소 높이 설정 */
+  box-sizing: border-box;
 }
 
 .page-title {
@@ -61,6 +64,7 @@ body {
   transform-style: preserve-3d; /* 3D 변환 스타일 보존 */
   perspective: 1000px; /* 3D 원근감 추가 */
   overflow: visible; /* transform으로 커지는 요소 표시 */
+  box-sizing: border-box;
 }
 
 .info-panel {
@@ -72,6 +76,7 @@ body {
   transition: all 0.3s ease;
   height: 500px; /* 높이 고정 */
   overflow-y: auto; /* 세로 스크롤 추가 */
+  box-sizing: border-box;
 }
 
 .info-panel.hidden {
