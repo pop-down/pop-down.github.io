@@ -159,15 +159,18 @@ body {
 .event-list li {
   padding: 5px 0;
   border-bottom: 1px dashed #FF4D9C;
-  display: flex;
-  align-items: center;
+  display: block;
   color: #333;
+  position: relative;
+  padding-left: 26px;
 }
 
 .event-list li::before {
   content: "🎁";
-  margin-right: 8px;
   font-size: 16px;
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
 
 .booth-products h3 {
@@ -297,11 +300,14 @@ svg {
 }
 
 .copy-code-content {
-  margin-top: 5px;
-  white-space: pre-wrap;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
   word-break: break-all;
-  font-family: monospace;
-  line-height: 1.5;
+  cursor: pointer;
 }
 
 .visit-button {
