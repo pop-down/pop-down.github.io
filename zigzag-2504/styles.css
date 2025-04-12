@@ -79,16 +79,29 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   height: 500px; /* 높이 고정 */
+  position: relative; /* 추가: 상대 위치 설정 */
+  overflow: hidden; /* 오버플로우 숨김 처리 */
 }
 
 .info-panel-scroll {
   overflow-y: auto;
   flex: 1;
-  margin-bottom: 15px;
+  margin-bottom: 70px; /* fixed 영역 높이보다 더 충분한 여백 추가 */
+  position: relative; /* 상대 위치 설정 */
+  padding-bottom: 20px; /* 하단 패딩 추가 */
 }
 
 .info-panel-fixed {
-  margin-top: auto;
+  position: absolute; /* 추가: 절대 위치 설정 */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 10px 20px;
+  z-index: 100; /* z-index 높게 설정 */
+  border-top: 1px solid #ffd9e5;
+  min-height: 60px; /* 최소 높이 지정 */
+  box-sizing: border-box; /* 크기 계산에 패딩 포함 */
 }
 
 .info-panel.hidden {
@@ -266,10 +279,12 @@ svg {
 }
 
 .social-links {
-  margin-top: 20px;
   display: flex;
   gap: 15px;
   align-items: center;
+  justify-content: center;
+  margin: 0; /* 마진 제거 */
+  padding: 5px 0; /* 패딩 추가 */
 }
 
 .social-links a {
@@ -309,6 +324,7 @@ svg {
   padding: 10px;
   margin: 15px 0;
   position: relative;
+  margin-bottom: 25px; /* 하단 여백 증가 */
 }
 
 .copy-button {
@@ -540,4 +556,13 @@ svg {
 /* 투표, 입장안내 부스 스타일 */
 .booth-wrapper path.booth {
   transition: all 0.3s ease;
+}
+
+#copy-code-container {
+  padding-bottom: 20px; /* 복사 코드 컨테이너 하단 여백 추가 */
+}
+
+.scrollable-content-bottom {
+  margin-bottom: 30px; /* 추가 하단 여백 */
+  padding-bottom: 30px; /* 추가 하단 패딩 */
 }
