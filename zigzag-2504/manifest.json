@@ -1,10 +1,12 @@
 {
     "name": "BE·YOU·TIFUL ZIGZAG",
-    "short_name": "BYT_ZIGZAG",
-    "theme_color": "#4285f4",
+    "short_name": "지그재그 팝업안내도",
+    "theme_color": "#E91E63",
     "background_color": "#ffffff",
     "display": "standalone",
     "start_url": "./",
+    "scope": "./",
+    "orientation": "portrait",
     "icons": [
       {
         "src": "./src/android-chrome-192x192.png",
@@ -15,6 +17,12 @@
         "src": "./src/android-chrome-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
+      },
+      {
+        "src": "./src/apple-touch-icon.png",
+        "sizes": "180x180",
+        "type": "image/png",
+        "purpose": "maskable"
       }
     ]
   }

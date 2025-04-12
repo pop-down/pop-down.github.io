@@ -12,6 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link rel="manifest" href="./manifest.json">
+  
+  <!-- iOS PWA 호환성을 위한 태그 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="지그재그 팝업안내도">
+  <link rel="apple-touch-icon" href="./src/apple-touch-icon.png">
+  <meta name="theme-color" content="#E91E63">
 </head>
 <body class="custom-font">
   <!-- 공지 팝업 추가 -->
@@ -213,189 +220,42 @@
     </div>
   </div>
 
+  <!-- PWA 설치 안내 -->
+  <div id="pwa-install-prompt" class="pwa-install-prompt" style="display: none;">
+    <div class="pwa-prompt-content">
+      <div class="pwa-prompt-message">
+        <i class="fas fa-mobile-alt"></i> 앱으로 설치하면 더 편하게 이용할 수 있어요!
+      </div>
+      <div class="pwa-prompt-buttons">
+        <button id="pwa-install-btn" class="pwa-install-btn">설치하기</button>
+        <button id="pwa-close-btn" class="pwa-close-btn">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
   <script>
-    // 인라인 스크립트로 HTML에 직접 추가된 함수들
+    // 부스 항목 선택 기능
     document.addEventListener('DOMContentLoaded', function() {
-      // 모든 부스 래퍼 요소 가져오기
-      const boothWrappers = document.querySelectorAll('.booth-wrapper');
+      // 모든 부스 요소 선택
+      const boothElements = document.querySelectorAll('.booth-wrapper');
       
-      // 페이지 제목 클릭 시 안내 정보 표시
-      const mainTitle = document.getElementById('main-title');
-      mainTitle.addEventListener('click', function() {
-        showBoothInfo('안내');
-      });
-      
-      // 현재 선택된 부스 추적
-      let selectedBooth = null;
-      // 전역 변수로 노출
-      window.selectedBooth = selectedBooth;
-      
-      // 각 부스 래퍼에 호버 이벤트 리스너 추가
-      boothWrappers.forEach(wrapper => {
-        // 호버 이벤트
-        wrapper.addEventListener('mouseenter', function() {
-          // z-index 우선순위: 호버 > 선택 > 나머지
-          document.querySelectorAll('.booth-wrapper').forEach(w => {
-            if (w.classList.contains('selected')) {
-              // 선택된 부스는 z-index 1000 유지
-              w.style.zIndex = '1000';
-            } else if (w !== this) {
-              // 호버되지 않고 선택되지 않은 부스는 z-index 초기화
-              w.style.zIndex = '';
-            }
-          });
-          
-          // 호버된 부스의 z-index를 가장 높게 설정 (선택된 부스보다 우선)
-          this.style.zIndex = '9999';
-          
-          // 호버 시 색상 변경만 적용 (크기 변경 제거)
-          if (this.classList.contains('booth-group')) {
-            // 원 요소 색상 변경
-            const circle = this.querySelector('circle.booth');
-            if (circle) {
-              if (!circle._origFill) {
-                circle._origFill = circle.getAttribute('fill');
-              }
-              circle.setAttribute('fill', '#FF97C1');
-            }
-            
-            // 입구, 출구 호버 시 폴리곤과 라인 색상 변경
-            const boothName = this.getAttribute('data-name');
-            if (boothName === '입구' || boothName === '출구') {
-              const polygon = this.querySelector('polygon');
-              const line = this.querySelector('line');
-              if (polygon) {
-                if (!polygon._origFill) {
-                  polygon._origFill = polygon.getAttribute('fill');
-                }
-                polygon.setAttribute('fill', '#FF97C1');
-                polygon.setAttribute('stroke', '#FF97C1');
-              }
-              if (line) {
-                if (!line._origStroke) {
-                  line._origStroke = line.getAttribute('stroke');
-                }
-                line.setAttribute('stroke', '#FF97C1');
-              }
-            }
-          } else {
-            // 사각형 요소 색상 변경
-            const rect = this.querySelector('rect.booth');
-            if (rect) {
-              if (!rect._origFill) {
-                rect._origFill = rect.getAttribute('fill');
-              }
-              rect.setAttribute('fill', '#FF97C1');
-            }
-            
-            // 투표, 입장안내 부스 처리
-            const boothName = this.getAttribute('data-name');
-            if (boothName === '투표') {
-              // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-            } else if (boothName === '입장안내') {
-              // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-            }
-          }
-        });
-        
-        // 호버 종료 이벤트
-        wrapper.addEventListener('mouseleave', function() {
-          // z-index 복원 - 선택된 부스만 높은 z-index 유지
-          if (this.classList.contains('selected')) {
-            this.style.zIndex = '1000';
-          } else {
-            this.style.zIndex = '';
-          }
-          
-          // 색상 복원 (호버 효과 제거)
-          if (this.classList.contains('booth-group')) {
-            const circle = this.querySelector('circle.booth');
-            if (circle && circle._origFill && !this.classList.contains('selected')) {
-              circle.setAttribute('fill', circle._origFill);
-            }
-            
-            // 입구, 출구 부스 호버 색상 복원
-            const boothName = this.getAttribute('data-name');
-            if ((boothName === '입구' || boothName === '출구') && !this.classList.contains('selected')) {
-              const polygon = this.querySelector('polygon');
-              const line = this.querySelector('line');
-              if (polygon && polygon._origFill) {
-                polygon.setAttribute('fill', polygon._origFill);
-                polygon.setAttribute('stroke', polygon._origFill);
-              }
-              if (line && line._origStroke) {
-                line.setAttribute('stroke', line._origStroke);
-              }
-            }
-          } else {
-            // 사각형 요소 색상 복원
-            const rect = this.querySelector('rect.booth');
-            if (rect && rect._origFill && !this.classList.contains('selected')) {
-              rect.setAttribute('fill', rect._origFill);
-            }
-            
-            // 투표, 입장안내 부스 색상 복원
-            const boothName = this.getAttribute('data-name');
-            if (boothName === '투표' && !this.classList.contains('selected')) {
-              // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-            } else if (boothName === '입장안내' && !this.classList.contains('selected')) {
-              // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-            }
-          }
-        });
-        
-        // 클릭 이벤트
-        wrapper.addEventListener('click', function() {
-          // 이전 선택 부스의 selected 클래스와 z-index 제거
-          if (selectedBooth) {
-            selectedBooth.classList.remove('selected');
-            selectedBooth.style.zIndex = '';
-            
-            // 이전 선택 부스의 색상 복원
-            if (selectedBooth.classList.contains('booth-group')) {
-              const circle = selectedBooth.querySelector('circle.booth');
-              if (circle && circle._origFill) {
-                circle.setAttribute('fill', circle._origFill);
-              }
-              
-              // 입구, 출구 부스 선택 해제 시 색상 복원
-              const boothName = selectedBooth.getAttribute('data-name');
-              if (boothName === '입구' || boothName === '출구') {
-                const polygon = selectedBooth.querySelector('polygon');
-                const line = selectedBooth.querySelector('line');
-                if (polygon && polygon._origFill) {
-                  polygon.setAttribute('fill', polygon._origFill);
-                  polygon.setAttribute('stroke', polygon._origFill);
-                }
-                if (line && line._origStroke) {
-                  line.setAttribute('stroke', line._origStroke);
-                }
-              }
-            } else {
-              const rect = selectedBooth.querySelector('rect.booth');
-              if (rect && rect._origFill) {
-                rect.setAttribute('fill', rect._origFill);
-              }
-              
-              // 투표, 입장안내 부스 선택 해제 시 색상 복원
-              const boothName = selectedBooth.getAttribute('data-name');
-              if (boothName === '투표') {
-                // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-              } else if (boothName === '입장안내') {
-                // CSS로 처리하도록 이 부분은 삭제 (booth-hover-target 클래스로 처리)
-              }
-            }
-          }
-          
-          // 현재 부스를 선택된 상태로 설정
-          selectedBooth = this;
-          window.selectedBooth = selectedBooth;
-          this.classList.add('selected');
-          this.style.zIndex = '1000'; // 선택된 부스는 z-index 1000으로 설정
-          
+      // 각 부스 요소에 클릭 이벤트 추가
+      boothElements.forEach(booth => {
+        booth.addEventListener('click', function() {
           // 부스 이름 가져오기
           const boothName = this.getAttribute('data-name');
+          
+          // 부스 이름이 없으면 처리하지 않음
+          if (!boothName) return;
+          
+          // 기존 선택된 부스의 강조 효과 제거
+          document.querySelectorAll('.booth-wrapper').forEach(b => {
+            b.classList.remove('selected');
+          });
+          
+          // 선택된 부스 강조 효과 추가
+          this.classList.add('selected');
           
           // 부스 정보 표시 함수 호출
           showBoothInfo(boothName);
@@ -411,11 +271,6 @@
       showBoothInfo('안내');
     });
     
-    // 주최사 부스인지 확인하는 함수
-    function isOrganizerBooth(boothName) {
-      return ['입장안내', '출구', '투표', '입구'].includes(boothName);
-    }
-
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
