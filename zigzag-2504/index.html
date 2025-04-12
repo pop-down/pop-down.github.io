@@ -265,6 +265,20 @@
         });
       });
       
+      // 메인 타이틀(h1)에 클릭 이벤트 추가
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) {
+        mainTitle.addEventListener('click', function() {
+          // 기존 선택된 부스의 강조 효과 제거
+          document.querySelectorAll('.booth-wrapper').forEach(b => {
+            b.classList.remove('selected');
+          });
+          
+          // 안내 정보 표시
+          showBoothInfo('안내');
+        });
+      }
+      
       // 페이지 로드 시 마지막으로 방문한 부스 정보 대신 초기 정보 표시
       loadLastVisitedBooth();
       // 추가로 초기 정보 표시
