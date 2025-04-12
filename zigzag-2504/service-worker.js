@@ -111,5 +111,14 @@ self.addEventListener('activate', event => {
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  } else if (event.data && event.data.type === 'GET_VERSION') {
+    // 버전 정보 요청 처리
+    // 메시지를 보낸 클라이언트에게 현재 버전 정보 전송
+    if (event.source) {
+      event.source.postMessage({
+        type: 'CURRENT_VERSION',
+        version: CACHE_VERSION
+      });
+    }
   }
 });
