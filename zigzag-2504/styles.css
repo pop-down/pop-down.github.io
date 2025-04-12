@@ -16,8 +16,21 @@ body {
   font-style: normal;
 }
 
+/* 카카오빅산스 웹폰트 추가 */
+@font-face {
+  font-family: 'KakaoBigSans-ExtraBold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2503@1.0/KakaoBigSans-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
 .custom-font {
   font-family: 'Cafe24Oneprettynight', 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+/* 정보란 내용 폰트 수정 */
+.event-list li, .product-list li, .booth-description, .section-content {
+  font-family: 'KakaoBigSans-ExtraBold', 'Pretendard', sans-serif;
 }
 
 /* 복사 가능한 영역만 선택 가능하게 설정 */
@@ -38,9 +51,13 @@ body {
 .page-title {
   text-align: center;
   margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .page-title h1 {
+  font-family: 'Poppins', sans-serif;
   color: #E91E63;
   font-size: 28px;
   font-weight: 700;
@@ -48,7 +65,6 @@ body {
   padding-bottom: 10px;
   border-bottom: 2px solid #FF4D9C;
   display: inline-block;
-  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
 }
 
 .map-container {
@@ -84,23 +100,41 @@ body {
 }
 
 .info-panel-scroll {
-  overflow-y: auto;
   flex: 1;
-  margin-bottom: 70px; /* fixed 영역 높이보다 더 충분한 여백 추가 */
-  position: relative; /* 상대 위치 설정 */
+  overflow-y: auto;
+  margin-bottom: 70px; /* 소셜 링크 영역 높이만큼 여백 추가 */
+  min-height: 0;
+  max-height: 400px; /* 최대 높이 축소 */
+  -ms-overflow-style: auto; /* IE와 Edge */
+  scrollbar-width: auto; /* Firefox */
+  position: relative; /* 추가: 상대 위치 설정 */
   padding-bottom: 20px; /* 하단 패딩 추가 */
 }
 
+.info-panel-scroll::-webkit-scrollbar {
+  width: 5px; /* 스크롤바 너비 */
+}
+
+.info-panel-scroll::-webkit-scrollbar-thumb {
+  background-color: #FF4D9C; /* 스크롤바 색상 */
+  border-radius: 5px;
+}
+
+.info-panel-scroll::-webkit-scrollbar-track {
+  background: #f0f0f0; /* 스크롤바 트랙 색상 */
+  border-radius: 5px;
+}
+
 .info-panel-fixed {
+  padding: 8px 10px;
   position: absolute; /* 추가: 절대 위치 설정 */
   bottom: 0;
   left: 0;
   right: 0;
   background-color: white;
-  padding: 10px 20px;
-  z-index: 100; /* z-index 높게 설정 */
+  z-index: 100; /* z-index 설정 추가 */
   border-top: 1px solid #ffd9e5;
-  min-height: 60px; /* 최소 높이 지정 */
+  min-height: 55px; /* 최소 높이 지정 */
   box-sizing: border-box; /* 크기 계산에 패딩 포함 */
 }
 
@@ -412,8 +446,28 @@ svg {
 @media (max-width: 767px) {
   .info-panel {
     height: 350px; /* 모바일에서는 더 작은 높이 적용 */
+    position: relative; /* 추가: 상대 위치 설정 */
+    overflow: hidden; /* 오버플로우 숨김 처리 */
     padding: 10px;
     padding-bottom: 5px;
+  }
+  
+  .info-panel-scroll {
+    margin-bottom: 70px; /* fixed 영역 높이보다 충분한 여백 추가 */
+    max-height: 250px; /* 모바일에서는 더 낮게 조정 */
+    position: relative;
+    padding-bottom: 20px; /* 하단 패딩 추가 */
+  }
+  
+  .info-panel-fixed {
+    padding: 8px 10px;
+    position: absolute; /* 추가: 절대 위치 설정 */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 100; /* z-index 설정 추가 */
+    border-top: 1px solid #ffd9e5;
   }
   
   .page-title h1 {
@@ -565,4 +619,120 @@ svg {
 .scrollable-content-bottom {
   margin-bottom: 30px; /* 추가 하단 여백 */
   padding-bottom: 30px; /* 추가 하단 패딩 */
+}
+
+/* 추가 링크 스타일 개선 */
+#additional-links-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.additional-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  color: white;
+  background-color: #5c9ce6; /* 기본 링크 색상 */
+  font-size: 16px;
+}
+
+.additional-link:hover {
+  transform: scale(1.1);
+}
+
+/* 다양한 아이콘별 배경색 - 클래스 기반 */
+.additional-link-poll {
+  background-color: #4CAF50; /* 설문조사 - 녹색 */
+}
+
+.additional-link-user {
+  background-color: #9C27B0; /* 프로필 - 보라색 */
+}
+
+.additional-link-ticket {
+  background-color: #FF9800; /* 쿠폰 - 주황색 */
+}
+
+.additional-link-map {
+  background-color: #F44336; /* 지도 - 빨간색 */
+}
+
+.additional-link-calendar {
+  background-color: #009688; /* 이벤트 - 청록색 */
+}
+
+.additional-link-shopping {
+  background-color: #795548; /* 쇼핑 - 갈색 */
+}
+
+.additional-link-question {
+  background-color: #607D8B; /* 문의 - 회색 */
+}
+
+.additional-link-info {
+  background-color: #2196F3; /* 정보 - 파란색 */
+}
+
+.additional-link-mail {
+  background-color: #E91E63; /* 이메일 - 분홍색 */
+}
+
+.additional-link-file {
+  background-color: #f44336; /* PDF - 빨간색 */
+}
+
+.additional-link-default {
+  background-color: #5c9ce6; /* 링크 - 하늘색 */
+}
+
+.link-name {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 200;
+  font-weight: bold;
+}
+
+.additional-link:hover .link-name {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 툴팁 화살표 추가 */
+.link-name::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
+@media (max-width: 767px) {
+  .additional-link {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
 }
