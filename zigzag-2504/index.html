@@ -55,12 +55,13 @@
     .info-panel-scroll {
       flex: 1;
       overflow-y: auto;
-      margin-bottom: 55px; /* 소셜 링크 영역 높이만큼 여백 추가 */
+      margin-bottom: 70px; /* 소셜 링크 영역 높이만큼 여백 추가 */
       min-height: 0;
-      max-height: 420px;
+      max-height: 400px; /* 최대 높이 축소 */
       -ms-overflow-style: auto; /* IE와 Edge */
       scrollbar-width: auto; /* Firefox */
       position: relative; /* 추가: 상대 위치 설정 */
+      padding-bottom: 20px; /* 하단 패딩 추가 */
     }
     
     .info-panel-scroll::-webkit-scrollbar {
