@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="./manifest.json">
 </head>
 <body class="custom-font">
   <!-- 공지 팝업 추가 -->
@@ -413,6 +414,16 @@
     // 주최사 부스인지 확인하는 함수
     function isOrganizerBooth(boothName) {
       return ['입장안내', '출구', '투표', '입구'].includes(boothName);
+    }
+
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.debug('서비스 워커가 등록되었습니다.', reg))
+          .catch(err => console.error('서비스 워커 등록 실패:', err));
+      });
+    } else if (location.protocol === 'file:') {
+      console.debug('로컬 환경에서는 서비스 워커가 지원되지 않습니다. HTTP 서버에서 실행하세요.');
     }
   </script>
 </body>
