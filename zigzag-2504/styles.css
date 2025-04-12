@@ -70,7 +70,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: all 0.3s ease;
-  max-height: 500px; /* 최대 높이 설정 */
+  height: 500px; /* 높이 고정 */
   overflow-y: auto; /* 세로 스크롤 추가 */
 }
 
@@ -221,10 +221,23 @@ svg {
 /* 투표 영역 스타일 유지 */
 #booth-vote {
   fill: rgba(255, 217, 229, 0.5);
+  transition: fill 0.3s ease;
 }
 
 #booth-exit rect, #booth-vote rect {
   fill: transparent;
+}
+
+.booth-hover-target {
+  transition: fill 0.3s ease;
+}
+
+.booth-wrapper:hover .booth-hover-target {
+  fill: rgba(255, 105, 180, 0.3) !important;
+}
+
+.booth-wrapper.selected .booth-hover-target {
+  fill: rgba(255, 105, 180, 0.2) !important;
 }
 
 .no-booth-selected {
@@ -354,10 +367,18 @@ svg {
   .info-panel {
     width: 300px;
     flex-shrink: 0;
+    /* 높이는 모든 화면 크기에서 고정 */
   }
   
   .copyright {
     width: 100%;
+  }
+}
+
+/* 모바일 환경을 위한 미디어 쿼리 */
+@media (max-width: 767px) {
+  .info-panel {
+    height: 400px; /* 모바일에서는 더 작은 높이 적용 */
   }
 }
 
@@ -448,4 +469,15 @@ svg {
 .booth-wrapper circle.booth {
   stroke: #E91E63;
   stroke-width: 1.5;
+}
+
+/* 입구, 출구 부스 스타일 */
+.booth-wrapper polygon, 
+.booth-wrapper line {
+  transition: all 0.3s ease;
+}
+
+/* 투표, 입장안내 부스 스타일 */
+.booth-wrapper path.booth {
+  transition: all 0.3s ease;
 }
