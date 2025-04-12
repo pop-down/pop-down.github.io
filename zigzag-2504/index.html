@@ -288,7 +288,20 @@
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
-          .then(reg => console.debug('서비스 워커가 등록되었습니다.', reg))
+          .then(reg => {
+            console.debug('서비스 워커가 등록되었습니다.', reg);
+            
+            // 서비스 워커 업데이트 확인
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              console.debug('새 서비스 워커 설치중', newWorker);
+              
+              // 상태 변경 감지
+              newWorker.addEventListener('statechange', () => {
+                console.debug('서비스 워커 상태 변경:', newWorker.state);
+              });
+            });
+          })
           .catch(err => console.error('서비스 워커 등록 실패:', err));
       });
     } else if (location.protocol === 'file:') {

@@ -1,4 +1,6 @@
-const CACHE_NAME = 'zigzag-cache-v1';
+// 캐시 버전 관리 (업데이트 시 버전 번호 변경)
+const CACHE_VERSION = 'v0.1.0';
+const CACHE_NAME = `zigzag-cache-${CACHE_VERSION}`;
 const urlsToCache = [
   './',
   './index.html',
@@ -9,6 +11,11 @@ const urlsToCache = [
 
 // 서비스 워커 설치 및 캐싱
 self.addEventListener('install', event => {
+  console.log(`[Service Worker] 새 버전 ${CACHE_VERSION} 설치 중`);
+  
+  // 대기 상태 없이 즉시 활성화 (skipWaiting)
+  self.skipWaiting();
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -56,19 +63,42 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// 오래된 캐시 정리
+// 오래된 캐시 정리 및 새 서비스 워커 활성화
 self.addEventListener('activate', event => {
+  console.log(`[Service Worker] 버전 ${CACHE_VERSION} 활성화 중`);
+  
   const cacheWhitelist = [CACHE_NAME];
+  
+  // 클라이언트 제어 즉시 획득 (새로고침 필요 없음)
+  self.clients.claim();
   
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log(`[Service Worker] 오래된 캐시 삭제: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      // 모든 클라이언트에게 업데이트 알림
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'UPDATE_AVAILABLE',
+            version: CACHE_VERSION
+          });
+        });
+      });
     })
   );
+});
+
+// 메시지 수신 처리 (클라이언트에서 서비스 워커로 메시지 보낼 경우)
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
