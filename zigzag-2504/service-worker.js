@@ -20,6 +20,11 @@ self.addEventListener('install', event => {
 
 // 네트워크 요청을 가로채서 캐시된 응답 반환
 self.addEventListener('fetch', event => {
+  // HTTP나 HTTPS 요청만 캐싱
+  if (!event.request.url.startsWith('http')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
