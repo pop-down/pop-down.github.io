@@ -9,9 +9,20 @@ const urlsToCache = [
   './manifest.json'
 ];
 
+// 로컬 환경에서만 로그를 출력하는 함수
+function swLog(message) {
+  // self.location 속성을 사용해 URL 확인
+  const url = new URL(self.location.href);
+  const isLocal = url.hostname === 'localhost' || url.hostname === '127.0.0.1' || url.protocol === 'file:';
+  
+  if (isLocal) {
+    console.log(message);
+  }
+}
+
 // 서비스 워커 설치 및 캐싱
 self.addEventListener('install', event => {
-  console.log(`[Service Worker] 새 버전 ${CACHE_VERSION} 설치 중`);
+  swLog(`[Service Worker] 새 버전 ${CACHE_VERSION} 설치 중`);
   
   // 대기 상태 없이 즉시 활성화 (skipWaiting)
   self.skipWaiting();
@@ -19,7 +30,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('캐시 열기 성공');
+        swLog('캐시 열기 성공');
         return cache.addAll(urlsToCache);
       })
   );
@@ -65,7 +76,7 @@ self.addEventListener('fetch', event => {
 
 // 오래된 캐시 정리 및 새 서비스 워커 활성화
 self.addEventListener('activate', event => {
-  console.log(`[Service Worker] 버전 ${CACHE_VERSION} 활성화 중`);
+  swLog(`[Service Worker] 버전 ${CACHE_VERSION} 활성화 중`);
   
   const cacheWhitelist = [CACHE_NAME];
   
@@ -77,7 +88,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log(`[Service Worker] 오래된 캐시 삭제: ${cacheName}`);
+            swLog(`[Service Worker] 오래된 캐시 삭제: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
