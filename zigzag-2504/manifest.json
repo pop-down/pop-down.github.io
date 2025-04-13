@@ -1,7 +1,7 @@
 {
     "name": "BE·YOU·TIFUL ZIGZAG",
     "short_name": "지그재그 팝업안내도",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "theme_color": "#E91E63",
     "background_color": "#ffffff",
     "display": "standalone",

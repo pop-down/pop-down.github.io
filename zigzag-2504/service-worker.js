@@ -1,5 +1,5 @@
 // 캐시 버전 관리 (업데이트 시 버전 번호 변경)
-const CACHE_VERSION = 'v0.2.3';
+const CACHE_VERSION = 'v0.2.4';
 const CACHE_NAME = `zigzag-cache-${CACHE_VERSION}`;
 const urlsToCache = [
   './',
