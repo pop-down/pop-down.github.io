@@ -1,5 +1,5 @@
 // 캐시 버전 관리 (업데이트 시 버전 번호 변경)
-const CACHE_VERSION = 'v0.2.4.1';
+const CACHE_VERSION = 'v0.2.5.1';
 const CACHE_NAME = `zigzag-cache-${CACHE_VERSION}`;
 const urlsToCache = [
   './',
@@ -42,7 +42,23 @@ self.addEventListener('fetch', event => {
   if (!event.request.url.startsWith('http')) {
     return;
   }
+  
+  // 캐시 확인 요청은 네트워크 우선(캐시 무시)
+  if (event.request.url.includes('check=') && event.request.url.includes('service-worker.js')) {
+    event.respondWith(
+      fetch(event.request)
+        .catch(error => {
+          // 오프라인인 경우 에러 응답
+          return new Response('오프라인 상태입니다.', { 
+            status: 503, 
+            statusText: 'Service Unavailable' 
+          });
+        })
+    );
+    return;
+  }
 
+  // 일반 요청의 경우 캐시 우선, 실패 시 네트워크 요청
   event.respondWith(
     caches.match(event.request)
       .then(response => {
