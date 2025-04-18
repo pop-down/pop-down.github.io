@@ -297,64 +297,23 @@
   <script type="module" src="script.js"></script>
   
   <script type="module">
-    // config.js에서 설정 가져오기
-    import { APP_CONFIG } from './config.js';
-    
-    // 버전 쿼리 파라미터를 스크립트 URL에 추가하는 함수
-    function loadScriptWithVersion(scriptPath, callback) {
-      // 캐시 버스팅 파라미터로 APP_CONFIG.cacheVersion 사용
-      const cacheBuster = APP_CONFIG.cacheVersion;
-      
-      // 스크립트 요소 생성
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      
-      // 캐시 버스팅 파라미터 추가
-      script.src = `${scriptPath}?v=${cacheBuster}`;
-      
-      // 스크립트를 body 끝에 추가
-      document.body.appendChild(script);
-      
-      // 스크립트가 로드된 후 콜백 실행
-      script.onload = () => {
-        if (callback) {
-          callback();
-        }
-      };
-    }
-    
-    // 맵 로드 함수 추가
-    async function loadMap() {
-      try {
-        // 스크립트 로드 및 초기화
-        loadScriptWithVersion('script.js', function() {
-          // 초기 정보 표시
-          if (typeof showBoothInfo === 'function') {
-            showBoothInfo('안내');
-          }
-          
-          // 부스 이벤트 초기화
-          if (typeof initializeBoothList === 'function') {
-            initializeBoothList();
-          }
-
-          // 탭 초기화
-          if (typeof initializeTabs === 'function') {
-            initializeTabs();
-          }
-        });
-      } catch (error) {
-        console.error('맵 로드 오류:', error);
-      }
-    }
-    
-    // 페이지 로드 시 맵 로드
-    window.addEventListener('load', loadMap);
-  </script>
-  
-  <script type="module">
-    // 부스 항목 선택 기능
+    // DOM이 로드된 후 실행할 초기화 함수들
     document.addEventListener('DOMContentLoaded', function() {
+      // 초기 정보 표시
+      if (typeof window.showBoothInfo === 'function') {
+        window.showBoothInfo('안내');
+      }
+      
+      // 부스 이벤트 초기화
+      if (typeof window.initializeBoothList === 'function') {
+        window.initializeBoothList();
+      }
+
+      // 탭 초기화
+      if (typeof window.initializeTabs === 'function') {
+        window.initializeTabs();
+      }
+      
       // 모든 부스 요소 선택
       const boothElements = document.querySelectorAll('.booth-wrapper');
       
@@ -376,12 +335,12 @@
           this.classList.add('selected');
           
           // 부스 정보 표시 함수 호출
-          if (typeof showBoothInfo === 'function') {
-            showBoothInfo(boothName);
+          if (typeof window.showBoothInfo === 'function') {
+            window.showBoothInfo(boothName);
             
             // 최근 방문 부스 저장
-            if (typeof saveLastVisitedBooth === 'function') {
-              saveLastVisitedBooth(boothName);
+            if (typeof window.saveLastVisitedBooth === 'function') {
+              window.saveLastVisitedBooth(boothName);
             }
           }
         });
@@ -397,19 +356,19 @@
           });
           
           // 안내 정보 표시
-          if (typeof showBoothInfo === 'function') {
-            showBoothInfo('안내');
+          if (typeof window.showBoothInfo === 'function') {
+            window.showBoothInfo('안내');
           }
         });
       }
       
       // 페이지 로드 시 마지막으로 방문한 부스 정보 대신 초기 정보 표시
-      if (typeof loadEmptyBooth === 'function') {
-        loadEmptyBooth();
+      if (typeof window.loadEmptyBooth === 'function') {
+        window.loadEmptyBooth();
       } else {
         // 함수가 아직 로드되지 않았으면 안내 정보만 표시
-        if (typeof showBoothInfo === 'function') {
-          showBoothInfo('안내');
+        if (typeof window.showBoothInfo === 'function') {
+          window.showBoothInfo('안내');
         }
       }
     });

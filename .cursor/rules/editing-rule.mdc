@@ -10,6 +10,12 @@ alwaysApply: true
 - You can use markdown but dont have to
 
 
+## 버저닝
+0.n.n.n 
+- 가장 끝자리 우선 사용
+
+
 
 ## 모든 코드변경사항 발생 시
 - [prd.md](mdc:2504-coupang/prd.md) 업데이트
+- [manifest.json](mdc:2504-coupang/manifest.json) [config.js](mdc:2504-coupang/config.js) [version.json](mdc:2504-coupang/version.json) 업데이트 (버전)
