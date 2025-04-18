@@ -1121,12 +1121,19 @@ svg {
 }
 
 .booth-list-item {
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .booth-list-item:hover {
@@ -1134,8 +1141,32 @@ svg {
   background-color: var(--hover-color);
 }
 
+.booth-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 정보 탭의 부스명 스타일 */
+.info-panel .booth-name {
+  color: var(--text-color);
+  border-bottom: 2px solid var(--main-pink);
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.booth-list-item.visited {
+  opacity: 0.6;
+  background-color: var(--hover-color);
+}
+
 .search-container {
   margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-input {
@@ -1441,4 +1472,43 @@ svg {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+.visit-toggle {
+  background: none;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.visit-toggle:hover {
+  border-color: var(--main-pink);
+}
+
+.visit-toggle.visited {
+  background-color: var(--main-pink);
+  border-color: var(--main-pink);
+}
+
+.visit-toggle.visited i {
+  color: white;
+}
+
+.booth-list-item.visited {
+  opacity: 0.6;
+  background-color: var(--hover-color);
+}
+
+.booth-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
