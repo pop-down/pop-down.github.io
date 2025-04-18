@@ -1,0 +1,6 @@
+{
+  "version": "0.2.5.3",
+  "releaseDate": "2025-04-29",
+  "minRequiredVersion": "0.2.5.0",
+  "changelog": "모듈 시스템 적용 및 설정 파일 분리"
+} 
