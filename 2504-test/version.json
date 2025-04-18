@@ -1,6 +1,7 @@
 {
-  "version": "0.2.6.6",
-  "releaseDate": "2025-04-26",
-  "minRequiredVersion": "0.2.5.0",
-  "changelog": "info-panel-fixed 영역이 스크롤에 영향받지 않고 화면 하단에 고정되도록 개선"
+  "version": "0.2.6.7",
+  "minRequired": "0.1.0.0",
+  "latest": "0.2.6.7",
+  "lastUpdated": "2025-04-19",
+  "notes": "맵이 접혔을 때 info-panel 높이 자동 조절 기능 추가 - 여러 화면 크기에서 적절하게 표시되도록 개"
 } 

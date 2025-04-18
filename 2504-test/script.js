@@ -250,7 +250,7 @@ if (typeof window.boothData === 'undefined') {
       copyCode: '#아벤느 #시칼파트 #쿠팡뷰티 #메가뷰티쇼',
       images: ['https://i.imgur.com/NjRpYnI.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 업로드 👉🏻 핀볼임</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 업로드 👉🏻 핀볼 게임</div>'
       ]
     },
     '메디힐': {
@@ -1595,12 +1595,20 @@ function setupFixedLayout() {
 // 윈도우 크기 변경 시 레이아웃 조정
 function adjustLayoutOnResize() {
   const windowHeight = window.innerHeight;
-  const optimalHeight1 = Math.min(350, windowHeight * 0.6);
-  const optimalHeight2 = Math.min(550, windowHeight * 0.6);
+  const mapContainer = document.getElementById('map-container');
+  const isMapCollapsed = mapContainer.classList.contains('collapsed');
+  
+  // 기본 info-panel 높이 계산
+  let infoHeight = Math.min(350, windowHeight * 0.6);
+  
+  // 지도가 접혔을 때는 info-panel 높이를 증가시킴
+  if (isMapCollapsed) {
+    infoHeight = Math.min(550, windowHeight * 0.8);
+  }
   
   // CSS 변수 업데이트
-  document.documentElement.style.setProperty('--info-panel-height', `${optimalHeight}px`);
-  document.documentElement.style.setProperty('--map-container-height', `${optimalHeight}px`);
+  document.documentElement.style.setProperty('--info-panel-height', `${infoHeight}px`);
+  document.documentElement.style.setProperty('--map-container-height', `${Math.min(300, windowHeight * 0.5)}px`);
 }
 
 // 지도 토글 버튼 초기화 함수
@@ -1628,86 +1636,9 @@ window.initializeMapToggleButton = function() {
       this.classList.add('expanded');
       this.classList.remove('collapsed');
       localStorage.setItem('mapCollapsed', 'false');
-      return;
-    }
-    
-    // 맵 탭인 경우 기존 토글 기능 수행
-    if (mapContainer.classList.contains('collapsed')) {
-      mapContainer.classList.remove('collapsed');
-      this.classList.add('expanded');
-      this.classList.remove('collapsed');
-      localStorage.setItem('mapCollapsed', 'false');
-    } else {
-      mapContainer.classList.add('collapsed');
-      this.classList.add('collapsed');
-      this.classList.remove('expanded');
-      localStorage.setItem('mapCollapsed', 'true');
-    }
-  });
-  
-  // 미니맵의 초기 상태 설정 (로컬 스토리지에서 가져옴)
-  const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
-  if (isMapCollapsed) {
-    mapContainer.classList.add('collapsed');
-    toggleBtn.classList.add('collapsed');
-    toggleBtn.classList.remove('expanded');
-  } else {
-    mapContainer.classList.remove('collapsed');
-    toggleBtn.classList.add('expanded');
-    toggleBtn.classList.remove('collapsed');
-  }
-  
-  // 활성 탭이 변경될 때 아이콘 상태 업데이트
-  document.querySelectorAll('.tab-button').forEach(button => {
-    const originalClickHandler = button.onclick;
-    button.addEventListener('click', function() {
-      // 탭이 맵이 아닌 경우 아이콘 상태 업데이트
-      const tabId = this.getAttribute('data-tab');
-      if (tabId !== 'map') {
-        toggleBtn.classList.add('collapsed');
-        toggleBtn.classList.remove('expanded');
-      } else {
-        // 맵 탭에서는 저장된 상태에 따라 표시
-        const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
-        if (isMapCollapsed) {
-          toggleBtn.classList.add('collapsed');
-          toggleBtn.classList.remove('expanded');
-        } else {
-          toggleBtn.classList.add('expanded');
-          toggleBtn.classList.remove('collapsed');
-        }
-      }
-    });
-  });
-  
-  return toggleBtn;
-} 
-
-// 지도 토글 버튼 초기화 함수
-window.initializeMapToggleButton = function() {
-  const mapContainer = document.getElementById('map-container');
-  const toggleBtn = document.getElementById('map-toggle-btn');
-  
-  if (!toggleBtn) {
-    console.error('지도 토글 버튼을 찾을 수 없습니다.');
-    return;
-  }
-  
-  // 버튼 클릭 이벤트 리스너 추가
-  toggleBtn.addEventListener('click', function() {
-    // 현재 활성 탭 확인
-    const currentActiveTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
-    
-    // 현재 맵 탭이 아니면 맵 탭으로 이동
-    if (currentActiveTab !== 'map') {
-      // 맵 탭으로 이동
-      window.showTab('map');
       
-      // 버튼 상태 업데이트 (확장 상태로)
-      mapContainer.classList.remove('collapsed');
-      this.classList.add('expanded');
-      this.classList.remove('collapsed');
-      localStorage.setItem('mapCollapsed', 'false');
+      // 레이아웃 조정
+      adjustLayoutOnResize();
       return;
     }
     
@@ -1723,6 +1654,9 @@ window.initializeMapToggleButton = function() {
       this.classList.remove('expanded');
       localStorage.setItem('mapCollapsed', 'true');
     }
+    
+    // 레이아웃 조정
+    adjustLayoutOnResize();
   });
   
   // 미니맵의 초기 상태 설정 (로컬 스토리지에서 가져옴)
@@ -1757,8 +1691,14 @@ window.initializeMapToggleButton = function() {
           toggleBtn.classList.remove('collapsed');
         }
       }
+      
+      // 레이아웃 조정
+      adjustLayoutOnResize();
     });
   });
+  
+  // 초기 레이아웃 조정
+  adjustLayoutOnResize();
   
   return toggleBtn;
 } 

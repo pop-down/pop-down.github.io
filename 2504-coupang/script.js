@@ -88,7 +88,7 @@ if (typeof window.boothData === 'undefined') {
         '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 업로드 👉🏻 뽑기 (시간걸림)</div>'
       ]
     },
-    '에이에이치씨': {
+    'AHC': {
       instagram: 'https://www.instagram.com/ahc.official/',
       kakaotalk: 'https://pf.kakao.com/_ermfl',
       coupang: 'N',
@@ -140,7 +140,7 @@ if (typeof window.boothData === 'undefined') {
       copyCode: '#아벤느 #시칼파트 #쿠팡뷰티 #메가뷰티쇼',
       images: ['https://i.imgur.com/NjRpYnI.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 업로드 👉🏻 핀볼임</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 업로드 👉🏻 핀볼 게임</div>'
       ]
     },
     '메디힐': {
@@ -1054,7 +1054,8 @@ window.showTab = function(tabId) {
 window.initializeMapTab = function() {
   // 미니맵 정보가 없습니다 메시지 표시
   const mapContainer = document.getElementById('map-container');
-  mapContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">미니맵 정보가 없습니다</div>';
+  mapContainer.innerHTML ='';
+  // mapContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">미니맵 정보가 없습니다</div>';
   
   // 정보 패널 초기화
   const boothInfoElement = document.getElementById('booth-info');
