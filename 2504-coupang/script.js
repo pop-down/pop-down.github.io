@@ -1,6 +1,12 @@
 // config.js에서 설정 가져오기
 import { APP_VERSION, APP_CONFIG, UPDATE_HISTORY } from './config.js';
 
+// 전역 변수 설정
+window.UPDATE_HISTORY = UPDATE_HISTORY;
+window.APP_VERSION = APP_VERSION;
+window.APP_CONFIG = APP_CONFIG;
+console.log('모듈에서 로드된 UPDATE_HISTORY:', UPDATE_HISTORY);
+
 // 히스토리 상태 관리를 위한 변수
 const HISTORY_STATES = {
   TAB: 'tab',      // 현재 탭
@@ -1397,50 +1403,103 @@ window.showImageModal = function(imageUrl) {
   }, 10);
 }
 
-// 업데이트 이력 관리 함수
-window.handleUpdateHistory = function() {
-  const toggleBtn = document.querySelector('.update-history-toggle');
-  const contentDiv = document.querySelector('.update-history-content');
-  const displayDiv = document.getElementById('update-history-display');
+// 업데이트 이력 토글 초기화
+function initializeUpdateHistoryToggle() {
+  const updateHistoryToggle = document.querySelector('.update-history-toggle');
+  const updateHistoryContent = document.querySelector('.update-history-content');
+  const updateHistoryDisplay = document.getElementById('update-history-display');
   
-  // 업데이트 이력 토글
-  toggleBtn.addEventListener('click', function() {
-    if (contentDiv.style.display === 'none') {
-      contentDiv.style.display = 'block';
-      toggleBtn.textContent = '▲';
-      window.displayUpdateHistory(UPDATE_HISTORY);
-    } else {
-      contentDiv.style.display = 'none';
-      toggleBtn.textContent = '▼';
-    }
-  });
-  
-  // 업데이트 이력 표시 함수
-  window.displayUpdateHistory = function(jsonData) {
-    if (!Array.isArray(jsonData)) {
-      displayDiv.innerHTML = '<p>업데이트 이력 형식이 올바르지 않습니다.</p>';
-      return;
-    }
-    
-    // 날짜 기준 내림차순 정렬
-    jsonData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    let html = '';
-    
-    jsonData.forEach(item => {
-      html += `
-        <div class="update-history-item">
-          <div class="update-history-date">${item.date} - 버전 ${item.version}</div>
-          <div class="update-history-description">${item.description}</div>
-        </div>
-      `;
+  if (updateHistoryToggle && updateHistoryContent) {
+    updateHistoryToggle.addEventListener('click', function() {
+      this.classList.toggle('collapsed');
+      if (updateHistoryContent.style.display === 'none' || updateHistoryContent.style.display === '') {
+        updateHistoryContent.style.display = 'block';
+        this.textContent = '▲';
+        
+        // 업데이트 이력 표시 - 토글 열때 표시
+        if (updateHistoryDisplay) {
+          if (typeof window.UPDATE_HISTORY !== 'undefined' && window.UPDATE_HISTORY) {
+            console.log('업데이트 이력 표시:', window.UPDATE_HISTORY);
+            window.displayUpdateHistory(window.UPDATE_HISTORY);
+          } else if (typeof UPDATE_HISTORY !== 'undefined') {
+            // 모듈에서 직접 임포트한 UPDATE_HISTORY 사용 시도
+            console.log('모듈에서 직접 UPDATE_HISTORY 사용:', UPDATE_HISTORY);
+            window.displayUpdateHistory(UPDATE_HISTORY);
+          } else {
+            console.error('업데이트 이력 데이터를 찾을 수 없습니다.');
+            updateHistoryDisplay.innerHTML = '<p>업데이트 이력을 불러올 수 없습니다.</p>';
+          }
+        } else {
+          console.error('업데이트 이력 표시 영역을 찾을 수 없습니다.');
+        }
+      } else {
+        updateHistoryContent.style.display = 'none';
+        this.textContent = '▼';
+      }
     });
-    
-    displayDiv.innerHTML = html || '<p>업데이트 이력이 없습니다.</p>';
+  } else {
+    console.error('업데이트 이력 토글 또는 콘텐츠 영역을 찾을 수 없습니다.', {
+      toggle: updateHistoryToggle,
+      content: updateHistoryContent
+    });
   }
 }
 
-// 페이지 로드 시 초기화
+// 업데이트 이력 표시 함수
+window.displayUpdateHistory = function(updateHistory) {
+  const updateHistoryDisplay = document.getElementById('update-history-display');
+  if (!updateHistoryDisplay) {
+    console.error('업데이트 이력 표시 영역을 찾을 수 없습니다.');
+    return;
+  }
+  
+  // 업데이트 이력 초기화
+  updateHistoryDisplay.innerHTML = '';
+  
+  // 날짜순 정렬 (최신 항목이 먼저 오도록)
+  const sortedHistory = [...updateHistory].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+  
+  // 이력 항목 추가
+  sortedHistory.forEach(item => {
+    const historyItem = document.createElement('div');
+    historyItem.className = 'update-history-item';
+    
+    const dateVersion = document.createElement('div');
+    dateVersion.className = 'update-history-date';
+    dateVersion.textContent = `${item.date} (v${item.version})`;
+    
+    const description = document.createElement('div');
+    description.className = 'update-history-description';
+    description.textContent = item.description;
+    
+    historyItem.appendChild(dateVersion);
+    historyItem.appendChild(description);
+    updateHistoryDisplay.appendChild(historyItem);
+  });
+}
+
+// 데이터 저장 안내 토글 초기화
+function initializeDataStorageToggle() {
+  const dataStorageToggle = document.querySelector('.data-storage-toggle');
+  const dataStorageContent = document.querySelector('.data-storage-content');
+  
+  if (dataStorageToggle && dataStorageContent) {
+    dataStorageToggle.addEventListener('click', function() {
+      this.classList.toggle('collapsed');
+      if (dataStorageContent.style.display === 'none' || dataStorageContent.style.display === '') {
+        dataStorageContent.style.display = 'block';
+        this.textContent = '▲';
+      } else {
+        dataStorageContent.style.display = 'none';
+        this.textContent = '▼';
+      }
+    });
+  }
+}
+
+// DOM이 로드된 후 초기화 함수들 실행
 document.addEventListener('DOMContentLoaded', function() {
   // 공지 팝업 처리
   window.handleNoticePopup();
@@ -1473,10 +1532,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.initializeBoothList();
   }
   
-  // 업데이트 이력 관리 초기화
-  if (window.handleUpdateHistory) {
-    window.handleUpdateHistory();
-  }
+  // 업데이트 이력 토글 초기화
+  initializeUpdateHistoryToggle();
+  
+  // 데이터 저장 안내 토글 초기화
+  initializeDataStorageToggle();
   
   // SVG 부스 요소에 방문 상태 적용
   const visitedBooths = window.getVisitedBooths();

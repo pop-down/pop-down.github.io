@@ -1,8 +1,8 @@
 // 앱 버전 정보
 const APP_VERSION = {
-  current: '0.2.6.7',           // 현재 버전
+  current: '0.2.6.8',           // 현재 버전
   minRequired: '0.1.0.0',       // 최소 필요 버전
-  latest: '0.2.6.7'            // 최신 버전
+  latest: '0.2.6.8'            // 최신 버전
 };
 
 // 앱 기본 설정
@@ -10,11 +10,16 @@ const APP_CONFIG = {
   name: '쿠팡 메가 뷰티쇼',
   description: '쿠팡 메가 뷰티쇼 부스 정보 및 안내',
   updateCheckInterval: 3600000, // 업데이트 체크 간격 (1시간)
-  cacheVersion: '0.2.6.7'        // 캐시 버전
+  cacheVersion: '0.2.6.8'        // 캐시 버전
 };
 
 // 업데이트 이력
 const UPDATE_HISTORY = [
+  {
+    date: '2025-04-19',
+    version: '0.2.6.8',
+    description: '업데이트 이력 토글 중복 이벤트 리스너 문제 해결 - 토글 클릭 시 열렸다가 바로 닫히는 버그 수정'
+  },
   {
     date: '2025-04-19',
     version: '0.2.6.7',
