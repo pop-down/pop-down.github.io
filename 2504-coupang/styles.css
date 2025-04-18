@@ -375,51 +375,40 @@ svg {
 }
 
 .copy-code-block {
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 15px 0;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .copy-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: var(--bg-color);
-  color: var(--main-pink);
-  border: 1px solid var(--main-pink);
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.copy-button:hover {
+  top: 10px;
+  right: 10px;
   background-color: var(--main-pink);
-  color: var(--bg-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  z-index: 1;
 }
 
 .copy-code-content {
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333;
-  word-break: break-all;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  width: 100%;
   text-align: left;
-}
-
-.copy-code-content:hover {
-  background-color: #f0f0f0;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-color);
+  padding-right: 100px;
+  box-sizing: border-box;
 }
 
 .visit-button {
@@ -532,20 +521,19 @@ svg {
   }
   
   .copy-code-block {
-    margin: 10px 0;
+    padding: 12px;
   }
   
   .copy-button {
-    font-size: 22px;
-    padding: 4px 12px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 10px;
   }
   
   .copy-code-content {
-    font-size: 13px;
-    padding-right: 60px;
-    text-align: left;
+    padding-right: 0;
   }
   
   /* 모바일 화면에서 해시태그 복사 섹션 스타일 수정 */

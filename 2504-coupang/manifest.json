@@ -1,8 +1,8 @@
 {
     "name": "쿠팡 메가뷰티쇼",
     "short_name": "쿠팡 메가뷰티쇼 2025 팝업안내도",
-    "version": "0.2.5.1",
-    "theme_color": "#E91E63",
+    "version": "0.2.5.2",
+    "theme_color": "#40E0D0",
     "background_color": "#ffffff",
     "display": "standalone",
     "start_url": "./",
