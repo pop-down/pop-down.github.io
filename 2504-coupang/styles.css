@@ -385,21 +385,6 @@ svg {
   box-sizing: border-box;
 }
 
-.copy-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: var(--main-pink);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-  z-index: 1;
-}
-
 .copy-code-content {
   width: 100%;
   text-align: left;
@@ -524,18 +509,39 @@ svg {
     padding: 12px;
   }
   
-  .copy-button {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
   .copy-code-content {
-    padding-right: 0;
+    padding-right: 100px;
+    position: relative;
   }
   
+  .copy-code-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    min-width: 84px;
+    min-height: 35px;
+    font-size: 15px !important;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .copy-code-button:hover {
+    background-color: var(--main-pink);
+    color: var(--bg-color);
+  }
+  
+  .copy-code-text {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   /* 모바일 화면에서 해시태그 복사 섹션 스타일 수정 */
   .copy-code-section {
     margin: 15px 0;
@@ -573,9 +579,6 @@ svg {
     min-width: 84px;
     min-height: 35px;
     margin: 0;
-    background-color: var(--bg-color);
-    color: var(--main-pink);
-    border: 1px solid var(--main-pink);
   }
   
   .copy-code-button:hover {
@@ -702,12 +705,18 @@ svg {
 
 /* 해시태그 복사 섹션 스타일 */
 .copy-code-section {
+  position: relative;
+  padding: 10px;
   background-color: #f7f7f7;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
-  padding: 10px;
   margin: 15px 0;
-  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.copy-code-section:hover {
+  background-color: #f0f0f0;
 }
 
 .copy-code-title {
@@ -721,6 +730,8 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-right: 100px;
+  position: relative;
 }
 
 .copy-code-text {
@@ -730,6 +741,9 @@ svg {
   font-size: 14px;
   color: #333;
   word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   transition: background-color 0.2s;
   text-align: left;
@@ -740,18 +754,18 @@ svg {
 }
 
 .copy-code-button {
-  align-self: flex-end;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background-color: var(--bg-color);
   color: var(--main-pink);
   border: 1px solid var(--main-pink);
   border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  z-index: 1;
 }
 
 .copy-code-button:hover {
@@ -760,7 +774,42 @@ svg {
 }
 
 .copy-code-button i {
-  font-size: 12px;
+  margin-right: 5px;
+}
+
+@media (max-width: 767px) {
+  .copy-code-content {
+    padding-right: 100px;
+    position: relative;
+  }
+  
+  .copy-code-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    min-width: 84px;
+    min-height: 35px;
+    font-size: 15px !important;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .copy-code-button:hover {
+    background-color: var(--main-pink);
+    color: var(--bg-color);
+  }
+  
+  .copy-code-text {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* 추가 링크 스타일 개선 */
@@ -1175,20 +1224,4 @@ svg {
 .event-list li {
   border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
-}
-
-/* 버튼 스타일 수정 */
-.copy-button {
-  background-color: var(--bg-color);
-  color: var(--main-pink);
-  border: 1px solid var(--main-pink);
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.copy-button:hover {
-  background-color: var(--main-pink);
-  color: var(--bg-color);
 }
