@@ -124,17 +124,17 @@ body {
 }
 
 .info-panel-scroll::-webkit-scrollbar {
-  width: 5px; /* 스크롤바 너비 */
+  width: 6px; /* 스크롤바 너비 */
 }
 
 .info-panel-scroll::-webkit-scrollbar-thumb {
   background-color: var(--main-pink);
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .info-panel-scroll::-webkit-scrollbar-track {
   background: #f0f0f0; /* 스크롤바 트랙 색상 */
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .info-panel-fixed {
@@ -173,10 +173,11 @@ body {
   float: right;
 }
 
-/* .booth-section {
+.booth-section {
   margin-bottom: 15px;
-  /* border-bottom: 1px solid #ffd9e5; 
-} */
+  border-bottom: 1px solid #ffd9e5;
+  padding-bottom: 15px;
+}
 
 .section-header {
   display: flex;
@@ -229,22 +230,26 @@ body {
 .event-list {
   list-style-type: none;
   padding-left: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-.event-list li {
+.event-list-item {
   padding: 5px 0;
   border-bottom: 1px solid var(--border-color);
   display: block;
   color: var(--text-color);
   position: relative;
-  padding-left: 26px;
+  padding-left: 45px;
+  margin: 0;
 }
 
-.event-list li::before {
+.event-list-item::before {
   content: "🎁";
   font-size: 16px;
   position: absolute;
-  left: 0;
+  left: -25px;
   top: 5px;
 }
 
@@ -331,6 +336,9 @@ svg {
   margin: 0;
   padding: 10px 0;
   width: 100%;
+  z-index: 10;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--border-color);
 }
 
 .social-links a {
@@ -345,11 +353,12 @@ svg {
   font-size: 20px;
   transition: transform 0.3s ease;
   position: relative;
+  z-index: 10;
 }
 
 .social-links a i {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -429,6 +438,7 @@ svg {
   .container {
     display: flex;
     flex-wrap: wrap;
+    max-width: 1400px;
   }
   
   .map-container {
@@ -437,14 +447,36 @@ svg {
     margin-bottom: 0;
   }
   
-  .info-panel {
-    width: 300px;
-    flex-shrink: 0;
-    height: 500px; /* 높이 고정 */
+  #info-panel {
+    flex: 1;
+    height: 500px;
+  }
+  
+  #booth-info {
+    height: 100%;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
   }
   
   .copyright {
     width: 100%;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .tabs {
+    width: 100%;
+    max-width: 1400px;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .tab-content {
+    padding: 30px;
   }
 }
 
@@ -453,19 +485,28 @@ svg {
   .info-panel {
     margin-top: 15px;
     padding: 15px;
+    position: relative; /* 추가: 상대 위치 설정 */
+    min-height: 400px; /* 추가: 최소 높이 설정 */
   }
   
   .info-panel-scroll {
     max-height: 300px;
     overflow-y: auto;
     padding-right: 10px;
+    margin-bottom: 60px; /* 수정: 소셜 링크 영역 높이만큼 여백 추가 */
   }
   
   .info-panel-fixed {
-    position: relative;
-    bottom: auto;
+    position: absolute; /* 수정: relative에서 absolute로 변경 */
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 10px 0;
-    margin-top: 10px;
+    background-color: white;
+    z-index: 100;
+    border-top: 1px solid var(--border-color);
+    min-height: 55px;
+    box-sizing: border-box;
   }
   
   .page-title h1 {
@@ -489,14 +530,14 @@ svg {
     border-bottom: 1px solid var(--border-color);
   }
   
-  .event-list li {
+  .event-list-item {
     font-size: 14px;
     padding: 8px 0;
     line-height: 1.4;
   }
   
   .social-links {
-    margin-top: 15px;
+    margin-top: 0; /* 수정: 상단 여백 제거 */
     gap: 10px;
   }
   
@@ -540,55 +581,6 @@ svg {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  /* 모바일 화면에서 해시태그 복사 섹션 스타일 수정 */
-  .copy-code-section {
-    margin: 15px 0;
-    position: relative;
-  }
-  
-  .copy-code-title {
-    font-size: 16px;
-    margin-bottom: 10px;
-    text-align: left;
-  }
-  
-  .copy-code-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .copy-code-text {
-    font-size: 14px;
-    text-align: left;
-    padding: 10px;
-  }
-  
-  .copy-code-button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 15px !important;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 84px;
-    min-height: 35px;
-    margin: 0;
-  }
-  
-  .copy-code-button:hover {
-    background-color: var(--main-pink);
-    color: var(--bg-color);
-  }
-
-  /* 복사 버튼 상태 변경 스타일 */
-  .copy-code-button.copied {
-    font-size: 13px !important;
   }
 }
 
@@ -705,18 +697,27 @@ svg {
 
 /* 해시태그 복사 섹션 스타일 */
 .copy-code-section {
-  position: relative;
-  padding: 10px;
-  background-color: #f7f7f7;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  margin: 15px 0;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
-.copy-code-section:hover {
+.copy-code-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.copy-code-section::-webkit-scrollbar-thumb {
+  background-color: var(--main-pink);
+  border-radius: 3px;
+}
+
+.copy-code-section::-webkit-scrollbar-track {
   background-color: #f0f0f0;
+  border-radius: 3px;
 }
 
 .copy-code-title {
@@ -775,41 +776,6 @@ svg {
 
 .copy-code-button i {
   margin-right: 5px;
-}
-
-@media (max-width: 767px) {
-  .copy-code-content {
-    padding-right: 100px;
-    position: relative;
-  }
-  
-  .copy-code-button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    min-width: 84px;
-    min-height: 35px;
-    font-size: 15px !important;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-  
-  .copy-code-button:hover {
-    background-color: var(--main-pink);
-    color: var(--bg-color);
-  }
-  
-  .copy-code-text {
-    padding: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 }
 
 /* 추가 링크 스타일 개선 */
@@ -1224,4 +1190,255 @@ svg {
 .event-list li {
   border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
+}
+
+/* 부스 이미지 스타일 */
+.booth-images {
+  max-height: 300px;
+  overflow-y: hidden;
+  padding-right: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.booth-image-wrapper {
+  width: calc(50% - 10px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.booth-image-wrapper:hover {
+  transform: scale(1.05);
+}
+
+.booth-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  border-radius: 8px;
+}
+
+/* 이미지 모달 스타일 */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-modal.show {
+  display: flex;
+}
+
+.image-modal-content {
+  max-width: 90%;
+  max-height: 90%;
+  position: relative;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 10px;
+}
+
+@media (max-width: 767px) {
+  .booth-image-wrapper {
+    width: 100%;
+  }
+  
+  .image-modal-content {
+    width: 95%;
+  }
+  
+  .event-list li {
+    font-size: 14px;
+    padding: 8px 0 8px 35px;
+  }
+}
+
+/* 해시태그, 이벤트 내용, 이미지 영역 스크롤바 추가 */
+.copy-code-section {
+  position: relative;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.copy-code-section::-webkit-scrollbar {
+  width: 5px;
+}
+
+.copy-code-section::-webkit-scrollbar-thumb {
+  background-color: var(--main-pink);
+  border-radius: 5px;
+}
+
+.copy-code-section::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 5px;
+}
+
+/* 이벤트 리스트 스크롤바 추가 */
+.event-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.event-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.event-list::-webkit-scrollbar-thumb {
+  background-color: var(--main-pink);
+  border-radius: 5px;
+}
+
+.event-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 5px;
+}
+
+/* 이미지 영역 스크롤바 추가 */
+.booth-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: hidden;
+}
+
+.booth-images::-webkit-scrollbar {
+  width: 5px;
+}
+
+.booth-images::-webkit-scrollbar-thumb {
+  background-color: var(--main-pink);
+  border-radius: 5px;
+}
+
+.booth-images::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 5px;
+}
+
+/* SNS 아이콘 스타일 수정 */
+.social-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px 0;
+  width: 100%;
+  z-index: 10;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.social-links a i {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* 모바일 환경에서 스크롤바 조정 */
+@media (max-width: 767px) {
+  .copy-code-section {
+    max-height: 250px;
+  }
+  
+  .event-list {
+    max-height: 250px;
+  }
+  
+  .booth-images {
+    max-height: 250px;
+  }
+  
+  .copy-code-content {
+    padding-right: 100px;
+    position: relative;
+  }
+  
+  .copy-code-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    min-width: 84px;
+    min-height: 35px;
+    font-size: 15px !important;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  .copy-code-button:hover {
+    background-color: var(--main-pink);
+    color: var(--bg-color);
+  }
+  
+  .copy-code-text {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

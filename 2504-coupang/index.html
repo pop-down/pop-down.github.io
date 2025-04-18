@@ -221,39 +221,39 @@
             </div>
           </div>
           
-          <div id="booth-info" style="display: none;">
+          <!-- 부스 정보 패널 -->
+          <div id="booth-info">
             <div class="booth-name" id="selected-booth-name"></div>
             
-            <div class="info-panel-scroll">
-              <div id="sections-container">
-                <!-- 이벤트 섹션 -->
-                <div class="booth-section" id="events-section-container" style="display: none;">
-                  <div class="section-content" id="events-section">
-                    <div class="booth-events">
-                      <ul class="event-list" id="event-list"></ul>
-                    </div>
-                  </div>
+            <!-- 해시태그 복사 컨테이너 -->
+            <div id="copy-code-container"></div>
+            
+            <!-- 부스 섹션 컨테이너 -->
+            <div id="sections-container">
+              <!-- 이벤트 섹션 -->
+              <div id="events-section-container" class="booth-section">
+                <div class="section-header">
+                  <h3>이벤트</h3>
+                  <span class="section-toggle">▼</span>
                 </div>
-                
-                <div id="copy-code-container" class="scrollable-content-bottom"></div>
+                <div class="section-content">
+                  <ul id="event-list"></ul>
+                </div>
               </div>
             </div>
             
-            <div class="info-panel-fixed">
-              <div class="social-links">
-                <a href="#" id="instagram-link" class="instagram-icon" target="_blank" title="인스타그램" style="display:none;">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" id="kakaotalk-link" class="kakaotalk-icon" target="_blank" title="카카오톡" style="display:none;">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a href="" id="coupang-link" class="coupang-icon" target="_blank" title="쿠팡브랜드샵" style="display:none;">
-                  <img src="https://image9.coupangcdn.com/image/coupang/favicon/v2/favicon.ico
-                  " style="width: 36px; height: 36px;">
-                </a>
-                <!-- 추가 링크를 위한 컨테이너(예약된 영역) - 각 링크는 스크립트에서 동적으로 추가 -->
-                <span id="additional-links-container" style="display:none;"></span>
-              </div>
+            <!-- 소셜 미디어 링크 -->
+            <div class="social-links">
+              <a id="instagram-link" href="#" target="_blank" title="인스타그램" class="instagram-icon">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a id="kakaotalk-link" href="#" target="_blank" title="카카오톡" class="kakaotalk-icon">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a id="coupang-link" href="#" target="_blank" title="쿠팡" class="coupang-icon">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+              <div id="additional-links-container"></div>
             </div>
           </div>
         </div>
