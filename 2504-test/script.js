@@ -39,13 +39,29 @@ function updateUrlHash(state, value) {
     .join('&');
   
   // 현재 URL에서 해시만 변경 (페이지 새로고침 없음)
-  // 뒤로가기를 위해 replaceState 대신 pushState 사용
-  window.history.pushState(null, document.title, newHash ? `#${newHash}` : window.location.pathname);
+  // 상태 객체에 실제 데이터를 포함시켜 브라우저 이력이 제대로 작동하도록 함
+  window.history.pushState(
+    { [state]: value, timestamp: new Date().getTime() },   // 상태 객체
+    document.title,                                        // 타이틀
+    newHash ? `#${newHash}` : window.location.pathname    // URL
+  );
+  
+  // 디버깅 메시지
+  console.log(`히스토리 엔트리 추가: ${state}=${value}, URL=${window.location.href}`);
 }
 
 // 다시 탐색할 때(예: 뒤로가기/앞으로가기) 상태 복원
-window.handleHistoryNavigation = function() {
-  const state = parseUrlHash();
+window.handleHistoryNavigation = function(passedState) {
+  // 상태 객체 가져오기
+  let state = passedState;
+  
+  // 전달된 상태가 없으면 URL 해시에서 파싱
+  if (!state) {
+    state = parseUrlHash();
+  }
+  
+  // 디버깅 메시지
+  console.log('탐색 상태 복원:', state);
   
   // 탭 상태 복원
   if (state[HISTORY_STATES.TAB]) {
@@ -406,10 +422,20 @@ window.sortBoothList = function() {
   window.updateVisitCheckLabel();
 }
 
-// 나머지 필요한 함수들도 이와 같이 window 객체에 할당하세요
-
 // 부스 정보 표시 함수
 window.showBoothInfo = function(boothName) {
+  // 현재 선택된 부스 정보 가져오기
+  const currentState = parseUrlHash();
+  const currentBooth = currentState[HISTORY_STATES.BOOTH];
+  
+  // 같은 부스를 선택한 경우 URL 해시 업데이트를 하지 않음
+  if (currentBooth === boothName) {
+    // 부스 데이터 가져오기
+    const boothData = window.boothData[boothName];
+    displayBoothInfo(boothName, boothData);
+    return;
+  }
+  
   // 부스 정보 패널 요소
   const boothInfoPanel = document.getElementById('booth-info');
   const defaultInfoPanel = document.getElementById('default-info');
@@ -439,6 +465,25 @@ window.showBoothInfo = function(boothName) {
   } else {
     updateUrlHash(HISTORY_STATES.BOOTH, null); // 안내 상태일 때는 부스 상태 제거
   }
+  
+  // 부스 정보 표시 함수 호출
+  displayBoothInfo(boothName, boothData);
+}
+
+// 부스 정보 표시 내부 함수
+function displayBoothInfo(boothName, boothData) {
+  // 부스 정보 패널 요소
+  const boothInfoPanel = document.getElementById('booth-info');
+  const defaultInfoPanel = document.getElementById('default-info');
+  const selectedBoothName = document.getElementById('selected-booth-name');
+  const eventList = document.getElementById('event-list');
+  const eventsSectionContainer = document.getElementById('events-section-container');
+  const instagramLink = document.getElementById('instagram-link');
+  const kakaotalkLink = document.getElementById('kakaotalk-link');
+  const coupangLink = document.getElementById('coupang-link');
+  const additionalLinksContainer = document.getElementById('additional-links-container');
+  const copyCodeContainer = document.getElementById('copy-code-container');
+  const sectionsContainer = document.getElementById('sections-container');
   
   // 부스 정보가 있으면 표시
   if (boothData) {
@@ -1104,6 +1149,14 @@ window.initializeTabs = function() {
 
 // 탭 표시 함수
 window.showTab = function(tabId) {
+  // 현재 활성화된 탭 가져오기
+  const currentActiveTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+  
+  // 같은 탭을 선택한 경우 아무것도 하지 않음
+  if (currentActiveTab === tabId) {
+    return;
+  }
+  
   // 모든 탭 버튼 비활성화
   document.querySelectorAll('.tab-button').forEach(button => {
     button.classList.remove('active');
@@ -1126,7 +1179,7 @@ window.showTab = function(tabId) {
     selectedContent.classList.add('active');
   }
   
-  // 히스토리 상태 업데이트
+  // 히스토리 상태 업데이트 - 다른 탭으로 변경된 경우에만 실행
   updateUrlHash(HISTORY_STATES.TAB, tabId);
 }
 
@@ -1395,8 +1448,13 @@ document.addEventListener('DOMContentLoaded', function() {
   window.handleHistoryNavigation();
   
   // 뒤로가기/앞으로가기 이벤트 처리
-  window.addEventListener('popstate', function() {
-    window.handleHistoryNavigation();
+  window.addEventListener('popstate', function(event) {
+    // 디버깅 메시지
+    console.log('Popstate 이벤트 발생:', event.state, window.location.hash);
+    
+    // event.state에 유효한 데이터가 있으면 그 값을 사용
+    // 없으면 URL 해시 파싱
+    window.handleHistoryNavigation(event.state);
   });
   
   // 초기 탭 설정 (URL 해시 기반 상태 복원 이후에 실행)

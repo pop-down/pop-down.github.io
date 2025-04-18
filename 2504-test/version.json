@@ -1,6 +1,6 @@
 {
-  "version": "0.2.6.1",
-  "releaseDate": "2025-04-21",
+  "version": "0.2.6.2",
+  "releaseDate": "2025-04-22",
   "minRequiredVersion": "0.2.5.0",
-  "changelog": "시스템 뒤로가기 기능 수정 및 개선"
+  "changelog": "브라우저 뒤로가기 기능 개선 및 히스토리 관리 최적화"
 } 
