@@ -1,6 +1,116 @@
 // config.js에서 설정 가져오기
 import { APP_VERSION, APP_CONFIG, UPDATE_HISTORY } from './config.js';
 
+// 히스토리 상태 관리를 위한 변수
+const HISTORY_STATES = {
+  TAB: 'tab',      // 현재 탭
+  BOOTH: 'booth'   // 현재 선택된 부스
+};
+
+// URL 해시를 파싱하여 현재 상태 가져오기
+function parseUrlHash() {
+  const hash = window.location.hash.substring(1);
+  const params = {};
+  
+  if (hash) {
+    hash.split('&').forEach(param => {
+      const [key, value] = param.split('=');
+      if (key && value) {
+        params[decodeURIComponent(key)] = decodeURIComponent(value);
+      }
+    });
+  }
+  
+  return params;
+}
+
+// URL 해시 빌드 함수
+function buildUrlHash(state) {
+  const newHash = Object.entries(state)
+    .map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+    .join('&');
+  
+  return newHash ? `#${newHash}` : '';
+}
+
+// 상태를 URL 해시로 업데이트
+function updateUrlHash(state, value) {
+  const currentState = parseUrlHash();
+  
+  if (value) {
+    currentState[state] = value;
+  } else {
+    delete currentState[state];
+  }
+  
+  const newHash = Object.entries(currentState)
+    .map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+    .join('&');
+  
+  // 현재 URL에서 해시만 변경 (페이지 새로고침 없음)
+  // 상태 객체에 실제 데이터를 포함시켜 브라우저 이력이 제대로 작동하도록 함
+  window.history.pushState(
+    { [state]: value, timestamp: new Date().getTime() },   // 상태 객체
+    document.title,                                        // 타이틀
+    newHash ? `#${newHash}` : window.location.pathname    // URL
+  );
+  
+  // 디버깅 메시지
+  console.log(`히스토리 엔트리 추가: ${state}=${value}, URL=${window.location.href}`);
+}
+
+// 현재 활성화된 부스 정보 초기화
+function resetActiveBoothInfo() {
+  const boothInfoElement = document.getElementById('booth-info');
+  const defaultInfoElement = document.getElementById('default-info');
+  
+  // 기본 정보 표시
+  boothInfoElement.style.display = 'none';
+  defaultInfoElement.style.display = 'block';
+  
+  // 모든 부스 강조 효과 제거
+  document.querySelectorAll('.booth-wrapper').forEach(booth => {
+    booth.classList.remove('selected');
+  });
+}
+
+// 다시 탐색할 때(예: 뒤로가기/앞으로가기) 상태 복원
+window.handleHistoryNavigation = function(passedState) {
+  // 상태 객체 가져오기
+  let state = passedState;
+  
+  // 전달된 상태가 없으면 URL 해시에서 파싱
+  if (!state) {
+    state = parseUrlHash();
+  }
+  
+  // 디버깅 메시지
+  console.log('탐색 상태 복원:', state);
+  
+  // 탭 상태 복원
+  if (state[HISTORY_STATES.TAB]) {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+      if (button.getAttribute('data-tab') === state[HISTORY_STATES.TAB]) {
+        // 기존 활성화 클래스 제거
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // 새 탭 활성화
+        button.classList.add('active');
+        document.getElementById(state[HISTORY_STATES.TAB]).classList.add('active');
+      }
+    });
+  }
+  
+  // 부스 상태 복원
+  if (state[HISTORY_STATES.BOOTH]) {
+    window.showBoothInfo(state[HISTORY_STATES.BOOTH]);
+  }
+}
+
 // 부스 정보 데이터베이스
 // 이미 선언되었는지 확인하여 중복 선언 방지
 if (typeof window.boothData === 'undefined') {
@@ -8,7 +118,7 @@ if (typeof window.boothData === 'undefined') {
     '안내': {
       coupang: 'N',
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">부스 검색 기능을 통해 부스를 택하세요</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">부스를 택하세요</div>',
       ]
     },
     // 여기에 만약 더 많은 부스 정보가 있다면 추가하세요
@@ -113,7 +223,7 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/wellage.official/',
       kakaotalk: 'https://pf.kakao.com/_qrEVxl',
       coupang: 'N',
-      copyCode: '',
+      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #웰라쥬',
       images: ['https://i.imgur.com/NNKDDr5.jpeg'],
       notes: [
         '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 친추 👉🏻 체험권+체험키트</div>',
@@ -280,6 +390,12 @@ window.updateBoothVisitUI = function(boothName) {
       icon.style.color = visited ? 'white' : '';
     }
   }
+  
+  // SVG 부스 요소 업데이트
+  const boothSvgElement = document.querySelector(`.booth-wrapper[data-name="${boothName}"]`);
+  if (boothSvgElement) {
+    boothSvgElement.classList.toggle('visited', visited);
+  }
 }
 
 // 방문체크 라벨 업데이트 함수
@@ -336,10 +452,20 @@ window.sortBoothList = function() {
   window.updateVisitCheckLabel();
 }
 
-// 나머지 필요한 함수들도 이와 같이 window 객체에 할당하세요
-
 // 부스 정보 표시 함수
 window.showBoothInfo = function(boothName) {
+  // 현재 선택된 부스 정보 가져오기
+  const currentState = parseUrlHash();
+  const currentBooth = currentState[HISTORY_STATES.BOOTH];
+  
+  // 같은 부스를 선택한 경우 URL 해시 업데이트를 하지 않음
+  if (currentBooth === boothName) {
+    // 부스 데이터 가져오기
+    const boothData = window.boothData[boothName];
+    displayBoothInfo(boothName, boothData);
+    return;
+  }
+  
   // 부스 정보 패널 요소
   const boothInfoPanel = document.getElementById('booth-info');
   const defaultInfoPanel = document.getElementById('default-info');
@@ -353,15 +479,34 @@ window.showBoothInfo = function(boothName) {
   const copyCodeContainer = document.getElementById('copy-code-container');
   const sectionsContainer = document.getElementById('sections-container');
   
-  // 미니맵 정보가 없습니다 메시지 숨기기
-  const mapContainer = document.getElementById('map-container');
-  const noMapInfoMessage = mapContainer.querySelector('div[style*="text-align: center"]');
-  if (noMapInfoMessage) {
-    noMapInfoMessage.style.display = 'none';
-  }
-  
   // 부스 데이터 가져오기
   const boothData = window.boothData[boothName];
+  
+  // 히스토리 상태 업데이트
+  if (boothName !== '안내') {
+    updateUrlHash(HISTORY_STATES.BOOTH, boothName);
+  } else {
+    updateUrlHash(HISTORY_STATES.BOOTH, null); // 안내 상태일 때는 부스 상태 제거
+  }
+  
+  // 부스 정보 표시 함수 호출
+  displayBoothInfo(boothName, boothData);
+}
+
+// 부스 정보 표시 내부 함수
+function displayBoothInfo(boothName, boothData) {
+  // 부스 정보 패널 요소
+  const boothInfoPanel = document.getElementById('booth-info');
+  const defaultInfoPanel = document.getElementById('default-info');
+  const selectedBoothName = document.getElementById('selected-booth-name');
+  const eventList = document.getElementById('event-list');
+  const eventsSectionContainer = document.getElementById('events-section-container');
+  const instagramLink = document.getElementById('instagram-link');
+  const kakaotalkLink = document.getElementById('kakaotalk-link');
+  const coupangLink = document.getElementById('coupang-link');
+  const additionalLinksContainer = document.getElementById('additional-links-container');
+  const copyCodeContainer = document.getElementById('copy-code-container');
+  const sectionsContainer = document.getElementById('sections-container');
   
   // 부스 정보가 있으면 표시
   if (boothData) {
@@ -377,7 +522,7 @@ window.showBoothInfo = function(boothName) {
     // 부스 이름 옆에 방문 토글 버튼 추가
     const boothNameElement = document.getElementById('selected-booth-name');
     boothNameElement.innerHTML = `
-      <span>${boothName}</span>
+      <span class="booth-title">${boothName}</span>
       <button class="visit-toggle ${window.isBoothVisited(boothName) ? 'visited' : ''}" 
               onclick="window.toggleBoothVisit('${boothName}')">
         <i class="fas fa-check"></i>
@@ -513,12 +658,14 @@ window.showBoothInfo = function(boothName) {
     // 고정 영역 생성
     const fixedContainer = document.createElement('div');
     fixedContainer.className = 'info-panel-fixed';
-    fixedContainer.appendChild(document.querySelector('.social-links'));
+    fixedContainer.appendChild(document.querySelector('.social-links').cloneNode(true));
     
     // 패널에 스크롤 영역과 고정 영역 추가
     boothInfoPanel.innerHTML = '';
     boothInfoPanel.appendChild(selectedBoothName);
     boothInfoPanel.appendChild(scrollContainer);
+    
+    // 고정 영역은 스크롤과 분리하여 직접 패널에 추가
     boothInfoPanel.appendChild(fixedContainer);
     
     // 부스 강조 효과
@@ -539,6 +686,7 @@ window.showBoothInfo = function(boothName) {
 window.highlightBooth = function(boothName) {
   // 모든 부스 강조 효과 제거
   document.querySelectorAll('.booth-wrapper').forEach(booth => {
+    // 선택 상태만 제거하고 방문 상태는 유지
     booth.classList.remove('selected');
   });
   
@@ -546,6 +694,12 @@ window.highlightBooth = function(boothName) {
   const selectedBooth = document.querySelector(`.booth-wrapper[data-name="${boothName}"]`);
   if (selectedBooth) {
     selectedBooth.classList.add('selected');
+    
+    // 방문 상태 확인 및 유지
+    const isVisited = window.isBoothVisited(boothName);
+    if (isVisited) {
+      selectedBooth.classList.add('visited');
+    }
   }
 }
 
@@ -1027,35 +1181,56 @@ window.initializeTabs = function() {
 
 // 탭 표시 함수
 window.showTab = function(tabId) {
-  // 모든 탭 버튼 비활성화
-  document.querySelectorAll('.tab-button').forEach(button => {
+  // 현재 활성화된 탭 클래스 제거
+  document.querySelectorAll('.tab-content').forEach(function(content) {
+    content.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-button').forEach(function(button) {
     button.classList.remove('active');
   });
   
-  // 모든 탭 내용 숨기기
-  document.querySelectorAll('.tab-content').forEach(content => {
-    content.classList.remove('active');
-  });
+  // 선택한 탭 활성화
+  document.getElementById(tabId).classList.add('active');
+  document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
   
-  // 선택된 탭 버튼 활성화
-  const selectedButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
-  if (selectedButton) {
-    selectedButton.classList.add('active');
+  // 선택한 탭이 지도 탭인지 확인하고 body 클래스 업데이트
+  if (tabId === 'map') {
+    document.body.classList.add('map-tab-active');
+  } else {
+    document.body.classList.remove('map-tab-active');
   }
   
-  // 선택된 탭 내용 표시
-  const selectedContent = document.getElementById(tabId);
-  if (selectedContent) {
-    selectedContent.classList.add('active');
+  // URL 해시 업데이트
+  const currentState = parseUrlHash();
+  currentState[HISTORY_STATES.TAB] = tabId;
+  const newHash = buildUrlHash(currentState);
+  
+  // 지도 탭일 경우, 부스 선택 상태 초기화
+  if (tabId === 'map') {
+    // 이미 부스 정보가 있는 경우 업데이트 방지
+    if (!currentState[HISTORY_STATES.BOOTH]) {
+      // 현재 활성화된 부스 정보 초기화
+      resetActiveBoothInfo();
+    }
   }
-}
+  
+  // 이력 상태 업데이트
+  window.history.pushState(currentState, '', newHash);
+};
 
 // 미니맵 탭 초기화 함수
 window.initializeMapTab = function() {
-  // 미니맵 정보가 없습니다 메시지 표시
+  // 미니맵 컨테이너 가져오기
   const mapContainer = document.getElementById('map-container');
-  mapContainer.innerHTML ='';
-  // mapContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">미니맵 정보가 없습니다</div>';
+  
+  // SVG 미니맵이 이미 존재하는지 확인
+  const existingSvg = mapContainer.querySelector('svg');
+  
+  // 기존 "미니맵 정보가 없습니다" 메시지 제거
+  const noMapInfoMessage = mapContainer.querySelector('div[style*="text-align: center"]');
+  if (noMapInfoMessage) {
+    noMapInfoMessage.remove();
+  }
   
   // 정보 패널 초기화
   const boothInfoElement = document.getElementById('booth-info');
@@ -1066,7 +1241,7 @@ window.initializeMapTab = function() {
   defaultInfoElement.style.display = 'block';
   
   // 기본 정보 내용 변경
-  defaultInfoElement.innerHTML = '<div class="no-booth-selected">부스 검색 기능을 통해 정보를 보기 원하는 부스를 택하세요</div>';
+  defaultInfoElement.innerHTML = '<div class="no-booth-selected">정보를 보기 원하는 부스를 택하세요</div>';
 }
 
 // 부스 리스트 초기화 함수
@@ -1264,6 +1439,7 @@ window.handleUpdateHistory = function() {
     displayDiv.innerHTML = html || '<p>업데이트 이력이 없습니다.</p>';
   }
 }
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
   // 공지 팝업 처리
@@ -1284,6 +1460,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleExternalLinks();
   }
   
+  // 지도 토글 버튼 초기화 - 페이지 로드 시 바로 추가
+  window.initializeMapToggleButton();
+  
   // 탭 초기화
   if (window.initializeTabs) {
     window.initializeTabs();
@@ -1299,8 +1478,227 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleUpdateHistory();
   }
   
-  // 초기 탭 설정
-  if (window.showTab) {
-    window.showTab('guide');
+  // SVG 부스 요소에 방문 상태 적용
+  const visitedBooths = window.getVisitedBooths();
+  if (visitedBooths) {
+    Object.keys(visitedBooths).forEach(boothName => {
+      if (visitedBooths[boothName]) {
+        const boothSvgElement = document.querySelector(`.booth-wrapper[data-name="${boothName}"]`);
+        if (boothSvgElement) {
+          boothSvgElement.classList.add('visited');
+        }
+      }
+    });
   }
-}); 
+  
+  // 뒤로가기 버튼 추가
+  const container = document.querySelector('.container');
+  const backButton = document.createElement('button');
+  backButton.className = 'back-button';
+  backButton.innerHTML = '<i class="fas fa-arrow-left"></i>';
+  backButton.addEventListener('click', function() {
+    window.history.back();
+  });
+  
+  // 컨테이너 맨 앞에 뒤로가기 버튼 추가
+  container.insertBefore(backButton, container.firstChild);
+  
+  // URL 해시에서 초기 상태 복원
+  window.handleHistoryNavigation();
+  
+  // 뒤로가기/앞으로가기 이벤트 처리
+  window.addEventListener('popstate', function(event) {
+    // 디버깅 메시지
+    console.log('Popstate 이벤트 발생:', event.state, window.location.hash);
+    
+    // event.state에 유효한 데이터가 있으면 그 값을 사용
+    // 없으면 URL 해시 파싱
+    window.handleHistoryNavigation(event.state);
+  });
+  
+  // 초기 탭 설정 (URL 해시 기반 상태 복원 이후에 실행)
+  const state = parseUrlHash();
+  if (state[HISTORY_STATES.TAB]) {
+    // 해시에서 탭 정보가 있으면 해당 탭 적용
+    const tabId = state[HISTORY_STATES.TAB];
+    if (tabId === 'map') {
+      document.body.classList.add('map-tab-active');
+    } else {
+      document.body.classList.remove('map-tab-active');
+    }
+  } else if (window.showTab) {
+    // 기본값은 guide 탭
+    window.showTab('guide');
+    document.body.classList.remove('map-tab-active');
+  }
+  
+  // info-panel과 map-container 레이아웃 고정
+  setupFixedLayout();
+});
+
+// 고정 레이아웃 설정 함수
+function setupFixedLayout() {
+  const mapContainer = document.getElementById('map-container');
+  const infoPanel = document.getElementById('info-panel');
+  const boothInfo = document.getElementById('booth-info');
+  const defaultInfo = document.getElementById('default-info');
+  
+  if (mapContainer && infoPanel) {
+    // CSS 변수로 고정 높이 설정
+    document.documentElement.style.setProperty('--info-panel-height', '340px');
+    document.documentElement.style.setProperty('--map-container-height', '300px');
+    
+    // 스타일 요소 생성
+    const style = document.createElement('style');
+    style.textContent = `
+      #info-panel {
+        height: var(--info-panel-height) !important;
+        overflow-y: auto;
+        position: relative;
+      }
+      
+      #booth-info, #default-info {
+        height: 100%;
+        overflow-y: auto;
+      }
+      
+      #map-container {
+        height: var(--map-container-height) !important;
+        min-height: var(--map-container-height) !important;
+        max-height: var(--map-container-height) !important;
+        overflow: hidden;
+      }
+      
+      #map-container.collapsed {
+        height: 0px !important;
+        min-height: 0px !important;
+        max-height: 0px !important;
+      }
+      
+      .info-panel-scroll {
+        max-height: calc(var(--info-panel-height) - 70px);
+        overflow-y: auto;
+      }
+    `;
+    
+    // head에 스타일 요소 추가
+    document.head.appendChild(style);
+    
+    // 이벤트 리스너 추가 - 윈도우 리사이즈 시 레이아웃 조정
+    window.addEventListener('resize', adjustLayoutOnResize);
+    
+    // 초기 레이아웃 조정
+    adjustLayoutOnResize();
+  }
+}
+
+// 윈도우 크기 변경 시 레이아웃 조정
+function adjustLayoutOnResize() {
+  const windowHeight = window.innerHeight;
+  const mapContainer = document.getElementById('map-container');
+  const isMapCollapsed = mapContainer.classList.contains('collapsed');
+  
+  // 기본 info-panel 높이 계산
+  let infoHeight = Math.min(350, windowHeight * 0.6);
+  
+  // 지도가 접혔을 때는 info-panel 높이를 증가시킴
+  if (isMapCollapsed) {
+    infoHeight = Math.min(550, windowHeight * 0.8);
+  }
+  
+  // CSS 변수 업데이트
+  document.documentElement.style.setProperty('--info-panel-height', `${infoHeight}px`);
+  document.documentElement.style.setProperty('--map-container-height', `${Math.min(300, windowHeight * 0.5)}px`);
+}
+
+// 지도 토글 버튼 초기화 함수
+window.initializeMapToggleButton = function() {
+  const mapContainer = document.getElementById('map-container');
+  const toggleBtn = document.getElementById('map-toggle-btn');
+  
+  if (!toggleBtn) {
+    console.error('지도 토글 버튼을 찾을 수 없습니다.');
+    return;
+  }
+  
+  // 버튼 클릭 이벤트 리스너 추가
+  toggleBtn.addEventListener('click', function() {
+    // 현재 활성 탭 확인
+    const currentActiveTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+    
+    // 현재 맵 탭이 아니면 맵 탭으로 이동
+    if (currentActiveTab !== 'map') {
+      // 맵 탭으로 이동
+      window.showTab('map');
+      
+      // 버튼 상태 업데이트 (확장 상태로)
+      mapContainer.classList.remove('collapsed');
+      this.classList.add('expanded');
+      this.classList.remove('collapsed');
+      localStorage.setItem('mapCollapsed', 'false');
+      
+      // 레이아웃 조정
+      adjustLayoutOnResize();
+      return;
+    }
+    
+    // 맵 탭인 경우 기존 토글 기능 수행
+    if (mapContainer.classList.contains('collapsed')) {
+      mapContainer.classList.remove('collapsed');
+      this.classList.add('expanded');
+      this.classList.remove('collapsed');
+      localStorage.setItem('mapCollapsed', 'false');
+    } else {
+      mapContainer.classList.add('collapsed');
+      this.classList.add('collapsed');
+      this.classList.remove('expanded');
+      localStorage.setItem('mapCollapsed', 'true');
+    }
+    
+    // 레이아웃 조정
+    adjustLayoutOnResize();
+  });
+  
+  // 미니맵의 초기 상태 설정 (로컬 스토리지에서 가져옴)
+  const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
+  if (isMapCollapsed) {
+    mapContainer.classList.add('collapsed');
+    toggleBtn.classList.add('collapsed');
+    toggleBtn.classList.remove('expanded');
+  } else {
+    mapContainer.classList.remove('collapsed');
+    toggleBtn.classList.add('expanded');
+    toggleBtn.classList.remove('collapsed');
+  }
+  
+  // 활성 탭이 변경될 때 아이콘 상태 업데이트
+  document.querySelectorAll('.tab-button').forEach(button => {
+    const originalClickHandler = button.onclick;
+    button.addEventListener('click', function() {
+      // 탭이 맵이 아닌 경우 아이콘 상태 업데이트
+      const tabId = this.getAttribute('data-tab');
+      if (tabId !== 'map') {
+        toggleBtn.classList.add('collapsed');
+        toggleBtn.classList.remove('expanded');
+      } else {
+        // 맵 탭에서는 저장된 상태에 따라 표시
+        const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
+        if (isMapCollapsed) {
+          toggleBtn.classList.add('collapsed');
+          toggleBtn.classList.remove('expanded');
+        } else {
+          toggleBtn.classList.add('expanded');
+          toggleBtn.classList.remove('collapsed');
+        }
+      }
+      
+      // 레이아웃 조정
+      adjustLayoutOnResize();
+    });
+  });
+  
+  // 초기 레이아웃 조정
+  adjustLayoutOnResize();
+  
+  return toggleBtn;
+} 
