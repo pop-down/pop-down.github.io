@@ -159,18 +159,70 @@ body {
 }
 
 .booth-name {
-  color: var(--text-color);
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  border-bottom: 2px solid var(--main-pink);
-  padding-bottom: 10px;
-  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 10px;
 }
 
-.booth-name:after {
-  content: "";
-  float: right;
+.booth-name span:first-child {
+  flex: 1;
+}
+
+.visit-check-label {
+  font-size: 12px;
+  color: #666;
+  margin-left: 0px;
+  display: inline-block;
+  margin-right: 5px;
+  text-align: right;
+  width: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+.visit-toggle {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.visit-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.visit-toggle.visited {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.visit-toggle i {
+  font-size: 12px;
+}
+
+/* 정보탭의 토글 체크 버튼 스타일 */
+#selected-booth-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 10px;
+}
+
+#selected-booth-name .visit-toggle {
+  margin-left: auto;
 }
 
 .booth-section {
@@ -1122,38 +1174,73 @@ svg {
 
 .booth-list-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  margin-bottom: 8px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  transition: background-color 0.2s;
 }
 
 .booth-list-item:hover {
-  border-color: var(--main-pink);
-  background-color: var(--hover-color);
+  background-color: #f5f5f5;
+}
+
+.booth-list-item.selected {
+  background-color: #e3f2fd;
 }
 
 .booth-name {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 10px;
 }
 
-/* 정보 탭의 부스명 스타일 */
-.info-panel .booth-name {
-  color: var(--text-color);
-  border-bottom: 2px solid var(--main-pink);
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
+.booth-name span:first-child {
+  flex: 1;
+}
+
+.visit-check-label {
+  font-size: 12px;
+  color: #666;
+  margin-left: 0px;
+  display: inline-block;
+  margin-right: 5px;
+  text-align: right;
+  width: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+.visit-toggle {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.visit-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.visit-toggle.visited {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.visit-toggle i {
+  font-size: 12px;
 }
 
 .booth-list-item.visited {
@@ -1213,9 +1300,14 @@ svg {
   border: 1px solid var(--border-color);
 }
 
-.booth-name {
+.info-panel .booth-name {
   color: var(--text-color);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
   border-bottom: 2px solid var(--main-pink);
+  padding-bottom: 10px;
+  font-family: 'Cafe24Oneprettynight', 'Pretendard', sans-serif;
 }
 
 .event-list li {
@@ -1300,10 +1392,23 @@ svg {
 @media (max-width: 767px) {
   .booth-image-wrapper {
     width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .booth-image {
+    max-width: 100%;
+    height: auto;
   }
   
   .image-modal-content {
     width: 95%;
+    max-width: 500px;
+  }
+  
+  .modal-image {
+    max-width: 100%;
+    height: auto;
   }
   
   .event-list li {
@@ -1487,10 +1592,13 @@ svg {
   margin-left: 8px;
   transition: all 0.3s ease;
   padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .visit-toggle:hover {
   border-color: var(--main-pink);
+  transform: scale(1.1);
 }
 
 .visit-toggle.visited {
@@ -1500,6 +1608,12 @@ svg {
 
 .visit-toggle.visited i {
   color: white;
+  transform: scale(1);
+}
+
+.visit-toggle i {
+  font-size: 12px;
+  transition: all 0.3s ease;
 }
 
 .booth-list-item.visited {
@@ -1507,8 +1621,80 @@ svg {
   background-color: var(--hover-color);
 }
 
-.booth-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* 업데이트 이력 스타일 */
+.update-history-toggle {
+  cursor: pointer;
+  font-size: 0.8em;
+  color: #E91E63;
+  margin-left: 5px;
+}
+
+.update-history-content {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.update-history-editor {
+  margin-bottom: 15px;
+}
+
+.update-history-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  resize: vertical;
+}
+
+.save-update-history-btn {
+  background-color: #E91E63;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-update-history-btn:hover {
+  background-color: #D81B60;
+}
+
+.update-history-display {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.update-history-item {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.update-history-date {
+  font-weight: bold;
+  color: #E91E63;
+}
+
+.update-history-description {
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .update-history-textarea {
+    font-size: 14px;
+  }
+  
+  .update-history-display {
+    max-height: 200px;
+  }
 }
