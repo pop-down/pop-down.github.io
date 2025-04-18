@@ -248,14 +248,37 @@
     // 스크립트 요소 생성
     const script = document.createElement('script');
     script.type = 'text/javascript';
+    
+    // 캐시 버스팅 파라미터 추가
     script.src = `script.js?v=${cacheBuster}`;
     
-    // 기존 HTML에 스크립트 추가
+    // 스크립트를 body 끝에 추가
     document.body.appendChild(script);
   }
   
-  // 스크립트 로드
-  loadScriptWithVersion();
+  // 맵 로드 함수 추가
+  async function loadMap() {
+    try {
+      const response = await fetch('/api/map-template');
+      if (!response.ok) {
+        throw new Error('맵 템플릿을 가져오는데 실패했습니다.');
+      }
+      const mapHTML = await response.text();
+      document.getElementById('map-wrapper').innerHTML = mapHTML;
+    } catch (error) {
+      console.error('맵 로드 오류:', error);
+      // 오류 발생 시 로컬에 저장된 템플릿 사용
+      const fallbackResponse = await fetch('/common-map/templates/boothMap.svg');
+      const fallbackHTML = await fallbackResponse.text();
+      document.getElementById('map-wrapper').innerHTML = fallbackHTML;
+    }
+    
+    // 맵 로드 후 스크립트 로드
+    loadScriptWithVersion();
+  }
+  
+  // 페이지 로드 시 맵 로드
+  window.addEventListener('load', loadMap);
   </script>
   
   <script>

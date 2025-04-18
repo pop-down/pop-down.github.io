@@ -316,8 +316,12 @@ svg {
   gap: 15px;
   align-items: center;
   justify-content: center;
-  margin: 0; /* 마진 제거 */
-  padding: 5px 0; /* 패딩 추가 */
+  margin: 0;
+  padding: 5px 0;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
 }
 
 .social-links a {
@@ -331,6 +335,7 @@ svg {
   text-decoration: none;
   font-size: 20px;
   transition: transform 0.3s ease;
+  position: relative;
 }
 
 .social-links a:hover {
@@ -339,15 +344,30 @@ svg {
 
 .instagram-icon {
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  position: relative;
+  z-index: 1;
 }
 
 .kakaotalk-icon {
   background-color: #FEE500;
   color: #3C1E1E !important;
+  position: relative;
+  z-index: 1;
 }
 
 .zigzag-icon {
   background-color: #FA6EE3;
+  position: relative;
+  z-index: 1;
+}
+
+.zigzag-icon img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .copy-code-block {
@@ -357,7 +377,8 @@ svg {
   padding: 10px;
   margin: 15px 0;
   position: relative;
-  margin-bottom: 25px; /* 하단 여백 증가 */
+  margin-bottom: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .copy-button {
@@ -372,6 +393,7 @@ svg {
   font-size: 12px;
   cursor: pointer;
   transition: background-color 0.2s;
+  z-index: 2;
 }
 
 .copy-button:hover {
@@ -387,6 +409,11 @@ svg {
   color: #333;
   word-break: break-all;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.copy-code-content:hover {
+  background-color: #f0f0f0;
 }
 
 .visit-button {
@@ -469,9 +496,44 @@ svg {
     border-top: 1px solid #ffd9e5;
   }
   
+  .page-title {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
   .page-title h1 {
-    font-size: 22px;
-    padding-bottom: 5px;
+    font-size: 24px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .visit-button, 
+  .copy-button {
+    font-size: 16px;
+    padding: 12px 24px;
+    margin-left: auto;
+    transform: scale(2);
+    transform-origin: right center;
+  }
+  
+  .copy-code-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .copy-code-content {
+    width: 100%;
+    text-align: left;
+  }
+  
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
   }
   
   .container {

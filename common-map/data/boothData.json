@@ -1,0 +1,159 @@
+{
+  "안내": {
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; margin-bottom: 10px;\">⭐ <b>사용법</b> ⭐<br>• 부스 등 미니맵 항목 선택👉 내용이 보입니다🙂<br>• 제공정보 : 각 브랜드별 이벤트 항목, 필요한 SNS 링크, hashtag<br>• 해시태그 복사 기능도 있습니다.</div>",
+      "<div style=\"line-height: 1.6em; margin-bottom: 10px;\"><b>지그재그 즐겨찾기 추가방법</b><br>• 검색 말고 👉 <b>앱 온라인 파우치</b> 메뉴를 이용하세요<br>• 맨 아래로 스크롤하면 브랜드 목록을 확인할 수 있습니다<br>• 즐겨찾기도 한번에 가능!</div>",
+      "<div style=\"line-height: 1.6em; margin-bottom: 10px;\"><b>추천 코스</b><br>• 첫부스 추천: 몰바니(타포린백)<br>• 요아정 쿠폰: 입장 시 못받았으면 출구쪽 코인 확인하시는 분께 요청!</div>"
+    ]
+  },
+  "잇퓨": {
+    "instagram": "https://instagram.com/itfu_official",
+    "kakaotalk": "https://pf.kakao.com/_xatQrs",
+    "zigzag": "Y",
+    "copyCode": "@itfu_official",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">카카오톡 친구추가 👉 공뽑기 이벤트</div>",
+      "<div style=\"line-height: 1.6em; \">타임어택 : 즐겨찾기 & 스토리 👉 스쿱</div>"
+    ]
+  },
+  "투에이엔": {
+    "instagram": "https://instagram.com/2an_official",
+    "kakaotalk": "https://pf.kakao.com/_sgHKT",
+    "zigzag": "Y",
+    "copyCode": "@2an_official #투에이엔 #뮤트블룸컬렉션",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">오픈런 5명 👉 오션글로우 프레시 키트</div>",
+      "<div style=\"line-height: 1.6em; \">스토리 인증 👉 플러피 블러 틴트 증정</div>",
+      "<div style=\"line-height: 1.6em; \">즐겨찾기, 플친추가 👉 베어 플래시 글로스 증정</div>",
+      "<div style=\"line-height: 1.6em; \">모든 SNS 이벤트 참여👉 럭키드로우</div>"
+    ]
+  },
+  "태그": {
+    "instagram": "https://instagram.com/tag_official_kr",
+    "kakaotalk": "https://pf.kakao.com/_tFTVn",
+    "zigzag": "N",
+    "copyCode": "@tag_official_kr #태그 #지그재그 #지그재그뷰티페스타 #지그재그팝업 #태그틴트",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우, 플친 추가 👉 샘플 증정</div>",
+      "<div style=\"line-height: 1.6em; \">SNS 인증 👉 럭키드로우</div>"
+    ]
+  },
+  "에스네이처": {
+    "instagram": "https://instagram.com/s.nature",
+    "kakaotalk": "https://pf.kakao.com/_GeAxnl",
+    "zigzag": "N",
+    "copyCode": "@s.nature @zigzag_korea #에스네이처팝업 #직잭팝업",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">플친추가 👉 시트마스크, 샘플</div>",
+      "<div style=\"line-height: 1.6em; \">SNS 인증 👉 럭키드로우</div>"
+    ]
+  },
+  "에뛰드": {
+    "instagram": "https://instagram.com/etudeofficial",
+    "zigzag": "N",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우 👉 뽑기</div>"
+    ]
+  },
+  "베노프&얌얌프로틴": {
+    "kakaotalk": "https://pf.kakao.com/_QQmNT",
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">즐겨찾기 👉 럭키드로우</div>",
+      "<div style=\"line-height: 1.6em; \">단백질음료 & 바 시식</div>",
+      "<div style=\"line-height: 1.6em; \">플친 추가 👉 뽑기</div>"
+    ]
+  },
+  "에크멀": {
+    "kakaotalk": "https://pf.kakao.com/_nxdlRxb",
+    "instagram": "https://www.instagram.com/equmal.official/",
+    "links": [
+      {
+        "name": "설문조사",
+        "url": "https://forms.gle/GXFmXQowN3KfNiUC6"
+      }],
+    "zigzag": "N",
+    "copyCode": "@equmal.official #블러리립앤치크 #에크멀팝업",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">플친 추가, 팔로우 👉 꽃반지</div>",
+      "<div style=\"line-height: 1.6em; \">테스트, 설문조사 👉 뽑기</div>"
+    ]
+  },
+  "무지개맨션": {
+    "instagram": "https://www.instagram.com/muzigae_mansion/",
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우, 즐겨찾기 👉 쿠션 공 쌓기</div>",
+      "<div style=\"line-height: 1.6em; \">SNS 리뷰작성 👉 추첨 (본품 세트)</div>"
+    ]
+  },
+  "에스쁘아": {
+    "instagram": "https://www.instagram.com/espoir_makeup/",
+    "kakaotalk": "https://pf.kakao.com/_BEpRZ",
+    "zigzag": "N",
+    "copyCode": "#에스쁘아 #지그재그 #뷰티페스타",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우, 플친추가 👉 SNS업로드 시 뽑기</div>"
+    ]
+  },
+  "몰바니": {
+    "instagram": "https://www.instagram.com/molvany_official/",
+    "kakaotalk": "https://pf.kakao.com/_HMdBb",
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">즐겨찾기, 팔로우, 플친추가 👉 스쿱이벤트</div>",
+      "<div style=\"line-height: 1.6em; \">타포린백 증정</div>"
+    ]
+  },
+  "릴리바이레드": {
+    "instagram": "https://instagram.com/lilybyred_official",
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우, 즐겨찾기 👉 뽑기</div>"
+    ]
+  },
+  "달바": {
+    "kakaotalk": "https://pf.kakao.com/_xhxoWDxb",
+    "zigzag": "N",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">플친 추가 👉 공뽑기</div>"
+    ]
+  },
+  "삐아": {
+    "instagram": "https://www.instagram.com/bbia.official/",
+    "zigzag": "Y",
+    "copyCode": "@bbia.official #삐아 #직잭뷰티페스타 #오버글레이즈",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팔로우, 즐겨찾기 👉 공던지기</div>", 
+      "<div style=\"line-height: 1.6em; \">SNS 작성 이벤트👉추첨 (오버글레이즈 본품 SET) </div>"
+    ]
+  },
+  "입구": {
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">팜플렛 및 종이가방 증정</div>",
+      "<div style=\"line-height: 1.6em; \">지그재그 앱 설치 확인</div>"
+    ]
+  },
+  "입장안내": {
+    "events": [
+      "<div style=\"line-height: 1.6em; \">게임 : 요아정 쿠폰 (핑크색 코인)</div>", 
+      "<div style=\"line-height: 1.6em; \">종이 팜플렛 👉 도장</div>"
+    ]
+  },
+  "투표": {
+    "events": [
+      "<div style=\"line-height: 1.6em; \">투표 👉 샘플 증정</div>"
+    ]
+  },
+  "출구": {
+    "zigzag": "Y",
+    "events": [
+      "<div style=\"line-height: 1.6em; \">핑크색 코인 (안받았을 경우 요청)</div>",
+      "<div style=\"line-height: 1.6em; \">스쿱 등(앱 👉 온라인 파우치 아무거나 담기, 종이 팜플렛 준비)</div>",
+      "<div style=\"line-height: 1.6em; \">쇼핑백채우기, 웜/쿨톤 퍼담기까지 하고 나갈 때 👉 흰색 코인 준비 (젤리샵)</div>", 
+      "<div style=\"line-height: 1.6em; \">젤리샵 후 👉 핑크 코인 준비 (요아정)</div>"
+    ]
+  }
+} 

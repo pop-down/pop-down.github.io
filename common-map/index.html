@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BE·YOU·TIFUL ZIGZAG - 서버 모드</title>
+  
+  <!-- 브라우저 캐시 제어를 위한 메타 태그 추가 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <link rel="stylesheet" href="../zigzag-2504/styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Poppins 웹폰트 추가 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- iOS PWA 호환성을 위한 태그 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="지그재그 팝업안내도">
+  <link rel="apple-touch-icon" href="../zigzag-2504/src/apple-touch-icon.png">
+  <meta name="theme-color" content="#E91E63">
+</head>
+<body class="custom-font">
+  <!-- 공지 팝업 추가 -->
+  <div id="notice-popup" class="notice-popup" style="display: none;">
+    <div class="notice-content">
+      <h3>안내</h3>
+      <ul>
+        <li>간단하게 만든 페이지이므로 버그가 있을 수 있습니다</li>
+        <li>현장상황에 따라 변동가능, 반영 불가합니다</li>
+        <li>공유는 피해주세요 😊</li>
+        <li>가난한 서버입니다. 막힐 수 있음</li>
+        <li>아이폰에서 테스트 안해봤습니다</li>
+      </ul>
+      <button id="notice-confirm-btn">확인 & 다시 열지 않기</button>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="page-title">
+      <h1 id="main-title" style="cursor: pointer;">BE·YOU·TIFUL ZIGZAG</h1>
+    </div>
+    <div class="map-container">
+      <!-- SVG 맵이 여기에 동적으로 로드됩니다 -->
+      <div id="map-wrapper"></div>
+    </div>
+    
+    <div class="info-panel">
+      <div id="default-info">
+        <div class="no-booth-selected">
+          부스를 선택하여 정보를 확인하세요
+        </div>
+      </div>
+      
+      <div id="booth-info" style="display: none;">
+        <div class="booth-name" id="selected-booth-name"></div>
+        
+        <div class="info-panel-scroll">
+          <div id="sections-container">
+            <!-- 이벤트 섹션 -->
+            <div class="booth-section" id="events-section-container" style="display: none;">
+              <div class="section-content" id="events-section">
+                <div class="booth-events">
+                  <ul class="event-list" id="event-list"></ul>
+                </div>
+              </div>
+            </div>
+            
+            <div id="copy-code-container" class="scrollable-content-bottom"></div>
+          </div>
+        </div>
+        
+        <div class="info-panel-fixed">
+          <div class="social-links">
+            <a href="#" id="instagram-link" class="instagram-icon" target="_blank" title="인스타그램" style="display:none;">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" id="kakaotalk-link" class="kakaotalk-icon" target="_blank" title="카카오톡" style="display:none;">
+              <i class="fas fa-comment"></i>
+            </a>
+            <a href="https://abrad.zigzag.kr/8q9wsd" id="zigzag-link" class="zigzag-icon" target="_blank" title="지그재그" style="display:none;">
+              <img src="https://cf.res.s.zigzag.kr/favicons/zigzag/favicon.ico" alt="Z" style="width: 25px; height: 25px;">
+            </a>
+            <!-- 추가 링크를 위한 컨테이너(예약된 영역) - 각 링크는 스크립트에서 동적으로 추가 -->
+            <span id="additional-links-container" style="display:none;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      Copyright &copy; 2025 by pop-down. All rights reserved.
+    </div>
+  </div>
+
+  <!-- 모듈 스크립트 로드 -->
+  <script type="module">
+    import app from './app.js';
+    
+    // 페이지 로드 시 앱 초기화
+    document.addEventListener('DOMContentLoaded', () => {
+      // 환영 메시지
+      console.log('지그재그 맵 애플리케이션 (서버 모드) 로드 중...');
+      
+      // 앱 초기화
+      app.initialize().catch(error => {
+        console.error('애플리케이션 초기화 중 오류 발생:', error);
+      });
+    });
+  </script>
+</body>
+</html> 
