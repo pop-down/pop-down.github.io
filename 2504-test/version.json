@@ -1,6 +1,6 @@
 {
-  "version": "0.2.5.5",
-  "releaseDate": "2025-04-19",
+  "version": "0.2.6.1",
+  "releaseDate": "2025-04-21",
   "minRequiredVersion": "0.2.5.0",
-  "changelog": "뒤로가기 버튼 및 상태 유지 기능 추가"
+  "changelog": "시스템 뒤로가기 기능 수정 및 개선"
 } 

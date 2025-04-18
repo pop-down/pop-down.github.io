@@ -39,7 +39,8 @@ function updateUrlHash(state, value) {
     .join('&');
   
   // 현재 URL에서 해시만 변경 (페이지 새로고침 없음)
-  window.history.replaceState(null, document.title, newHash ? `#${newHash}` : window.location.pathname);
+  // 뒤로가기를 위해 replaceState 대신 pushState 사용
+  window.history.pushState(null, document.title, newHash ? `#${newHash}` : window.location.pathname);
 }
 
 // 다시 탐색할 때(예: 뒤로가기/앞으로가기) 상태 복원
