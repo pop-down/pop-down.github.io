@@ -1,6 +1,6 @@
 {
-  "version": "0.2.6.2",
-  "releaseDate": "2025-04-22",
+  "version": "0.2.6.6",
+  "releaseDate": "2025-04-26",
   "minRequiredVersion": "0.2.5.0",
-  "changelog": "브라우저 뒤로가기 기능 개선 및 히스토리 관리 최적화"
+  "changelog": "info-panel-fixed 영역이 스크롤에 영향받지 않고 화면 하단에 고정되도록 개선"
 } 

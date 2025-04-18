@@ -1,8 +1,8 @@
 // 앱 버전 정보
 const APP_VERSION = {
-  current: '0.2.6.2',           // 현재 버전
+  current: '0.2.6.6',           // 현재 버전
   minRequired: '0.2.5.0',       // 최소 필요 버전
-  latest: '0.2.6.2'            // 최신 버전
+  latest: '0.2.6.6'            // 최신 버전
 };
 
 // 앱 기본 설정
@@ -10,11 +10,31 @@ const APP_CONFIG = {
   name: '쿠팡 메가 뷰티쇼',
   description: '쿠팡 메가 뷰티쇼 부스 정보 및 안내',
   updateCheckInterval: 3600000, // 업데이트 체크 간격 (1시간)
-  cacheVersion: '0.2.6.2'        // 캐시 버전
+  cacheVersion: '0.2.6.6'        // 캐시 버전
 };
 
 // 업데이트 이력
 const UPDATE_HISTORY = [
+  {
+    date: '2025-04-26',
+    version: '0.2.6.6',
+    description: 'info-panel-fixed 영역이 스크롤에 영향받지 않고 화면 하단에 고정되도록 개선'
+  },
+  {
+    date: '2025-04-25',
+    version: '0.2.6.5',
+    description: '메인 타이틀 클릭 시 일관된 안내 정보 표시 방식으로 개선'
+  },
+  {
+    date: '2025-04-24',
+    version: '0.2.6.4',
+    description: 'SVG 부스 배경색 변경 기능 추가 (현재 선택 부스 하이라이트 및 방문 부스 그레이아웃)'
+  },
+  {
+    date: '2025-04-23',
+    version: '0.2.6.3',
+    description: '미니맵 기능 복원 및 접기/펼치기 기능 추가'
+  },
   {
     date: '2025-04-22',
     version: '0.2.6.2',

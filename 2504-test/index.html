@@ -42,6 +42,11 @@
     </div>
   </div>
   
+  <!-- 지도 토글 버튼을 body에 직접 추가 -->
+  <button id="map-toggle-btn" class="map-toggle-btn" aria-label="지도 접기/펼치기">
+    <i class="fas fa-map-marker-alt"></i>
+  </button>
+  
   <div class="container">
     <div class="page-title">
       <h1 id="main-title" style="cursor: pointer;">MEGA BEAUTY SHOW</h1>
@@ -63,14 +68,14 @@
             <!-- <li>미니맵 탭에서 부스 위치를 확인할 수 있습니다.</li> -->
             <!-- <li>부스를 클릭하면 상세 정보를 볼 수 있습니다.</li> -->
             <li>부스 리스트에서 검색하여 원하는 부스를 찾을 수 있습니다.</li>
-            <li>해시태그복사, 채널링크, 인스타그램 링크를 제공합니다</li>
+            <li>해시태그복사, 채널링크, 인스타그램 링크, 미니맵의 위치를 표시합니다.</li>
             <li>부스 방문 여부를 체크하여 방문한 부스를 관리할 수 있습니다</li>
             <li>방문한 부스는 리스트에서 그레이아웃으로 표시되며 하단으로 정렬됩니다</li>
+            <li>설치 기능이 있습니다. 홈화면에 추가- 앱으로 설치하면 인터넷 창과 독립적으로 이용할 수 있습니다.</li>
           </ul>
           <h3>주의사항</h3>
           <ul>
             <li>현장 상황에 따라 부스 위치 및 정보가 변경될 수 있습니다.</li>
-            <li>업뎃예정 : 부스별 상세정보, 미니맵 등 (가능하면요...)</li>
           </ul>
           <h3>데이터 저장 안내</h3>
           <ul>
@@ -98,9 +103,6 @@
 
       <div class="tab-content" id="map">
         <div id="map-container">
-          <div style="text-align: center; padding: 20px; color: #666;">
-            미니맵 정보가 없습니다
-          </div>
           <!-- SVG 지도 -->
           <svg id="booth-map" class="booth-map" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
             <!-- Main border with lighter color -->
@@ -109,193 +111,180 @@
             <!-- Grouped Booths -->
             <!-- Booth 1 -->
             <g id="booth1" class="booth-wrapper" data-name="메디힐">
-              <rect x="70" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="70" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="70" y1="70" x2="170" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="70" y1="70" x2="70" y2="150" stroke="#999999" stroke-width="1"/>   <!-- left -->
               <line x1="170" y1="70" x2="170" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="110" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">메디힐</text>
+              <text x="110" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">메디힐</text>
             </g>
             
             <!-- Booth 2 -->
             <g id="booth2" class="booth-wrapper" data-name="바닐라코">
-              <rect x="170" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="170" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="170" y1="70" x2="270" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="170" y1="70" x2="170" y2="150" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="270" y1="70" x2="270" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="210" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">바닐라코</text>
+              <text x="210" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">바닐라코</text>
             </g>
             
             <!-- Booth 3 -->
             <g id="booth3" class="booth-wrapper" data-name="스킨푸드">
-              <rect x="270" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="270" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="270" y1="70" x2="370" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="270" y1="70" x2="270" y2="150" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="370" y1="70" x2="370" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="310" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">스킨푸드</text>
+              <text x="310" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">스킨푸드</text>
             </g>
             
             <!-- Booth 4 -->
             <g id="booth4" class="booth-wrapper" data-name="아이오페">
-              <rect x="370" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="370" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="370" y1="70" x2="470" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="370" y1="70" x2="370" y2="150" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="470" y1="70" x2="470" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="410" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">아이오페</text>
+              <text x="410" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">아이오페</text>
             </g>
             
             <!-- Booth 5 -->
-            <g id="booth5" class="booth-wrapper" data-name="아리엘">
-              <rect x="470" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+            <g id="booth5" class="booth-wrapper" data-name="아리얼">
+              <rect class="booth"  x="470" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="470" y1="70" x2="570" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="470" y1="70" x2="470" y2="150" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="570" y1="70" x2="570" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="510" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">아리엘</text>
+              <text x="510" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">아리얼</text>
             </g>
             
             <!-- Booth 6 -->
             <g id="booth6" class="booth-wrapper" data-name="아벤느">
-              <rect x="570" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="570" y="70" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="570" y1="70" x2="670" y2="70" stroke="#999999" stroke-width="1"/>  <!-- top -->
               <line x1="570" y1="70" x2="570" y2="150" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="670" y1="70" x2="670" y2="150" stroke="#999999" stroke-width="1"/> <!-- right -->
-              <text x="610" y="115" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">아벤느</text>
+              <text x="610" y="115" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">아벤느</text>
             </g>
             
             <!-- Booth 7 -->
             <g id="booth7" class="booth-wrapper" data-name="에스쁘아">
-              <rect x="120" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="120" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="120" y1="200" x2="220" y2="200" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="200" x2="220" y2="280" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="120" y1="280" x2="220" y2="280" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="160" y="245" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">에스쁘아</text>
+              <text x="160" y="245" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">에스쁘아</text>
             </g>
             
             <!-- Booth 8 -->
             <g id="booth8" class="booth-wrapper" data-name="에뛰드">
-              <rect x="220" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="220" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="220" y1="200" x2="320" y2="200" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="200" x2="220" y2="280" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="220" y1="280" x2="320" y2="280" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="260" y="245" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">에뛰드</text>
+              <text x="260" y="245" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">에뛰드</text>
             </g>
             
             <!-- Booth 9 -->
             <g id="booth9" class="booth-wrapper" data-name="AHC">
-              <rect x="120" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="120" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="120" y1="280" x2="220" y2="280" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="280" x2="220" y2="360" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="120" y1="360" x2="220" y2="360" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="160" y="325" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">AHC</text>
+              <text x="160" y="325" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">AHC</text>
             </g>
             
             <!-- Booth 10 -->
             <g id="booth10" class="booth-wrapper" data-name="웰라쥬">
-              <rect x="220" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="220" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="220" y1="280" x2="320" y2="280" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="280" x2="220" y2="360" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="220" y1="360" x2="320" y2="360" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="260" y="325" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">웰라쥬</text>
+              <text x="260" y="325" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">웰라쥬</text>
             </g>
             
             <!-- Booth 11 -->
             <g id="booth11" class="booth-wrapper" data-name="닥터지">
-              <rect x="120" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="120" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="120" y1="360" x2="220" y2="360" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="360" x2="220" y2="440" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="120" y1="440" x2="220" y2="440" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="160" y="405" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">닥터지</text>
+              <text x="160" y="405" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">닥터지</text>
             </g>
             
             <!-- Booth 12 -->
             <g id="booth12" class="booth-wrapper" data-name="닥터자르트">
-              <rect x="220" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="220" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="220" y1="360" x2="320" y2="360" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="220" y1="360" x2="220" y2="440" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="220" y1="440" x2="320" y2="440" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="260" y="405" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">닥터자르트</text>
+              <text x="260" y="405" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">닥터자르트</text>
             </g>
             
             <!-- Booth 13 -->
             <g id="booth13" class="booth-wrapper" data-name="토니모리">
-              <rect x="430" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="430" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="430" y1="200" x2="530" y2="200" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="530" y1="200" x2="530" y2="280" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="430" y1="280" x2="530" y2="280" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="470" y="245" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">토니모리</text>
+              <text x="470" y="245" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">토니모리</text>
             </g>
             
             <!-- Booth 14 -->
             <g id="booth14" class="booth-wrapper" data-name="더페이스샵">
-              <rect x="530" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="530" y="200" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="530" y1="200" x2="630" y2="200" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="530" y1="200" x2="530" y2="280" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="530" y1="280" x2="630" y2="280" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="570" y="245" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">더페이스샵</text>
+              <text x="570" y="245" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">더페이스샵</text>
             </g>
             
             <!-- Booth 15 -->
             <g id="booth15" class="booth-wrapper" data-name="차앤박">
-              <rect x="430" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="430" y="280" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="430" y1="280" x2="530" y2="280" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="530" y1="280" x2="530" y2="360" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="430" y1="360" x2="530" y2="360" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="470" y="325" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">차앤박</text>
+              <text x="470" y="325" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">차앤박</text>
             </g>
             
             <!-- Booth 16 -->
             <g id="booth16" class="booth-wrapper" data-name="지베르니">
-              <rect x="430" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="430" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="430" y1="360" x2="530" y2="360" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="530" y1="360" x2="530" y2="440" stroke="#999999" stroke-width="1"/> <!-- right -->
               <line x1="430" y1="440" x2="530" y2="440" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="470" y="405" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">지베르니</text>
+              <text x="470" y="405" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">지베르니</text>
             </g>
             
             <!-- Booth 17 -->
             <g id="booth17" class="booth-wrapper" data-name="레스노베">
-              <rect x="530" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
+              <rect class="booth"  x="530" y="360" width="100" height="80" fill="#B0E0E0" stroke="none"/>
               <line x1="530" y1="360" x2="630" y2="360" stroke="#999999" stroke-width="1"/> <!-- top -->
               <line x1="530" y1="360" x2="530" y2="440" stroke="#999999" stroke-width="1"/> <!-- left -->
               <line x1="530" y1="440" x2="630" y2="440" stroke="#999999" stroke-width="1"/> <!-- bottom -->
-              <text x="570" y="405" font-family="Arial" font-size="14" text-anchor="middle" fill="#333333">레스노베</text>
+              <text x="570" y="405" font-family="Pretendard" font-size="16" text-anchor="middle" fill="#333333">레스노베</text>
             </g>
             
             <!-- Entrance group -->
             <g id="entrance">
-              <text x="75" y="505" font-family="Arial" font-size="12" fill="blue">IN</text>
+              <text x="75" y="505" font-family="Pretendard" font-size="12" fill="blue">IN</text>
               <polygon points="90,525 100,535 80,535" fill="blue"/>
             </g>
             
             <!-- Exit group -->
             <g id="exit">
-              <text x="655" y="505" font-family="Arial" font-size="12" fill="blue">쿠팡관</text>
+              <text x="655" y="505" font-family="Pretendard" font-size="12" fill="blue">쿠팡관</text>
               <polygon points="680,535 690,525 670,525" fill="blue"/>
             </g>
             
             <!-- Restrooms group -->
             <g id="restrooms">
               <rect x="650" y="200" width="70" height="200" fill="white" stroke="#999999" stroke-width="1"/>
-              
-              <!-- Men's restroom -->
-              <g id="mens_restroom">
-                <rect x="675" y="250" width="20" height="30" fill="black" stroke="none"/>
-                <circle cx="685" cy="240" r="8" fill="white" stroke="black" stroke-width="1"/>
-                <text x="680" y="243" font-family="Arial" font-size="12" fill="black">♂</text>
-              </g>
-              
-              <!-- Women's restroom -->
-              <g id="womens_restroom">
-                <rect x="675" y="350" width="20" height="30" fill="black" stroke="none"/>
-                <circle cx="685" cy="340" r="8" fill="white" stroke="black" stroke-width="1"/>
-                <text x="680" y="343" font-family="Arial" font-size="12" fill="black">♀</text>
-              </g>
+              <text x="685" y="300" font-family="Pretendard" font-size="16" fill="black" text-anchor="middle" dominant-baseline="middle" writing-mode="tb" letter-spacing="5">화장실</text>
             </g>
           </svg>
         </div>
         <div id="info-panel">
           <div id="default-info">
             <div class="no-booth-selected">
-              부스 검색 기능을 통해 정보를 보기 원하는 부스를 택하세요
+              정보를 보기 원하는 부스를 택하세요
             </div>
           </div>
           
@@ -364,9 +353,9 @@
     // DOM이 로드된 후 실행할 초기화 함수들
     document.addEventListener('DOMContentLoaded', function() {
       // 초기 정보 표시
-      if (typeof window.showBoothInfo === 'function') {
-        window.showBoothInfo('안내');
-      }
+      // if (typeof window.showBoothInfo === 'function') {
+      //   window.showBoothInfo('안내');
+      // }
       
       // 부스 이벤트 초기화
       if (typeof window.initializeBoothList === 'function') {
@@ -419,9 +408,16 @@
             b.classList.remove('selected');
           });
           
-          // 안내 정보 표시
-          if (typeof window.showBoothInfo === 'function') {
-            window.showBoothInfo('안내');
+          // 부스 정보 패널 숨기고 기본 정보 표시
+          const boothInfoElement = document.getElementById('booth-info');
+          const defaultInfoElement = document.getElementById('default-info');
+          
+          boothInfoElement.style.display = 'none';
+          defaultInfoElement.style.display = 'block';
+          
+          // URL 해시에서 부스 정보 제거
+          if (typeof window.updateUrlHash === 'function') {
+            window.updateUrlHash('booth', null);
           }
         });
       }
@@ -431,9 +427,11 @@
         window.loadEmptyBooth();
       } else {
         // 함수가 아직 로드되지 않았으면 안내 정보만 표시
-        if (typeof window.showBoothInfo === 'function') {
-          window.showBoothInfo('안내');
-        }
+        const boothInfoElement = document.getElementById('booth-info');
+        const defaultInfoElement = document.getElementById('default-info');
+        
+        boothInfoElement.style.display = 'none';
+        defaultInfoElement.style.display = 'block';
       }
     });
   </script>

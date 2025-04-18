@@ -1,12 +1,14 @@
 :root {
-  --main-pink: #FF69B4;
-  --main-turquoise: #40E0D0;
-  --text-color: #000000;
-  --text-secondary: #666666;
-  --bg-color: #FFFFFF;
-  --border-color: #EEEEEE;
-  --hover-color: rgba(255, 105, 180, 0.1);
+  --main-pink: #FF4D9C;
+  --lighter-pink: #FFD9E5;
+  --hover-color: rgba(255, 105, 180, 0.2);
+  --selected-color: rgba(255, 77, 156, 0.4);
+  --visited-color: #e0e0e0;
+  --text-color: #333333;
+  --bg-color: #ffffff;
+  --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  --tab-inactive: #f0f0f0;
 }
 
 body {
@@ -57,6 +59,10 @@ body {
   padding: 20px;
   min-height: 600px; /* 컨테이너 최소 높이 설정 */
   box-sizing: border-box;
+  max-height: 100vh; /* 뷰포트 높이로 제한 */
+  overflow: hidden; /* 내부 컴포넌트에서 스크롤 처리 */
+  display: flex;
+  flex-direction: column;
 }
 
 .page-title {
@@ -79,20 +85,106 @@ body {
   display: inline-block;
 }
 
-.map-container {
+#map-container {
   width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
+  max-width: 800px;
+  height: 500px; /* 고정 높이 설정 */
+  max-height: 500px; /* 최대 높이도 고정으로 설정 */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transform-style: preserve-3d; /* 3D 변환 스타일 보존 */
-  perspective: 1000px; /* 3D 원근감 추가 */
-  overflow: visible; /* transform으로 커지는 요소 표시 */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  overflow: hidden;
   box-sizing: border-box;
+  position: relative;
+  transition: all 0.3s ease;
+  text-align: center;
+  /* margin: 0 auto; 가운데 정렬 */
+  /* border-radius: 10px; 모서리 둥글게 */
+  /* background-color: white; 배경색 추가 */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 그림자 효과 */
+}
+.booth-title{
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+}
+
+#map-container.collapsed {
+  max-height: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.map-toggle-btn {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  color: var(--main-pink);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000; /* 매우 높은 z-index로 항상 최상단에 표시 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-toggle-btn i {
+  transition: all 0.3s ease;
+}
+
+/* 확장 상태 - 지도가 표시될 때 (정보 탭에서만) */
+.map-toggle-btn.expanded i {
+  color: var(--main-pink);
+}
+
+/* 접힌 상태 - 지도가 숨겨져 있을 때 (정보 탭에서만) */
+.map-toggle-btn.collapsed i {
+  color: #999;
+}
+
+/* 다른 탭에 있을 때 - 다른 색상으로 표시 */
+body:not(.map-tab-active) .map-toggle-btn i {
+  color: #666;
+}
+
+/* 지도 핀 위에 마우스 올렸을 때 */
+.map-toggle-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 정보 탭에서 마우스 올렸을 때 */
+body.map-tab-active .map-toggle-btn:hover i {
+  color: var(--main-pink);
+}
+
+/* 다른 탭에서 마우스 올렸을 때 */
+body:not(.map-tab-active) .map-toggle-btn:hover i {
+  color: #444;
+}
+
+@media (max-width: 767px) {
+  .map-toggle-btn {
+    top: 70px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
 }
 
 .info-panel {
@@ -102,12 +194,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 80px; /* 하단 고정 영역을 위한 여백 증가 */
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   height: 500px; /* 높이 고정 */
+  max-height: calc(100vh - 250px); /* 뷰포트 높이 기준으로 제한 */
   position: relative; /* 추가: 상대 위치 설정 */
   overflow: hidden; /* 오버플로우 숨김 처리 */
 }
@@ -120,12 +213,15 @@ body {
   max-height: 400px; /* 최대 높이 축소 */
   -ms-overflow-style: auto; /* IE와 Edge */
   scrollbar-width: auto; /* Firefox */
-  position: relative; /* 추가: 상대 위치 설정 */
+  position: relative; /* 상대 위치 설정 */
   padding-bottom: 20px; /* 하단 패딩 추가 */
 }
-
 .info-panel-scroll::-webkit-scrollbar {
   width: 6px; /* 스크롤바 너비 */
+}
+
+#guide, #list{
+  overflow-y: auto;
 }
 
 .info-panel-scroll::-webkit-scrollbar-thumb {
@@ -140,7 +236,7 @@ body {
 
 .info-panel-fixed {
   padding: 8px 10px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -149,6 +245,7 @@ body {
   border-top: 1px solid var(--border-color);
   min-height: 55px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .info-panel.hidden {
@@ -342,7 +439,7 @@ body {
 }
 
 /* hover 상태의 부스에 대한 스타일 */
-.booth-wrapper:hover {
+.booth-wrapper:hover:not(.selected) {
   z-index: 9999 !important;
 }
 
@@ -391,7 +488,7 @@ svg {
   width: 100%;
   z-index: 10;
   background-color: var(--bg-color);
-  border-top: 1px solid var(--border-color);
+  /* border-top: 1px solid var(--border-color); */
 }
 
 .social-links a {
@@ -507,12 +604,33 @@ svg {
   
   #booth-info {
     height: 100%;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    /* background: var(--bg-color); */
+    /* border: 1px solid var(--border-color); */
+    /* border-radius: 10px; */
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+    /* padding: 20px; */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #map {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #info-panel {
+    flex: 1;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    max-height: calc(100vh - 200px);
+    overflow: hidden;
   }
   
   .copyright {
@@ -550,7 +668,7 @@ svg {
   }
   
   .info-panel-fixed {
-    position: absolute; /* 수정: relative에서 absolute로 변경 */
+    position: fixed; /* relative에서 fixed로 변경 */
     bottom: 0;
     left: 0;
     right: 0;
@@ -572,7 +690,9 @@ svg {
   }
   
   .map-container {
-    padding: 15px;
+    padding: 10px;
+    margin: 0 auto 10px;
+    max-width: 95%;
   }
   
   .booth-name {
@@ -717,8 +837,8 @@ svg {
 }
 
 .booth-wrapper rect.booth, .booth-wrapper path.booth {
-  fill: var(--bg-color);
-  stroke: var(--main-pink);
+  fill: #B0E0E0;
+  /* stroke: var(--main-pink); */
   stroke-width: 1.5;
   transition: all 0.3s ease;
 }
@@ -1115,12 +1235,18 @@ svg {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px var(--shadow-color);
+  max-height: calc(100vh - 150px); /* 뷰포트 높이에 따라 제한 */
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* 컨테이너 내에서 확장 */
+  position: relative; /* 추가: 탭 내용의 absolute 위치 기준점 */
 }
 
 .tab-buttons {
   display: flex;
   background: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0; /* 탭 버튼 영역은 축소되지 않음 */
 }
 
 .tab-button {
@@ -1160,10 +1286,34 @@ svg {
   display: none;
   padding: 20px;
   background: var(--bg-color);
+  overflow: hidden; /* 내부 요소에서 스크롤 처리 */
+  flex: 1;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  box-sizing: border-box;
 }
 
 .tab-content.active {
   display: block;
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+#map.tab-content {
+  display: none;
+  flex-direction: column;
+}
+
+#map.tab-content.active {
+  display: flex;
 }
 
 /* 부스 리스트 스타일 */
@@ -1176,8 +1326,8 @@ svg {
 .booth-list-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  /* padding: 10px; */
+  /* border-bottom: 1px solid #eee; */
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -1258,7 +1408,7 @@ svg {
 }
 
 .search-input {
-  width: 100%;
+  width: 95%;
   padding: 12px;
   border: 2px solid var(--border-color);
   border-radius: 8px;
@@ -1276,19 +1426,49 @@ svg {
 .booth-wrapper rect.booth,
 .booth-wrapper path.booth,
 .booth-wrapper circle.booth {
-  fill: var(--bg-color);
-  stroke: var(--main-pink);
+  fill: #B0E0E0;
+  /* stroke: var(--main-pink); */
   stroke-width: 1.5;
   transition: all 0.3s ease;
 }
 
-.booth-wrapper:hover rect.booth,
-.booth-wrapper:hover path.booth,
+/* 선택된 부스에 대한 스타일 (하이라이트) */
 .booth-wrapper.selected rect.booth,
-.booth-wrapper.selected path.booth {
-  fill: var(--hover-color);
-  stroke: var(--main-pink);
+.booth-wrapper.selected path.booth,
+.booth-wrapper.selected circle.booth {
+  fill: #439d9d;
+  /* stroke: var(--main-pink); */
   stroke-width: 2;
+}
+
+.booth-wrapper.selected text {
+  fill: #ffffff;
+}
+
+/* 호버 상태의 부스에 대한 스타일 */
+.booth-wrapper:hover:not(.selected) rect.booth,
+.booth-wrapper:hover:not(.selected) path.booth,
+.booth-wrapper:hover:not(.selected) circle.booth {
+  fill: var(--main-pink);
+  /* stroke: var(--main-pink); */
+  stroke-width: 2;
+}
+.booth-wrapper:hover text {
+  fill: var(--bg-color);
+  /* stroke: var(--main-pink); */
+  stroke-width: 2;
+}
+/* 방문한 부스 스타일 (그레이아웃) */
+.booth-wrapper.visited rect.booth,
+.booth-wrapper.visited path.booth,
+.booth-wrapper.visited circle.booth {
+  fill: var(--visited-color);
+  /* stroke: #999999; */
+}
+
+/* 방문한 부스의 텍스트 스타일 */
+.booth-wrapper.visited text {
+  fill: #666666;
 }
 
 .booth-wrapper text {
@@ -1503,8 +1683,8 @@ svg {
   padding: 10px 0;
   width: 100%;
   z-index: 10;
-  background-color: var(--bg-color);
-  border-top: 1px solid var(--border-color);
+  /* background-color: var(--bg-color); */
+  /* border-top: 1px solid var(--border-color); */
 }
 
 .social-links a {
@@ -1626,8 +1806,9 @@ svg {
 .update-history-toggle {
   cursor: pointer;
   font-size: 0.8em;
-  color: #E91E63;
+  color: #000;
   margin-left: 5px;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .update-history-content {
@@ -1635,6 +1816,7 @@ svg {
   margin-bottom: 20px;
   border: 1px solid #eee;
   border-radius: 5px;
+  font-size: 12px;
   padding: 10px;
   background-color: #f9f9f9;
 }
@@ -1728,4 +1910,123 @@ svg {
 
 .back-button:active {
   transform: scale(0.95);
+}
+
+/* 업데이트 배너 스타일 */
+.update-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+  border: 1px solid rgba(255, 77, 156, 0.3);
+}
+
+.update-banner-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.update-banner-message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: #333;
+  font-size: 15px;
+}
+
+.update-banner-message i {
+  color: var(--main-pink);
+  margin-right: 8px;
+  animation: spin 2s infinite linear;
+  font-size: 16px;
+}
+
+.update-banner-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.update-banner .update-button {
+  background-color: var(--main-pink);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.update-banner .close-button {
+  background-color: transparent;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.update-banner .update-button:hover {
+  background-color: #ff3383;
+}
+
+.update-banner .close-button:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 모바일 반응형 스타일 */
+@media (max-width: 767px) {
+  .update-banner {
+    width: 95%;
+    max-width: 350px;
+    bottom: 15px;
+  }
+  
+  .update-banner-content {
+    padding: 12px;
+  }
+  
+  .update-banner-message {
+    font-size: 14px;
+  }
+  
+  .update-banner .update-button,
+  .update-banner .close-button {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
 }
