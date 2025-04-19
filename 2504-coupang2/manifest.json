@@ -1,0 +1,29 @@
+{
+    "name": "쿠팡 메가뷰티쇼",
+    "short_name": "쿠팡 메가뷰티쇼 2025 팝업안내도",
+    "version": "0.2.6.8",
+    "theme_color": "#40E0D0",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "start_url": "./",
+    "scope": "./",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "./src/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "./src/android-chrome-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "./src/apple-touch-icon.png",
+        "sizes": "180x180",
+        "type": "image/png",
+        "purpose": "maskable"
+      }
+    ]
+  }
