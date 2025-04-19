@@ -150,8 +150,7 @@ if (typeof window.boothData === 'undefined') {
       copyCode: '#쿠팡뷰티#메가뷰티쇼#닥터자르트',
       images: ['https://i.imgur.com/b0H0Uni.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 게시물 👉🏻 게임, 본품증정(한정) </div>',
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">종이백 증정(뷰티박스에 딱맞아요!) </div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 게시물 👉🏻 게임, 본품증정(한정) </div>'
       ]
     },
     '에스쁘아': {
@@ -308,7 +307,8 @@ if (typeof window.boothData === 'undefined') {
       copyCode: '#쿠팡뷰티 #메가뷰티쇼 #CNP',
       images: ['https://i.imgur.com/1ayAJsT.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">업로드 👉🏻 가챠</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">업로드 👉🏻 가챠</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">종이백 증정(뷰티박스에 딱맞아요!) </div>'
       ]
     },
     '스킨푸드': {
