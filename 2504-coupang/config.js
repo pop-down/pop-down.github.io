@@ -22,7 +22,7 @@ const UPDATE_HISTORY = [
   },
   {
     date: '2025-04-19',
-    version: '0.2.6.7',
+    version: '0.2.6.8',
     description: '맵 컨테이너 높이 반응형으로 수정, 맵이 접혔을 때 info-panel 높이 자동 조절 기능 추가 - 화면 공간 효율적 활용'
   },
   {
