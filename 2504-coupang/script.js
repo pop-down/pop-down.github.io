@@ -1206,6 +1206,9 @@ window.showTab = function(tabId) {
     document.body.classList.remove('map-tab-active');
   }
   
+  // 로컬 스토리지에 탭 정보 저장
+  localStorage.setItem('lastActiveTab', tabId);
+  
   // URL 해시 업데이트
   const currentState = parseUrlHash();
   currentState[HISTORY_STATES.TAB] = tabId;
@@ -1594,6 +1597,63 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // info-panel과 map-container 레이아웃 고정
   setupFixedLayout();
+  
+  // 부스 데이터 로드
+  fetch('data/booths.json?v=' + APP_CONFIG.version)
+    .then(response => response.json())
+    .then(data => {
+      
+      // 부스 데이터
+      window.boothData = data;
+      // 부스 기본 이벤트 리스너 초기화
+      
+      // 시작 시 로컬 스토리지에서 마지막 활성화 탭 복원
+      const lastActiveTab = localStorage.getItem('lastActiveTab');
+      
+      // URL 해시 파싱
+      const state = parseUrlHash();
+      const tabState = state[HISTORY_STATES.TAB];
+      const boothState = state[HISTORY_STATES.BOOTH];
+      
+      // 탭 초기화
+      initializeTabs();
+      
+      // 부스 목록 초기화
+      initializeBoothList();
+      
+      // 업데이트 기록 토글 초기화
+      initializeUpdateHistoryToggle();
+      
+      // 지도 토글 버튼 초기화
+      initializeMapToggleButton();
+      
+      // URL 부스 파라미터가 없고 로컬 스토리지에 탭 정보가 있으면 해당 탭 활성화
+      if (!boothState && lastActiveTab) {
+        showTab(lastActiveTab);
+      }
+      // URL에 탭 정보가 있으면 해당 탭 활성화
+      else if (tabState) {
+        showTab(tabState);
+      }
+      // 기본 탭 활성화 (지도 탭)
+      else {
+        showTab('map');
+      }
+      
+      // 앱 버전 표시
+      const appVersionElement = document.getElementById('app-version');
+      if (appVersionElement) {
+        appVersionElement.textContent = 'Ver ' + APP_CONFIG.version + ' ' + APP_CONFIG.date;
+      }
+      
+      // 지도 탭 초기화
+      initializeMapTab();
+      
+      // URL에 부스 정보가 있으면 해당 부스 선택
+      if (boothState) {
+        selectBooth(boothState);
+      }
+    });
 });
 
 // 고정 레이아웃 설정 함수
@@ -1606,20 +1666,44 @@ function setupFixedLayout() {
   if (mapContainer && infoPanel) {
     // CSS 변수로 고정 높이 설정
     document.documentElement.style.setProperty('--info-panel-height', '340px');
-    document.documentElement.style.setProperty('--map-container-height', '300px');
+    document.documentElement.style.setProperty('--map-container-height', '180px');
     
     // 스타일 요소 생성
     const style = document.createElement('style');
     style.textContent = `
       #info-panel {
         height: var(--info-panel-height) !important;
-        overflow-y: auto;
+        overflow: hidden;
         position: relative;
+        display: flex;
+        flex-direction: column;
       }
       
       #booth-info, #default-info {
         height: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .info-panel-scroll {
         overflow-y: auto;
+        max-height: calc(var(--info-panel-height) - 80px);
+        scrollbar-width: thin;
+        scrollbar-color: var(--main-pink) #f1f1f1;
+      }
+      
+      .info-panel-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      .info-panel-scroll::-webkit-scrollbar-thumb {
+        background-color: var(--main-pink);
+        border-radius: 3px;
+      }
+      
+      .info-panel-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
       }
       
       #map-container {
@@ -1627,6 +1711,7 @@ function setupFixedLayout() {
         min-height: var(--map-container-height) !important;
         max-height: var(--map-container-height) !important;
         overflow: hidden;
+        transition: height 0.3s ease, min-height 0.3s ease, max-height 0.3s ease;
       }
       
       #map-container.collapsed {
@@ -1635,9 +1720,13 @@ function setupFixedLayout() {
         max-height: 0px !important;
       }
       
-      .info-panel-scroll {
-        max-height: calc(var(--info-panel-height) - 70px);
-        overflow-y: auto;
+      .social-links {
+        margin-top: 15px;
+        padding-top: 10px;
+      }
+      
+      .booth-section {
+        margin-bottom: 15px;
       }
     `;
     
@@ -1658,17 +1747,36 @@ function adjustLayoutOnResize() {
   const mapContainer = document.getElementById('map-container');
   const isMapCollapsed = mapContainer.classList.contains('collapsed');
   
-  // 기본 info-panel 높이 계산
-  let infoHeight = Math.min(350, windowHeight * 0.6);
+  // 탭 버튼 높이, 헤더, 컨테이너 패딩 등의 높이 계산
+  const headerHeight = document.querySelector('.page-title').offsetHeight || 50;
+  const tabButtonsHeight = document.querySelector('.tab-buttons').offsetHeight || 40;
+  const containerPadding = 40; // 상하 패딩 합계
+  const footerHeight = document.querySelector('.copyright').offsetHeight || 30;
+  const extraPadding = 20; // 추가 여백
   
-  // 지도가 접혔을 때는 info-panel 높이를 증가시킴
+  // 사용 가능한 총 공간 계산
+  const availableHeight = windowHeight - headerHeight - tabButtonsHeight - containerPadding - footerHeight - extraPadding;
+  
+  // 지도 컨테이너의 높이 계산 (접혀있지 않을 때)
+  let mapHeight = Math.min(210, availableHeight * 0.3);
+  
+  // 정보 패널 높이 계산
+  let infoHeight;
+  
+  // 지도가 접혔을 때는 info-panel이 가능한 공간을 모두 차지하도록 함
   if (isMapCollapsed) {
-    infoHeight = Math.min(550, windowHeight * 0.8);
+    infoHeight = availableHeight;
+  } else {
+    // 지도가 표시될 때는 남은 공간을 info-panel이 차지하도록 함
+    infoHeight = availableHeight - mapHeight;
   }
+  
+  // 최소값 보장
+  infoHeight = Math.max(infoHeight, 300);
   
   // CSS 변수 업데이트
   document.documentElement.style.setProperty('--info-panel-height', `${infoHeight}px`);
-  document.documentElement.style.setProperty('--map-container-height', `${Math.min(300, windowHeight * 0.5)}px`);
+  document.documentElement.style.setProperty('--map-container-height', `${mapHeight}px`);
 }
 
 // 지도 토글 버튼 초기화 함수
