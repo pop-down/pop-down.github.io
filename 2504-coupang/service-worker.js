@@ -1,5 +1,5 @@
 // 캐시 버전 관리 (업데이트 시 버전 번호 변경)
-const CACHE_VERSION = 'v0.2.6.9';
+const CACHE_VERSION = 'v0.2.6.10';
 const CACHE_NAME = `coupang-cache-${CACHE_VERSION}`;
 const urlsToCache = [
   './',

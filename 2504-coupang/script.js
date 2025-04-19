@@ -132,37 +132,47 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/iope_official/',
       kakaotalk: 'https://pf.kakao.com/_Bqfxes',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#쿠팡뷰티 #메가뷰티쇼 #아이오페 @iope_official',
       images: ['https://i.imgur.com/5slkw7v.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 👉🏻 핀볼게임</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 👉🏻 핀볼게임(미니)</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">업로드 👉🏻 추첨(4/21~) 본품 증정(비타민C 40%) </div>'
       ]
     },
     '닥터자르트': {
       instagram: 'https://www.instagram.com/drjart_kr/',
       kakaotalk: 'https://pf.kakao.com/_UTxfuE',
       coupang: 'https://www.coupang.com/np/products/brand-shop?brandName=%EB%8B%A5%ED%84%B0%EC%9E%90%EB%A5%B4%ED%8A%B8',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#쿠팡뷰티#메가뷰티쇼#닥터자르트',
       images: ['https://i.imgur.com/b0H0Uni.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 게시물 👉🏻 게임</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 + 브랜드샵 + 게시물 👉🏻 게임, 본품증정(한정) </div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">종이백 증정(뷰티박스에 딱맞아요!) </div>'
       ]
     },
     '에스쁘아': {
       instagram: 'https://www.instagram.com/espoir_makeup/',
       kakaotalk: 'https://pf.kakao.com/_BEpRZ',
       coupang: 'N',
+      instagram_enable: true,
+      kakaotalk_enable: true,
       copyCode: '@espoir_makeup #쿠팡메가뷰티쇼',
       images: ['https://i.imgur.com/f3gmPfA.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 친추 👉🏻 샘플</div>',
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 친추 + 스토리/피드 👉🏻 가챠</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 플친 👉🏻 샘플</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 플친 + 스토리/피드 👉🏻 가챠 (대부분 미니사이즈 같음)</div>'
       ]
     },
     '에뛰드': {
       instagram: 'https://www.instagram.com/etudeofficial/',
       kakaotalk: 'https://pf.kakao.com/_FRxjxfR',
       coupang: 'N',
+      instagram_enable: true,
+      kakaotalk_enable: false,
       copyCode: '@etudeofficial #메가뷰티쇼 #에뛰드 #클라우드필터쿠션',
       images: ['https://i.imgur.com/E6wmvl3.jpeg'],
       notes: [
@@ -174,12 +184,14 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/thefaceshop.official/',
       kakaotalk: 'https://pf.kakao.com/_xisxdGR',
       coupang: 'N',
-      copyCode: '#쿠팡뷰티#쿠팡메가뷰티쇼#더페이스샵#잉크파데',
+      instagram_enable: true,
+      kakaotalk_enable: false,
+      copyCode: '#쿠팡뷰티 #쿠팡메가뷰티쇼 #더페이스샵 #잉크파데 @thefaceshop.official',
       images: ['https://i.imgur.com/L61rquE.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 스토리 업로드 👉🏻 향수 미니어처</div>',
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">쿠션 타워 게임 👉🏻 등수별 사은품</div>',
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">쿠션 꾸미기 👉🏻 럭드</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">1. 팔로우 + <font color="blue">스토리</font> 업로드 👉🏻 향수 미니어처</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">2. 쿠션 꾸미기 👉🏻 럭드</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">3. 쿠션 타워 게임 👉🏻 등수별 사은품</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">현장구매 시 증정품</div>'
       ]
     },
@@ -187,10 +199,12 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/giverny_korea/',
       kakaotalk: 'https://pf.kakao.com/_LHxbXxl',
       coupang: 'N',
-      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #지베르니',
+      instagram_enable: true,
+      kakaotalk_enable: true,
+      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #지베르니 @giverny_korea',
       images: ['https://i.imgur.com/hqT9mPv.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 게시물 업로드 👉🏻 두더지 잡기 게임</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 게시물 업로드 👉🏻 두더지 게임 (본품)</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 👉🏻 신문네컷</div>'
       ]
     },
@@ -198,16 +212,20 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/dr.g_official/',
       kakaotalk: 'https://pf.kakao.com/_HuEsE',
       coupang: 'N',
+      instagram_enable: true,
+      kakaotalk_enable: false,
       copyCode: '@dr.g_official #닥터지 #쿠팡뷰티 #메가뷰티쇼',
       images: ['https://i.imgur.com/sWH9q9c.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 업로드 👉🏻 뽑기 (시간걸림)</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 업로드 👉🏻 뽑기</div>'
       ]
     },
     'AHC': {
       instagram: 'https://www.instagram.com/ahc.official/',
       kakaotalk: 'https://pf.kakao.com/_ermfl',
       coupang: 'N',
+      instagram_enable: true,
+      kakaotalk_enable: true,
       copyCode: '#AHC #쿠팡뷰티 #메가뷰티쇼 #AHC쿠팡메가뷰티쇼 #SKINGAME_T_SHOT @ahc.official',
       images: ['https://i.imgur.com/BEc7U1N.jpeg'],
       notes: [
@@ -219,6 +237,8 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/banilaco_official/',
       kakaotalk: 'https://pf.kakao.com/_tsWfxd',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#쿠팡뷰티 #메가뷰티쇼 #바닐라코',
       images: ['https://i.imgur.com/i0MIQtL.jpeg'],
       notes: [
@@ -229,22 +249,26 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/wellage.official/',
       kakaotalk: 'https://pf.kakao.com/_qrEVxl',
       coupang: 'N',
-      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #웰라쥬',
+      instagram_enable: true,
+      kakaotalk_enable: true,
+      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #웰라쥬 @wellage.official',
       images: ['https://i.imgur.com/NNKDDr5.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 친추 👉🏻 체험권+체험키트</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우 + 플친 👉🏻 체험권+체험키트</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">게시물 업로드 👉🏻 웰라쥬 마스크</div>',
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">덕력고사 게임</div>'
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">덕력고사 게임 (럭드)</div>'
       ]
     },
     '토니모리': {
       instagram: 'https://www.instagram.com/tonymoly/',
       kakaotalk: 'https://pf.kakao.com/_AcKrI',
       coupang: 'N',
+      instagram_enable: true,
+      kakaotalk_enable: true,
       copyCode: '@tonymoly #쿠팡뷰티 #메가뷰티쇼 #토니모리 #tonymoly',
       images: ['https://i.imgur.com/GqjdWds.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">인스타 팔로우 + 게시물 업로드 👉🏻 게임</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">인스타 팔로우 + 게시물 업로드 👉🏻 게임 (미니제품)</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">틱톡 팔로우 👉🏻 추가 기회</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">플친 👉🏻 추가 기회</div>'
       ]
@@ -253,6 +277,9 @@ if (typeof window.boothData === 'undefined') {
       // instagram: 'https://www.instagram.com/avenekorea/',
       kakaotalk: 'https://pf.kakao.com/_VGFXxl',
       coupang: 'https://www.coupang.com/np/products/brand-shop?brandName=%EC%95%84%EB%B2%A4%EB%8A%90',
+      instagram: 'https://www.instagram.com/',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#아벤느 #시칼파트 #쿠팡뷰티 #메가뷰티쇼',
       images: ['https://i.imgur.com/NjRpYnI.jpeg'],
       notes: [
@@ -263,6 +290,8 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/mediheal_official/',
       kakaotalk: 'https://pf.kakao.com/_zueIxd',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#메디힐 #쿠팡 #쿠팡뷰티 #메가뷰티쇼 @mediheal_official',
       images: ['https://i.imgur.com/P8D6by2.jpeg'],
       notes: [
@@ -274,6 +303,8 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/cnplaboratory.official/',
       kakaotalk: 'https://pf.kakao.com/_pHuwd',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: false,
       copyCode: '#쿠팡뷰티 #메가뷰티쇼 #CNP',
       images: ['https://i.imgur.com/1ayAJsT.jpeg'],
       notes: [
@@ -284,6 +315,8 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/skinfood_official/',
       kakaotalk: 'https://pf.kakao.com/_pUUqR',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: true,
       copyCode: '#스킨푸드 #쿠팡뷰티 #메가뷰티쇼',
       images: ['https://i.imgur.com/MaaudYR.jpeg'],
       notes: [
@@ -296,6 +329,8 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/ariul_official/',
       kakaotalk: 'https://pf.kakao.com/_KUsxjM',
       coupang: 'N',
+      instagram_enable: false,
+      kakaotalk_enable: false,
       copyCode: '#쿠팡뷰티 #메가뷰티쇼 #아리얼',
       images: ['https://i.imgur.com/Sj8xrwR.jpeg'],
       notes: [
@@ -306,10 +341,12 @@ if (typeof window.boothData === 'undefined') {
       instagram: 'https://www.instagram.com/resnovae_official/',
       kakaotalk: 'https://pf.kakao.com/_xbxoxowG',
       coupang: 'N',
-      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #레스노베',
+      instagram_enable: true,
+      kakaotalk_enable: true,
+      copyCode: '#쿠팡뷰티 #메가뷰티쇼 #레스노베 @resnovae_official',
       images: ['https://i.imgur.com/zeIV7RS.jpeg'],
       notes: [
-        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우/친추 택일 👉🏻 에어볼이벤트</div>',
+        '<div style="line-height: 1.6em; margin-bottom: 10px;">팔로우/플친 택일 👉🏻 에어볼이벤트</div>',
         '<div style="line-height: 1.6em; margin-bottom: 10px;">스토리/피드 👉🏻 본품 (제로 포어 필링 패드)</div>'
       ]
     }
@@ -627,16 +664,46 @@ function displayBoothInfo(boothName, boothData) {
     }
     
     // 소셜 링크 설정
+    // 인스타그램 링크 설정
     if (boothData.instagram) {
       instagramLink.href = boothData.instagram;
       instagramLink.style.display = 'flex';
+      
+      // instagram_enable 속성에 따라 스타일 적용
+      const instagramIcon = instagramLink.querySelector('i');
+      if (instagramIcon) {
+        if (boothData.instagram_enable === false) {
+          instagramIcon.style.color = '#999'; // 회색으로 표시
+          instagramLink.style.opacity = '0.5';
+          instagramLink.title = '인스타그램 (비활성화)';
+        } else {
+          instagramIcon.style.color = ''; // 기본 색상으로 복원
+          instagramLink.style.opacity = '1';
+          instagramLink.title = '인스타그램';
+        }
+      }
     } else {
       instagramLink.style.display = 'none';
     }
     
+    // 카카오톡 링크 설정
     if (boothData.kakaotalk) {
       kakaotalkLink.href = boothData.kakaotalk;
       kakaotalkLink.style.display = 'flex';
+      
+      // kakaotalk_enable 속성에 따라 스타일 적용
+      const kakaotalkIcon = kakaotalkLink.querySelector('i');
+      if (kakaotalkIcon) {
+        if (boothData.kakaotalk_enable === false) {
+          kakaotalkIcon.style.color = '#999'; // 회색으로 표시
+          kakaotalkLink.style.opacity = '0.5';
+          kakaotalkLink.title = '카카오톡 (비활성화)';
+        } else {
+          kakaotalkIcon.style.color = ''; // 기본 색상으로 복원
+          kakaotalkLink.style.opacity = '1';
+          kakaotalkLink.title = '카카오톡';
+        }
+      }
     } else {
       kakaotalkLink.style.display = 'none';
     }
@@ -1199,11 +1266,73 @@ window.showTab = function(tabId) {
   document.getElementById(tabId).classList.add('active');
   document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
   
+  // 맵 컨테이너 요소 및 토글 버튼 가져오기
+  const mapContainer = document.getElementById('map-container');
+  const toggleBtn = document.getElementById('map-toggle-btn');
+  
+  // 로컬 스토리지에서 맵 상태 불러오기
+  const isCollapsed = localStorage.getItem('mapCollapsed') === 'true';
+  console.log('탭 전환 - 저장된 맵 상태:', isCollapsed ? '접힘' : '펼침');
+  
   // 선택한 탭이 지도 탭인지 확인하고 body 클래스 업데이트
   if (tabId === 'map') {
     document.body.classList.add('map-tab-active');
-  } else {
+    
+    // 지도 탭으로 변경 시 토글 버튼 상태 업데이트
+    if (toggleBtn) {
+      if (isCollapsed) {
+        toggleBtn.classList.add('collapsed');
+        toggleBtn.classList.remove('expanded');
+        if (mapContainer) {
+          mapContainer.classList.add('collapsed');
+        }
+      } else {
+        toggleBtn.classList.add('expanded');
+        toggleBtn.classList.remove('collapsed');
+        if (mapContainer) {
+          mapContainer.classList.remove('collapsed');
+        }
+      }
+    }
+  } else if (tabId === 'info') {
+    // 정보 탭으로 변경 시
     document.body.classList.remove('map-tab-active');
+    
+    // 정보 탭에서는 로컬 스토리지 상태에 따라 지도 표시
+    if (toggleBtn && mapContainer) {
+      if (isCollapsed) {
+        toggleBtn.classList.add('collapsed');
+        toggleBtn.classList.remove('expanded');
+        mapContainer.classList.add('collapsed');
+      } else {
+        toggleBtn.classList.add('expanded');
+        toggleBtn.classList.remove('collapsed');
+        mapContainer.classList.remove('collapsed');
+      }
+    }
+  } else {
+    // 다른 탭으로 변경 시
+    document.body.classList.remove('map-tab-active');
+    
+    // 지도 탭이 아닌 경우 토글 버튼 collapsed 상태로 설정
+    if (toggleBtn) {
+      toggleBtn.classList.add('collapsed');
+      toggleBtn.classList.remove('expanded');
+    }
+    
+    // 지도 탭이 아닐 때는 지도 컨테이너 반드시 숨김
+    if (mapContainer) {
+      mapContainer.classList.add('collapsed');
+    }
+  }
+  
+  // 높이 재계산 및 레이아웃 조정
+  if (window.updateMapContainerRatio) {
+    window.updateMapContainerRatio();
+  }
+  
+  if (window.adjustLayoutOnResize) {
+    window.adjustLayoutOnResize(tabId);
   }
   
   // 로컬 스토리지에 탭 정보 저장
@@ -1214,18 +1343,11 @@ window.showTab = function(tabId) {
   currentState[HISTORY_STATES.TAB] = tabId;
   const newHash = buildUrlHash(currentState);
   
-  // 지도 탭일 경우, 부스 선택 상태 초기화
-  if (tabId === 'map') {
-    // 이미 부스 정보가 있는 경우 업데이트 방지
-    if (!currentState[HISTORY_STATES.BOOTH]) {
-      // 현재 활성화된 부스 정보 초기화
-      resetActiveBoothInfo();
-    }
-  }
-  
   // 이력 상태 업데이트
   window.history.pushState(currentState, '', newHash);
-};
+  
+  console.log(`탭 변경 완료: ${tabId}, URL 해시: ${newHash}`);
+}
 
 // 미니맵 탭 초기화 함수
 window.initializeMapTab = function() {
@@ -1313,7 +1435,24 @@ window.initializeBoothList = function() {
         li.classList.add('selected');
         
         // 정보 탭으로 이동
-        window.showTab('map');
+        window.showTab('info');
+        
+        // 맵 컨테이너 표시 (collapsed 제거)
+        const mapContainer = document.getElementById('map-container');
+        const toggleBtn = document.getElementById('map-toggle-btn');
+        if (mapContainer) {
+          mapContainer.classList.remove('collapsed');
+          if (toggleBtn) {
+            toggleBtn.classList.add('expanded');
+            toggleBtn.classList.remove('collapsed');
+          }
+          localStorage.setItem('mapCollapsed', 'false');
+          
+          // info-panel 높이 재계산 및 레이아웃 조정
+          if (window.updateMapContainerRatio) {
+            window.updateMapContainerRatio();
+          }
+        }
       });
       
       boothList.appendChild(li);
@@ -1407,7 +1546,7 @@ window.showImageModal = function(imageUrl) {
 }
 
 // 업데이트 이력 토글 초기화
-function initializeUpdateHistoryToggle() {
+window.initializeUpdateHistoryToggle = function() {
   const updateHistoryToggle = document.querySelector('.update-history-toggle');
   const updateHistoryContent = document.querySelector('.update-history-content');
   const updateHistoryDisplay = document.getElementById('update-history-display');
@@ -1484,7 +1623,7 @@ window.displayUpdateHistory = function(updateHistory) {
 }
 
 // 데이터 저장 안내 토글 초기화
-function initializeDataStorageToggle() {
+window.initializeDataStorageToggle = function() {
   const dataStorageToggle = document.querySelector('.data-storage-toggle');
   const dataStorageContent = document.querySelector('.data-storage-content');
   
@@ -1521,38 +1660,40 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.handleExternalLinks) {
     window.handleExternalLinks();
   }
+
+  console.log('페이지 초기화: 지도를 접힌 상태로 설정');
   
-  // 지도 토글 버튼 초기화 - 페이지 로드 시 바로 추가
-  window.initializeMapToggleButton();
+  // 새로고침 시 무조건 지도 접힌 상태로 설정
+  const mapContainer = document.getElementById('map-container');
+  const toggleBtn = document.getElementById('map-toggle-btn');
   
-  // 탭 초기화
-  if (window.initializeTabs) {
-    window.initializeTabs();
+  // 지도 상태를 접힌 상태로 강제 설정
+  if (mapContainer && toggleBtn) {
+    // 지도 접기
+    mapContainer.classList.add('expanded');
+    toggleBtn.classList.add('expanded');
+    toggleBtn.classList.remove('collapsed');
+    
+    // 로컬 스토리지에 접힌 상태로 저장
+    localStorage.setItem('mapCollapsed', 'false');
+    
+    // 레이아웃 높이 재계산
+    if (window.updateMapContainerRatio) {
+      window.updateMapContainerRatio();
+    }
   }
   
-  // 부스 리스트 초기화
-  if (window.initializeBoothList) {
-    window.initializeBoothList();
+  // 맵 토글 버튼 초기화 함수 호출
+  if (window.initializeMapToggleButton) {
+    window.initializeMapToggleButton();
   }
   
-  // 업데이트 이력 토글 초기화
-  initializeUpdateHistoryToggle();
-  
-  // 데이터 저장 안내 토글 초기화
-  initializeDataStorageToggle();
-  
-  // SVG 부스 요소에 방문 상태 적용
-  const visitedBooths = window.getVisitedBooths();
-  if (visitedBooths) {
-    Object.keys(visitedBooths).forEach(boothName => {
-      if (visitedBooths[boothName]) {
-        const boothSvgElement = document.querySelector(`.booth-wrapper[data-name="${boothName}"]`);
-        if (boothSvgElement) {
-          boothSvgElement.classList.add('visited');
-        }
-      }
-    });
-  }
+  // 레이아웃 강제 조정 (맵 표시 상태 반영)
+  setTimeout(function() {
+    if (window.adjustLayoutOnResize) {
+      window.adjustLayoutOnResize();
+    }
+  }, 100);
   
   // 뒤로가기 버튼 추가
   const container = document.querySelector('.container');
@@ -1566,8 +1707,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // 컨테이너 맨 앞에 뒤로가기 버튼 추가
   container.insertBefore(backButton, container.firstChild);
   
-  // URL 해시에서 초기 상태 복원
-  window.handleHistoryNavigation();
+  // URL 해시에서 초기 상태 복원 - 초기 탭 설정은 나중에 처리하므로 지금은 하지 않음
+  // window.handleHistoryNavigation(); - 주석 처리
   
   // 뒤로가기/앞으로가기 이벤트 처리
   window.addEventListener('popstate', function(event) {
@@ -1579,22 +1720,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleHistoryNavigation(event.state);
   });
   
-  // 초기 탭 설정 (URL 해시 기반 상태 복원 이후에 실행)
-  const state = parseUrlHash();
-  if (state[HISTORY_STATES.TAB]) {
-    // 해시에서 탭 정보가 있으면 해당 탭 적용
-    const tabId = state[HISTORY_STATES.TAB];
-    if (tabId === 'map') {
-      document.body.classList.add('map-tab-active');
-    } else {
-      document.body.classList.remove('map-tab-active');
-    }
-  } else if (window.showTab) {
-    // 기본값은 guide 탭
-    window.showTab('guide');
-    document.body.classList.remove('map-tab-active');
-  }
-  
   // info-panel과 map-container 레이아웃 고정
   setupFixedLayout();
   
@@ -1605,39 +1730,48 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // 부스 데이터
       window.boothData = data;
-      // 부스 기본 이벤트 리스너 초기화
       
-      // 시작 시 로컬 스토리지에서 마지막 활성화 탭 복원
-      const lastActiveTab = localStorage.getItem('lastActiveTab');
+      // 탭 초기화
+      if (window.initializeTabs) {
+        window.initializeTabs();
+      }
+      
+      // 부스 목록 초기화
+      if (window.initializeBoothList) {
+        window.initializeBoothList();
+      }
+      
+      // 업데이트 기록 토글 초기화
+      window.initializeUpdateHistoryToggle();
+      
+      // 데이터 저장 안내 토글 초기화
+      window.initializeDataStorageToggle();
       
       // URL 해시 파싱
       const state = parseUrlHash();
       const tabState = state[HISTORY_STATES.TAB];
       const boothState = state[HISTORY_STATES.BOOTH];
       
-      // 탭 초기화
-      initializeTabs();
+      console.log('URL 해시 기반 탭 상태:', tabState);
+      console.log('URL 해시 기반 부스 상태:', boothState);
       
-      // 부스 목록 초기화
-      initializeBoothList();
-      
-      // 업데이트 기록 토글 초기화
-      initializeUpdateHistoryToggle();
-      
-      // 지도 토글 버튼 초기화
-      initializeMapToggleButton();
-      
-      // URL 부스 파라미터가 없고 로컬 스토리지에 탭 정보가 있으면 해당 탭 활성화
-      if (!boothState && lastActiveTab) {
-        showTab(lastActiveTab);
-      }
-      // URL에 탭 정보가 있으면 해당 탭 활성화
-      else if (tabState) {
+      // 최종 탭 활성화 처리
+      // URL에 탭 정보가 있으면 최우선 적용
+      if (tabState) {
+        console.log('URL 해시 기반으로 탭 활성화:', tabState);
         showTab(tabState);
       }
-      // 기본 탭 활성화 (지도 탭)
-      else {
-        showTab('map');
+      // URL에 탭 정보가 없고, 부스 정보도 없으며, 로컬 스토리지에 탭 정보가 있는 경우
+      else if (!boothState) {
+        const lastActiveTab = localStorage.getItem('lastActiveTab');
+        if (lastActiveTab) {
+          console.log('로컬 스토리지 기반으로 탭 활성화:', lastActiveTab);
+          showTab(lastActiveTab);
+        } else {
+          // 기본 탭 활성화 (지도 탭)
+          console.log('기본 탭(map) 활성화');
+          showTab('map');
+        }
       }
       
       // 앱 버전 표시
@@ -1653,6 +1787,19 @@ document.addEventListener('DOMContentLoaded', function() {
       if (boothState) {
         selectBooth(boothState);
       }
+      
+      // SVG 부스 요소에 방문 상태 적용
+      const visitedBooths = window.getVisitedBooths();
+      if (visitedBooths) {
+        Object.keys(visitedBooths).forEach(boothName => {
+          if (visitedBooths[boothName]) {
+            const boothSvgElement = document.querySelector(`.booth-wrapper[data-name="${boothName}"]`);
+            if (boothSvgElement) {
+              boothSvgElement.classList.add('visited');
+            }
+          }
+        });
+      }
     });
 });
 
@@ -1664,15 +1811,13 @@ function setupFixedLayout() {
   const defaultInfo = document.getElementById('default-info');
   
   if (mapContainer && infoPanel) {
-    // CSS 변수로 고정 높이 설정
-    document.documentElement.style.setProperty('--info-panel-height', '340px');
-    document.documentElement.style.setProperty('--map-container-height', '180px');
+    // 맵 컨테이너 비율 계산 및 적용
+    updateMapContainerRatio();
     
     // 스타일 요소 생성
     const style = document.createElement('style');
     style.textContent = `
       #info-panel {
-        height: var(--info-panel-height) !important;
         overflow: hidden;
         position: relative;
         display: flex;
@@ -1687,9 +1832,8 @@ function setupFixedLayout() {
       
       .info-panel-scroll {
         overflow-y: auto;
-        max-height: calc(var(--info-panel-height) - 80px);
         scrollbar-width: thin;
-        scrollbar-color: var(--main-pink) #f1f1f1;
+        scrollbar-color: var(--main-pink) #f0f0f0;
       }
       
       .info-panel-scroll::-webkit-scrollbar {
@@ -1702,81 +1846,81 @@ function setupFixedLayout() {
       }
       
       .info-panel-scroll::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #f0f0f0;
         border-radius: 3px;
-      }
-      
-      #map-container {
-        height: var(--map-container-height) !important;
-        min-height: var(--map-container-height) !important;
-        max-height: var(--map-container-height) !important;
-        overflow: hidden;
-        transition: height 0.3s ease, min-height 0.3s ease, max-height 0.3s ease;
-      }
-      
-      #map-container.collapsed {
-        height: 0px !important;
-        min-height: 0px !important;
-        max-height: 0px !important;
-      }
-      
-      .social-links {
-        margin-top: 15px;
-        padding-top: 10px;
-      }
-      
-      .booth-section {
-        margin-bottom: 15px;
       }
     `;
     
-    // head에 스타일 요소 추가
+    // 스타일 요소 추가
     document.head.appendChild(style);
     
-    // 이벤트 리스너 추가 - 윈도우 리사이즈 시 레이아웃 조정
-    window.addEventListener('resize', adjustLayoutOnResize);
-    
-    // 초기 레이아웃 조정
+    // adjustLayoutOnResize 호출
     adjustLayoutOnResize();
+    
+    // 리사이즈 이벤트 리스너 등록
+    window.addEventListener('resize', adjustLayoutOnResize);
   }
 }
 
 // 윈도우 크기 변경 시 레이아웃 조정
-function adjustLayoutOnResize() {
-  const windowHeight = window.innerHeight;
+window.adjustLayoutOnResize = function(forceTabId) {
+  // 맵 컨테이너 비율 계산 및 업데이트
+  updateMapContainerRatio();
+  
+  // SVG 지도 스케일 및 위치 조정
+  adjustMapScale();
+  
+  // 맵 컨테이너 크기와 탭 콘텐츠 크기 조정
   const mapContainer = document.getElementById('map-container');
-  const isMapCollapsed = mapContainer.classList.contains('collapsed');
-  
-  // 탭 버튼 높이, 헤더, 컨테이너 패딩 등의 높이 계산
-  const headerHeight = document.querySelector('.page-title').offsetHeight || 50;
-  const tabButtonsHeight = document.querySelector('.tab-buttons').offsetHeight || 40;
-  const containerPadding = 40; // 상하 패딩 합계
-  const footerHeight = document.querySelector('.copyright').offsetHeight || 30;
-  const extraPadding = 20; // 추가 여백
-  
-  // 사용 가능한 총 공간 계산
-  const availableHeight = windowHeight - headerHeight - tabButtonsHeight - containerPadding - footerHeight - extraPadding;
-  
-  // 지도 컨테이너의 높이 계산 (접혀있지 않을 때)
-  let mapHeight = Math.min(210, availableHeight * 0.3);
-  
-  // 정보 패널 높이 계산
-  let infoHeight;
-  
-  // 지도가 접혔을 때는 info-panel이 가능한 공간을 모두 차지하도록 함
-  if (isMapCollapsed) {
-    infoHeight = availableHeight;
-  } else {
-    // 지도가 표시될 때는 남은 공간을 info-panel이 차지하도록 함
-    infoHeight = availableHeight - mapHeight;
+  if (mapContainer) {
+    // 현재 사용할 탭 ID 결정 (우선순위: 강제 탭 ID > URL 해시 > DOM 활성 탭)
+    let currentTabId;
+    
+    if (forceTabId) {
+      // 함수 호출 시 전달된 탭 ID가 있으면 우선 사용
+      currentTabId = forceTabId;
+      console.log('강제 지정된 탭 ID 사용:', currentTabId);
+    } else {
+      // URL 해시에서 탭 정보 확인
+      const urlState = parseUrlHash();
+      const urlTabId = urlState[HISTORY_STATES.TAB];
+      
+      if (urlTabId) {
+        // URL 해시에 탭 정보가 있으면 사용
+        currentTabId = urlTabId;
+        console.log('URL 해시에서 탭 ID 사용:', currentTabId);
+      } else {
+        // DOM에서 현재 활성화된 탭 찾기
+        const activeTab = document.querySelector('.tab-button.active');
+        currentTabId = activeTab ? activeTab.getAttribute('data-tab') : '';
+        console.log('DOM 활성 탭 ID 사용:', currentTabId);
+      }
+    }
+    
+    // 지도 탭이 아닌 경우
+    if (currentTabId !== 'info') {
+      // 정보 탭일 경우 토글 버튼의 제어에 맡김 (현재 상태 유지)
+    
+        // 정보 탭이 아닌 다른 탭의 경우 맵 컨테이너 숨김
+        console.log('다른 탭: 맵 컨테이너 숨김');
+        if (!mapContainer.classList.contains('collapsed')) {
+          mapContainer.classList.add('collapsed');
+          // 맵이 접혔을 때 info-panel 높이 재계산
+          updateMapContainerRatio();
+        }
+    } else {
+      // 지도 탭인 경우 로컬 스토리지 설정에 따라 표시
+      const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
+      console.log('맵 탭: 저장된 상태에 따라 표시', isMapCollapsed ? '접힘' : '펼침');
+      if (isMapCollapsed) {
+        if (!mapContainer.classList.contains('collapsed')) {
+          mapContainer.classList.add('collapsed');
+        }
+      } else {
+        mapContainer.classList.remove('collapsed');
+      }
+    }
   }
-  
-  // 최소값 보장
-  infoHeight = Math.max(infoHeight, 300);
-  
-  // CSS 변수 업데이트
-  document.documentElement.style.setProperty('--info-panel-height', `${infoHeight}px`);
-  document.documentElement.style.setProperty('--map-container-height', `${mapHeight}px`);
 }
 
 // 지도 토글 버튼 초기화 함수
@@ -1789,60 +1933,145 @@ window.initializeMapToggleButton = function() {
     return;
   }
   
-  // 버튼 클릭 이벤트 리스너 추가
-  toggleBtn.addEventListener('click', function() {
+  // 초기 상태 설정 - 로컬스토리지에서 지도 접힘 상태 불러오기
+  const isCollapsed = localStorage.getItem('mapCollapsed') === 'true';
+  console.log('지도 초기 상태:', isCollapsed ? '접힘' : '펼침');
+  
+  // 버튼과 컨테이너 상태 동기화
+  if (isCollapsed) {
+    toggleBtn.classList.add('collapsed');
+    toggleBtn.classList.remove('expanded');
+    if (mapContainer) {
+      mapContainer.classList.add('collapsed');
+    }
+  } else {
+    toggleBtn.classList.add('expanded');
+    toggleBtn.classList.remove('collapsed');
+    if (mapContainer) {
+      mapContainer.classList.remove('collapsed');
+    }
+  }
+  
+  // updateMapContainerRatio 호출하여 높이 재계산
+  if (window.updateMapContainerRatio) {
+    window.updateMapContainerRatio();
+  }
+  
+  // URL 해시에서 탭 정보 가져오기
+  const urlState = parseUrlHash();
+  const urlTabId = urlState[HISTORY_STATES.TAB];
+  console.log('URL 해시 탭 정보:', urlTabId);
+  
+  // 레이아웃 강제 조정 - URL 탭 정보 전달
+  if (window.adjustLayoutOnResize) {
+    window.adjustLayoutOnResize(urlTabId);
+  }
+  
+  // 기존 이벤트 리스너 제거 (중복 이벤트 방지)
+  toggleBtn.removeEventListener('click', toggleBtnClickHandler);
+  
+  // 버튼 클릭 이벤트 핸들러 함수
+  function toggleBtnClickHandler(event) {
+    console.log('지도 토글 버튼 클릭됨');
+    
     // 현재 활성 탭 확인
     const currentActiveTab = document.querySelector('.tab-button.active').getAttribute('data-tab');
+    console.log('현재 활성 탭:', currentActiveTab);
     
-    // 현재 맵 탭이 아니면 맵 탭으로 이동
-    if (currentActiveTab !== 'map') {
-      // 맵 탭으로 이동
-      window.showTab('map');
+    // 현재 맵 탭이 아니면서 정보 탭도 아닌 경우 -> 정보 탭으로 이동 후 맵 확장
+    if (currentActiveTab !== 'map' && currentActiveTab !== 'info') {
+      console.log('다른 탭에서 정보 탭으로 이동');
       
-      // 버튼 상태 업데이트 (확장 상태로)
-      mapContainer.classList.remove('collapsed');
-      this.classList.add('expanded');
-      this.classList.remove('collapsed');
-      localStorage.setItem('mapCollapsed', 'false');
+      // 정보 탭으로 이동
+      window.showTab('info');
       
-      // 레이아웃 조정
-      adjustLayoutOnResize();
+      // 맵 컨테이너 열기 (collapsed 제거)
+      const mapContainer = document.getElementById('map-container');
+      if (mapContainer) {
+        mapContainer.classList.remove('collapsed');
+        toggleBtn.classList.add('expanded');
+        toggleBtn.classList.remove('collapsed');
+        localStorage.setItem('mapCollapsed', 'false');
+      }
+      
+      // info-panel 높이 재계산과 레이아웃 조정
+      if (window.updateMapContainerRatio) {
+        window.updateMapContainerRatio();
+      }
+      
+      if (window.adjustLayoutOnResize) {
+        window.adjustLayoutOnResize('info');
+      }
+      return;
+    }
+    
+    // 정보 탭인 경우 맵 컨테이너 토글
+    if (currentActiveTab === 'info') {
+      console.log('정보 탭에서 맵 토글');
+      const mapContainer = document.getElementById('map-container');
+      if (mapContainer) {
+        if (mapContainer.classList.contains('collapsed')) {
+          // 맵 펼치기
+          mapContainer.classList.remove('collapsed');
+          toggleBtn.classList.add('expanded');
+          toggleBtn.classList.remove('collapsed');
+          localStorage.setItem('mapCollapsed', 'false');
+        } else {
+          // 맵 접기
+          mapContainer.classList.add('collapsed');
+          toggleBtn.classList.add('collapsed');
+          toggleBtn.classList.remove('expanded');
+          localStorage.setItem('mapCollapsed', 'true');
+        }
+        
+        // info-panel 높이 재계산을 위해 updateMapContainerRatio 호출
+        if (window.updateMapContainerRatio) {
+          window.updateMapContainerRatio();
+        }
+        
+        // 레이아웃 조정
+        if (window.adjustLayoutOnResize) {
+          window.adjustLayoutOnResize('info');
+        }
+      }
       return;
     }
     
     // 맵 탭인 경우 기존 토글 기능 수행
+    console.log('맵 토글 동작 수행:', mapContainer.classList.contains('collapsed') ? '펼치기' : '접기');
     if (mapContainer.classList.contains('collapsed')) {
       mapContainer.classList.remove('collapsed');
-      this.classList.add('expanded');
-      this.classList.remove('collapsed');
+      toggleBtn.classList.add('expanded');
+      toggleBtn.classList.remove('collapsed');
       localStorage.setItem('mapCollapsed', 'false');
     } else {
       mapContainer.classList.add('collapsed');
-      this.classList.add('collapsed');
-      this.classList.remove('expanded');
+      toggleBtn.classList.add('collapsed');
+      toggleBtn.classList.remove('expanded');
       localStorage.setItem('mapCollapsed', 'true');
     }
     
+    // info-panel 높이 재계산을 위해 updateMapContainerRatio 호출
+    if (window.updateMapContainerRatio) {
+      window.updateMapContainerRatio();
+    }
+    
     // 레이아웃 조정
-    adjustLayoutOnResize();
-  });
-  
-  // 미니맵의 초기 상태 설정 (로컬 스토리지에서 가져옴)
-  const isMapCollapsed = localStorage.getItem('mapCollapsed') === 'true';
-  if (isMapCollapsed) {
-    mapContainer.classList.add('collapsed');
-    toggleBtn.classList.add('collapsed');
-    toggleBtn.classList.remove('expanded');
-  } else {
-    mapContainer.classList.remove('collapsed');
-    toggleBtn.classList.add('expanded');
-    toggleBtn.classList.remove('collapsed');
+    if (window.adjustLayoutOnResize) {
+      window.adjustLayoutOnResize('map');
+    }
   }
+  
+  // 새 이벤트 리스너 등록
+  toggleBtn.addEventListener('click', toggleBtnClickHandler);
   
   // 활성 탭이 변경될 때 아이콘 상태 업데이트
   document.querySelectorAll('.tab-button').forEach(button => {
-    const originalClickHandler = button.onclick;
-    button.addEventListener('click', function() {
+    // 기존 이벤트 리스너 제거
+    button.removeEventListener('click', tabButtonClickHandler);
+    
+    // 탭 버튼 클릭 이벤트 핸들러
+    function tabButtonClickHandler() {
       // 탭이 맵이 아닌 경우 아이콘 상태 업데이트
       const tabId = this.getAttribute('data-tab');
       if (tabId !== 'map') {
@@ -1860,13 +2089,49 @@ window.initializeMapToggleButton = function() {
         }
       }
       
+      // info-panel 높이 재계산을 위해 updateMapContainerRatio 호출
+      updateMapContainerRatio();
+      
       // 레이아웃 조정
-      adjustLayoutOnResize();
-    });
+      adjustLayoutOnResize(tabId);
+    }
+    
+    // 새 이벤트 리스너 등록
+    button.addEventListener('click', tabButtonClickHandler);
   });
+}
+
+// 맵 컨테이너 비율 업데이트
+window.updateMapContainerRatio = function() {
+  const mapContainer = document.getElementById('map-container');
+  const mapWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--map-width'));
+  const mapHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--map-height'));
   
-  // 초기 레이아웃 조정
-  adjustLayoutOnResize();
+  if (mapContainer) {
+    // 맵 컨테이너 비율 계산
+    const mapRatio = mapHeight / mapWidth;
+    document.documentElement.style.setProperty('--map-ratio', mapRatio);
+    
+    // 맵 컨테이너가 접혀있는지 확인
+    if (mapContainer.classList.contains('collapsed')) {
+      // 맵이 접혀있으면 맵 컨테이너 높이를 0으로 설정
+      document.documentElement.style.setProperty('--map-container-height', '0px');
+    } else {
+      // 맵이 펼쳐져 있으면 맵 컨테이너 높이를 계산해서 설정
+      const mapContainerWidth = mapContainer.clientWidth;
+      const calculatedHeight = mapContainerWidth * mapRatio;
+      document.documentElement.style.setProperty('--map-container-height', `${calculatedHeight}px`);
+    }
+  }
+}
+
+// SVG 지도 스케일 및 위치 조정
+function adjustMapScale() {
+  const exhibitionMap = document.getElementById('exhibition-map');
   
-  return toggleBtn;
-} 
+  if (exhibitionMap) {
+    // SVG 뷰박스 속성 조정
+    // SVG가 컨테이너에 맞게 조정되도록 설정
+    exhibitionMap.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  }
+}

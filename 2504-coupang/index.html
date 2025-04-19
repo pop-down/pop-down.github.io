@@ -43,7 +43,7 @@
   </div>
   
   <!-- 지도 토글 버튼을 body에 직접 추가 -->
-  <button id="map-toggle-btn" class="map-toggle-btn" aria-label="지도 접기/펼치기">
+  <button id="map-toggle-btn" class="map-toggle-btn expanded" aria-label="지도 접기/펼치기">
     <i class="fas fa-map-marker-alt"></i>
   </button>
   
@@ -56,20 +56,23 @@
       <div class="tab-buttons">
         <button class="tab-button active" data-tab="guide">이용 안내</button>
         <button class="tab-button" data-tab="list">부스 리스트</button>
-        <button class="tab-button" data-tab="map">정보</button>
+        <button class="tab-button" data-tab="info">정보</button>
       </div>
       
       <div class="tab-content active" id="guide">
         <h2>이용 안내</h2>
         <div class="guide-content">
-          <p>쿠팡 메가 뷰티쇼2025를 빠르고 효율적으로 둘러보기 위해 만들었습니다</p>
+          <p>쿠팡 메가 뷰티쇼 2025를 빠르고 효율적으로 둘러보기 위해 만들었습니다</p>
           <h3>이용 방법</h3>
           <ul>
             <!-- <li>미니맵 탭에서 부스 위치를 확인할 수 있습니다.</li> -->
             <!-- <li>부스를 클릭하면 상세 정보를 볼 수 있습니다.</li> -->
             <li>부스 리스트 탭에서 이름이나 인스타그램 아이디로 검색하여 쉽게 원하는 부스를 찾을 수 있습니다.</li>
-            <li>각 부스별로 해시태그, 채널 링크, 인스타그램 링크 및 미니맵 위치(정보 탭 지도아이콘)를 바로 확인할 수 있습니다.</li>
-            <li>부스 방문 여부를 체크하여 효율적으로 방문한 부스를 관리할 수 있습니다.</li>
+            <li>각 부스별로 해시태그, 링크 및 미니맵 위치(정보 탭 지도아이콘)를 바로 확인할 수 있습니다.
+
+              <br /> <span style="font-size: 11px; font-family: Arial, Helvetica, sans-serif; color: #999999;">(카카오톡/인스타그램 아이콘은 경우,  선명함 👉🏻 플친/팔로우 필요)</span>
+            </li>
+            <li> 부스 방문 여부를 체크하여 효율적으로 방문한 부스를 관리할 수 있습니다.</li>
             <li>홈 화면에 추가 - 앱으로 설치하면 인터넷 창과 독립적으로 이용할 수 있어 편리합니다.</li>
           </ul>
           <h3>주의사항</h3>
@@ -105,7 +108,7 @@
         </ul>
       </div>
 
-      <div class="tab-content" id="map">
+      <div class="tab-content" id="info">
         <div id="map-container">
           <!-- SVG 지도 -->
           <svg id="booth-map" class="booth-map" viewBox="40 51 720 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
@@ -438,6 +441,78 @@
         
         boothInfoElement.style.display = 'none';
         defaultInfoElement.style.display = 'block';
+      }
+      
+      // 데이터 저장 안내와 업데이트 이력 토글 초기화
+      const dataStorageToggle = document.querySelector('.data-storage-toggle');
+      const dataStorageContent = document.querySelector('.data-storage-content');
+      const updateHistoryToggle = document.querySelector('.update-history-toggle');
+      const updateHistoryContent = document.querySelector('.update-history-content');
+      
+      if (dataStorageToggle && dataStorageContent) {
+        dataStorageToggle.addEventListener('click', function() {
+          if (dataStorageContent.style.display === 'none' || dataStorageContent.style.display === '') {
+            dataStorageContent.style.display = 'block';
+            this.textContent = '▲';
+          } else {
+            dataStorageContent.style.display = 'none';
+            this.textContent = '▼';
+          }
+        });
+      }
+      
+      if (updateHistoryToggle && updateHistoryContent) {
+        updateHistoryToggle.addEventListener('click', function() {
+          if (updateHistoryContent.style.display === 'none' || updateHistoryContent.style.display === '') {
+            updateHistoryContent.style.display = 'block';
+            this.textContent = '▲';
+            
+            // 업데이트 이력 표시
+            const updateHistoryDisplay = document.getElementById('update-history-display');
+            if (updateHistoryDisplay) {
+              // config.js에서 가져온 UPDATE_HISTORY 데이터 가져오기 시도
+              import('./config.js')
+                .then(module => {
+                  if (module.UPDATE_HISTORY) {
+                    // 업데이트 이력 데이터 정렬 및 표시
+                    const sortedHistory = [...module.UPDATE_HISTORY].sort((a, b) => {
+                      return new Date(b.date) - new Date(a.date);
+                    });
+                    
+                    // 표시 영역 초기화
+                    updateHistoryDisplay.innerHTML = '';
+                    
+                    // 이력 항목 추가
+                    sortedHistory.forEach(item => {
+                      const historyItem = document.createElement('div');
+                      historyItem.className = 'update-history-item';
+                      
+                      const dateVersion = document.createElement('div');
+                      dateVersion.className = 'update-history-date';
+                      dateVersion.textContent = `${item.date} (v${item.version})`;
+                      
+                      const description = document.createElement('div');
+                      description.className = 'update-history-description';
+                      description.textContent = item.description;
+                      
+                      historyItem.appendChild(dateVersion);
+                      historyItem.appendChild(description);
+                      updateHistoryDisplay.appendChild(historyItem);
+                    });
+                  } else {
+                    updateHistoryDisplay.innerHTML = '<p>업데이트 이력을 불러올 수 없습니다.</p>';
+                  }
+                })
+                .catch(err => {
+                  console.error('업데이트 이력 데이터 로드 실패:', err);
+                  updateHistoryDisplay.innerHTML = '<p>업데이트 이력을 불러올 수 없습니다.</p>';
+                });
+            }
+          } else {
+            updateHistoryContent.style.display = 'none';
+            this.textContent = '▼';
+          }
+        });
       }
     });
   </script>

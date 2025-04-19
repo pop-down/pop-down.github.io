@@ -1,7 +1,7 @@
 {
-  "version": "0.2.6.9",
+  "version": "0.2.6.10",
   "minRequired": "0.1.0.0",
-  "latest": "0.2.6.9",
+  "latest": "0.2.6.10",
   "lastUpdated": "2025-04-19",
   "notes": "입구/출구 위치 조정 및 지도 viewBox 최적화, 화면 표시 개선"
 } 

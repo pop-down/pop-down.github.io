@@ -9,6 +9,10 @@
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
   --tab-inactive: #f0f0f0;
+  --map-width: 382;
+  --map-height: 210;
+  --map-ratio: calc(var(--map-height) / var(--map-width));
+  --map-container-height: auto; /* JavaScript에서 조정 가능한 변수 */
 }
 
 body {
@@ -71,7 +75,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-left: 50px;
+  padding-left: 20px;
 }
 
 .page-title h1 {
@@ -87,7 +91,7 @@ body {
 
 #map-container {
   width: 100%;
-  max-width: 100%;
+  max-width: 800px;
   height: 250px;
   position: relative;
   display: flex;
@@ -100,29 +104,35 @@ body {
   box-sizing: border-box;
   transition: all 0.3s ease;
   text-align: center;
-  min-height: 200px;
-  max-height: 280px;
-  padding: 0;
   margin: 0 auto;
 }
 
 #map-container.collapsed {
-  height: 0;
-  max-height: 0;
-  min-height: 0;
-  overflow: hidden;
-  margin: 0 auto;
-  border: none;
-  box-shadow: none;
+  height: 0 !important;
+  max-height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 auto !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+.guide-content li{
+  font-size: 14px;
 }
 
 .booth-map {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* absolute에서 relative로 변경 */
   width: 100%;
   height: 100%;
+  object-fit: contain; /* 비율 유지하면서 컨테이너에 맞춤 */
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto; /* 중앙 정렬 */
+  display: block; /* 중앙 정렬을 위해 block으로 설정 */
 }
 
 .booth-title{
@@ -157,12 +167,12 @@ body {
 
 /* 확장 상태 - 지도가 표시될 때 (정보 탭에서만) */
 .map-toggle-btn.expanded i {
-  color: var(--main-pink);
+  color: var(--main-pink) !important;
 }
 
 /* 접힌 상태 - 지도가 숨겨져 있을 때 (정보 탭에서만) */
 .map-toggle-btn.collapsed i {
-  color: #999;
+  color: #999 !important;
 }
 
 /* 다른 탭에 있을 때 - 다른 색상으로 표시 */
@@ -196,9 +206,7 @@ body:not(.map-tab-active) .map-toggle-btn:hover i {
   }
 
   #map-container {
-    height: 200px; /* 모바일에서의 고정 높이 */
-    min-height: 180px; /* 모바일 최소 높이 */
-    max-height: 220px; /* 모바일 최대 높이 */
+    height: 200px;
   }
 }
 
@@ -207,27 +215,27 @@ body:not(.map-tab-active) .map-toggle-btn:hover i {
   width: auto;
   max-width: 100%;
   background: var(--bg-color);
-  /* border: 1px solid var(--border-color); */
-  /* border-radius: 10px; */
-  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
   padding: 20px;
-  padding-bottom: 80px; /* 하단 고정 영역을 위한 여백 증가 */
+  padding-top: 0px !important;
+  /* padding-bottom: 80px; */
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  height: 500px; /* 높이 고정 */
-  max-height: calc(100vh - 250px); /* 뷰포트 높이 기준으로 제한 */
-  position: relative; /* 추가: 상대 위치 설정 */
-  overflow: hidden; /* 오버플로우 숨김 처리 */
+  /* 화면의 나머지 영역을 채우도록 설정 */
+  height: calc(100vh - 250px - var(--map-container-height, calc(100vw * var(--map-ratio))));
+  /* 최대 높이 제한 제거 */
+  position: relative;
+  overflow: hidden;
 }
 
 .info-panel-scroll {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 70px; /* 소셜 링크 영역 높이만큼 여백 추가 */
-  min-height: 0;
-  max-height: 400px; /* 최대 높이 축소 */
+  min-height: 100px; /* 최소 높이 설정 */
+  /* 컨테이너 크기에 맞춤 */
+  max-height: calc(100% - 80px); /* 하단 고정 영역 고려 */
   -ms-overflow-style: auto; /* IE와 Edge */
   scrollbar-width: auto; /* Firefox */
   position: relative; /* 상대 위치 설정 */
@@ -447,7 +455,9 @@ body:not(.map-tab-active) .map-toggle-btn:hover i {
 /* 기본 커서 스타일 */
 .booth-wrapper {
   cursor: pointer;
-  /* 크기 변경 효과를 CSS에서 제거 */
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
 }
 
 /* 선택된 부스에 대한 스타일 */
@@ -619,22 +629,67 @@ svg {
   #booth-info {
     padding: 20px;
   }
+  
+  /* 데스크톱 환경에서 정보탭의 2단 레이아웃 (미니맵 좌측, 내용 우측) */
+  .tab-content#info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    opacity: 0;
+    visibility: hidden;
+    padding: 20px;
+  }
+  
+  .tab-content#info.active {
+    display: flex;
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    top: auto;
+    left: auto;
+  }
+  
+  .tab-content#info #map-container {
+    width: 40%;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 10px;
+    height: auto;
+    max-height: none;
+    position: relative;
+    display: block;
+  }
+  
+  .tab-content#info .info-panel,
+  .tab-content#info #info-panel {
+    width: 60%;
+    margin-left: 20px;
+    height: auto;
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    display: block;
+  }
 }
 
 @media (max-width: 767px) {
   .info-panel,
   #info-panel {
-    max-height: calc(100vh - 170px);
-    height: auto;
+    /* 모바일에서도 화면 나머지 영역 채우기 */
+    height: calc(100vh - 200px - var(--map-container-height, calc(100vw * var(--map-ratio))));
     padding: 15px;
-    padding-bottom: 10px;
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box;
+    /* padding-bottom: 70px; */
   }
-
+  
   .info-panel-scroll {
-    max-height: calc(100vh - 280px);
+    margin-bottom: 60px;
+    max-height: calc(100% - 70px);
   }
 
   .page-title h1 {
@@ -655,6 +710,7 @@ svg {
   .booth-name {
     font-size: 18px;
     padding: 10px 0;
+    /* padding-bottom: 10px; */
     margin-bottom: 10px;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
@@ -711,6 +767,15 @@ svg {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  
+  /* 모바일에서는 정보탭에서 기본 세로 배치 유지 */
+  .tab-content#info {
+    display: block;
+  }
+  
+  .tab-content#info.active {
+    display: block;
   }
 }
 
@@ -2043,4 +2108,146 @@ svg {
 
 .guide-content li:last-child {
   margin-bottom: 0;
+}
+
+/* SVG 전체 중앙 정렬 */
+#exhibition-map {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 모든 부스 요소에 중앙 정렬 스타일 적용 */
+.booth-wrapper {
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* 부스 SVG 내부 요소들에 대한 스타일 */
+.booth-hover-target,
+.booth-wrapper rect,
+.booth-wrapper path,
+.booth-wrapper circle,
+.booth-wrapper polygon,
+.booth-wrapper line {
+  transition: all 0.3s ease;
+}
+
+/* 정보탭 2단 레이아웃 완전 재정의 */
+/* 모든 기존 스타일을 덮어쓰기 위해 매우 구체적인 선택자와 !important 사용 */
+@media (min-width: 768px) {
+  /* 정보탭 컨테이너를 2단 레이아웃으로 변경 */
+  body .tabs #info.tab-content.active {
+    display: flex !important;
+    flex-direction: row !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 600px !important;
+    padding: 20px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    z-index: 999 !important;
+    background-color: var(--bg-color) !important;
+    transform: none !important;
+  }
+  
+  /* 지도 영역을 왼쪽으로 배치 */
+  body .tabs #info.tab-content.active #map-container {
+    width: 40% !important;
+    height: auto !important;
+    min-width: 300px !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    flex: 0 0 40% !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 10 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+  
+  /* 지도가 접혀있는 경우에도 표시되게 */
+  body .tabs #info.tab-content.active #map-container.collapsed {
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+  
+  /* SVG 요소가 완전히 표시되도록 설정 */
+  body .tabs #info.tab-content.active #map-container svg,
+  body .tabs #info.tab-content.active #map-container .booth-map {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    margin: 0 auto !important;
+  }
+  
+  /* 정보 패널 영역을 오른쪽으로 배치 */
+  body .tabs #info.tab-content.active #info-panel,
+  body .tabs #info.tab-content.active .info-panel {
+    width: 60% !important;
+    min-width: 300px !important;
+    height: auto !important;
+    margin-left: 20px !important;
+    padding: 15px !important;
+    flex: 0 0 60% !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 5 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+  }
+  
+  /* 정보 패널의 스크롤 영역 설정 */
+  body .tabs #info.tab-content.active #info-panel .info-panel-scroll,
+  body .tabs #info.tab-content.active .info-panel .info-panel-scroll {
+    height: auto !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+    padding-bottom: 80px !important;
+  }
+  
+  /* 하단 고정 영역 설정 */
+  body .tabs #info.tab-content.active #info-panel .info-panel-fixed,
+  body .tabs #info.tab-content.active .info-panel .info-panel-fixed {
+    position: fixed !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    width: calc(60% - 20px) !important;
+    z-index: 100 !important;
+  }
+}
+
+/* 모바일에서는 세로 배치 유지 */
+@media (max-width: 767px) {
+  body .tabs #info.tab-content.active {
+    display: block !important;
+    flex-direction: column !important;
+  }
+  
+  body .tabs #info.tab-content.active #map-container {
+    width: 100% !important;
+    /* margin-bottom: 20px !important; */
+  }
+  
+  body .tabs #info.tab-content.active #info-panel,
+  body .tabs #info.tab-content.active .info-panel {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
 }
